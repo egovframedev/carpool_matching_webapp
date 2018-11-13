@@ -1,0 +1,10 @@
+bin/
+tmp/
+*.bak
+*.tmp
+*.swp
+*.class
+*.log
+*.war
+.sts4-cache/
+target/
