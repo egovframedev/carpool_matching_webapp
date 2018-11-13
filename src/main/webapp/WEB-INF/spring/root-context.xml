@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	<context:property-placeholder location="classpath:/database/dbconfig.properties"/>
+	
+	<!--  커넥션 풀 데이터소스 빈 설정 -->
+	<bean id="dataSource" 
+		class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${db.driverClassName}"/>
+		<property name="url" value="${db.url}"/>
+		<property name="username" value="${db.username}"/>
+		<property name="password" value="${db.password}"/>
+		<!-- 동시에 사용할 수 있는 커넥션 갯수(기본값: 8) -->
+		<property name="maxTotal" value="${db.maxTotal}"/>
+		<!-- 커넥션 풀에 반납할 때 최대로 유지될 수 있는 커넥션 개수(기본값 8) -->
+		<property name="maxIdle"  value="${db.maxIdle}"/>
+		<!-- 커넥션 풀 안에 커넥션이 고갈되었을 때 커넥션 반납을 대기하는 시간(밀리초) -->
+		<property name="maxWaitMillis" value="${db.maxWaitMillis}"/> 
+		<property name="poolPreparedStatements" value="true"/>
+	</bean>
+	
+	<!-- 마이바티스 설정 부분 -->
+	<bean id="sqlSessionFactory" 
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml"/>
+	</bean>	
+	
+	<bean id="sqlSession" 
+		class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<tx:annotation-driven />
+</beans>
