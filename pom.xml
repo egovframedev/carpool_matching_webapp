@@ -156,9 +156,9 @@
 		
 		<!-- Apache Commons DBCP -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-dbcp2</artifactId>
-		    <version>2.5.0</version>
+		    <groupId>commons-dhcp</groupId>
+		    <artifactId>commons-dbcp</artifactId>
+		    <version>1.4</version>
 		</dependency>
 
 		<!-- Lombok -->
