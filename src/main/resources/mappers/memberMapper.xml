@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carto.mappers.MemberMapper">
+
+	<resultMap id="memberMap" type="MemberDTO">
+		<id property="mno" column="mno"/>
+		<result property="mstate" column="mstate"/>
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="name" column="name"/>
+		<result property="birth" column="birth"/>
+		<result property="gender" column="gender"/>
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="authno" column="authno"/>
+		<result property="regDate" column="regdate"/>
+		<result property="pwDate" column="pwdate"/>
+		<result property="photo" column="photo" />
+		<result property="enabled" column="enabled" />
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap id="authMap" type="AuthDTO">
+		<result property="userid" column="userid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="read" resultMap="memberMap">
+		SELECT mno, mem.userid, userpw, name, enable, regdate, pwdate, authority
+		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.userid = auth.userid
+		WHERE mem.userid = #{userid} 
+	</select>
+	<!-- mno, mstate, mem.userid, userpw, enabled 
+			name, gender, birth, email, phone, authono, 
+			regdate, pwdate, photo, auth.authority -->
+	<select id="readById" resultMap="memberMap">
+		SELECT mno, mstate, mem.userid, userpw, enabled 
+			name, gender, birth, email, phone, authno, 
+			regdate, pwdate, photo, auth.authority
+		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.userid = auth.userid
+		WHERE mem.userid = #{userid} 
+	</select>
+</mapper>

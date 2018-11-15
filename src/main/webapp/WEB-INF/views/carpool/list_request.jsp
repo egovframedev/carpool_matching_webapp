@@ -39,8 +39,7 @@
             	</div><!-- /.box-body -->
           	</div><!-- // 검색 부분 -->
           	<!-- 결과 리스트 부분 -->
-          	<div class="row">
-        
+          	<div class="row">        
 		</section>
 		<!-- /.content -->
 	</div>

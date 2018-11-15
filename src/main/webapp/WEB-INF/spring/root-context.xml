@@ -12,18 +12,17 @@
 	
 	<!--  커넥션 풀 데이터소스 빈 설정 -->
 	<bean id="dataSource" 
-		class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${db.driverClassName}"/>
 		<property name="url" value="${db.url}"/>
 		<property name="username" value="${db.username}"/>
 		<property name="password" value="${db.password}"/>
 		<!-- 동시에 사용할 수 있는 커넥션 갯수(기본값: 8) -->
-		<property name="maxTotal" value="${db.maxTotal}"/>
+		<property name="maxActive" value="${db.maxActive}"/>
 		<!-- 커넥션 풀에 반납할 때 최대로 유지될 수 있는 커넥션 개수(기본값 8) -->
-		<property name="maxIdle"  value="${db.maxIdle}"/>
-		<!-- 커넥션 풀 안에 커넥션이 고갈되었을 때 커넥션 반납을 대기하는 시간(밀리초) -->
-		<property name="maxWaitMillis" value="${db.maxWaitMillis}"/> 
+		<property name="maxIdle"  value="${db.maxIdle}"/>				 
 		<property name="poolPreparedStatements" value="true"/>
+		<property name="defaultAutoCommit" value="true"/>
 	</bean>
 	
 	<!-- 마이바티스 설정 부분 -->
@@ -44,4 +43,8 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	<tx:annotation-driven />
+	
+	<!-- <context:component-scan base-package="com.carto.member"/>
+	<context:component-scan base-package="com.carto.board"/> -->
+	
 </beans>

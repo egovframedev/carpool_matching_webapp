@@ -6,9 +6,25 @@
 		http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="carpoolAccessDenied" class="com.carto.member.security.CarpoolAccessDeniendHandler"/>
+	<!-- <bean id="carpoolLoginSuccess" class="com.carto.member.security.CarpoolLoginSuccessHandler" /> -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	<bean id="carpoolUserDetailService" class="com.carto.member.security.CarpoolUserDetailsService"/>
 	<security:http>
-		<security:form-login/>
+		<security:intercept-url pattern="/board" access="permitAll"/>
+		<security:intercept-url pattern="/rider" access="hasRole('ROLE_RIDER')"/> 
+		<security:intercept-url pattern="/driver" access="hasRole('ROLE_DRIVER')"/>
+		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+		 
+		<!-- <security:access-denied-handler error-page="/accessError"/> -->
+		<security:access-denied-handler ref="carpoolAccessDenied"/>
+		<security:form-login login-page="/member/login"/>
+		<!-- <security:csrf disabled="true"/> -->
 	</security:http>
 	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="carpoolUserDetailService">
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>

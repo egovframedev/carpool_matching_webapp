@@ -1,11 +1,11 @@
 package com.carto.member.domain;
 
-public enum Gender {
-	NONE("모름"), MALE("남성"), FEMALE("여성");
+public enum MemberStatus {
+	DISABLE("사용불가"), OFFLINE("오프라인"), ONLINE("온라인");
 	
 	private String desc;
 	
-	private Gender(String description) {
+	private MemberStatus(String description) {
 		this.desc = description;
 	}
 	

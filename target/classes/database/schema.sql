@@ -1,33 +1,46 @@
--- 회원
-CREATE TABLE `MEMBER` (
-	`mno`        INT          NOT NULL COMMENT '회원번호', -- 회원번호
-	`mtype`      TINYINT      NOT NULL COMMENT '회원구분', -- 회원구분
-	`mstate`     TINYINT      NOT NULL COMMENT '회원상태', -- 회원상태
-	`id`         VARCHAR(50)  NOT NULL COMMENT '아이디', -- 아이디
-	`pw`         VARCHAR(128) NOT NULL COMMENT '비밀번호', -- 비밀번호
-	`name`       VARCHAR(50)  NOT NULL COMMENT '이름', -- 이름
-	`birth`      VARCHAR(10)  NULL     COMMENT '생년월일', -- 생년월일
-	`email`      VARCHAR(50)  NOT NULL COMMENT '이메일', -- 이메일
-	`tel`        VARCHAR(20)  NULL     COMMENT '전화번호', -- 전화번호
-	`gender`     TINYINT      NULL     COMMENT '성별', -- 성별
-	`cardco`     VARCHAR(10)  NULL     COMMENT '결제카드사', -- 결제카드사
-	`cardno`     VARCHAR(20)  NULL     COMMENT '결제카드번호', -- 결제카드번호
-	`validity`   VARCHAR(10)  NULL     COMMENT '카드유효년월', -- 카드유효년월
-	`authchk`    TINYINT      NULL     COMMENT '회원인증여부', -- 회원인증여부
-	`authno`     VARCHAR(100) NULL     COMMENT '인증번호', -- 인증번호
-	`reg_date`   TIMESTAMP    NULL     COMMENT '가입날짜', -- 가입날짜
-	`login_date` TIMESTAMP    NULL     COMMENT '로그인 최근일자', -- 로그인 최근일자
-	`pw_date`    TIMESTAMP    NULL     COMMENT '비밀번호변경일', -- 비밀번호변경일
-	`photo`      VARCHAR(100) NULL     COMMENT '프로필사진' -- 프로필사진
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
-COMMENT '회원';
-
+CREATE TABLE `member` (
+	`mno`     INT(11)      NOT NULL AUTO_INCREMENT COMMENT '회원번호',
+	`mstate`  TINYINT(4)   NOT NULL DEFAULT '0'    COMMENT '회원상태',
+	`userid`  VARCHAR(50)  NOT NULL                COMMENT '아이디',
+	`userpw`  VARCHAR(128) NOT NULL                COMMENT '비밀번호',
+	`name`    VARCHAR(50)  NOT NULL                COMMENT '이름',
+	`birth`   VARCHAR(10)  NULL     DEFAULT NULL   COMMENT '생년월일',
+	`email`   VARCHAR(50)  NOT NULL                COMMENT '이메일',
+	`phone`   VARCHAR(20)  NULL     DEFAULT NULL   COMMENT '전화번호',
+	`gender`  TINYINT(4)   NULL     DEFAULT '1'    COMMENT '성별',
+	`authno`  VARCHAR(100) NULL     DEFAULT NULL   COMMENT '인증번호',
+	`regdate` TIMESTAMP    NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '가입날짜',
+	`pwdate`  TIMESTAMP    NULL     DEFAULT NULL   COMMENT '비번변경일자',
+	`photo`   VARCHAR(100) NULL     DEFAULT NULL   COMMENT '프로필사진',
+	`enabled` TINYINT(4)   NOT NULL DEFAULT '1'    COMMENT '사용여부', 
+	UNIQUE INDEX `IX_USERID` (`userid`),
+	UNIQUE INDEX `IX_EMAIL` (`email`)
+) COMMENT='회원' 
+COLLATE='utf8_general_ci' ENGINE=InnoDB;
 -- 회원
 ALTER TABLE `MEMBER`
 	ADD CONSTRAINT `PK_MEMBER` -- 회원 기본키
-		PRIMARY KEY (
-			`mno` -- 회원번호
-		);
+		PRIMARY KEY (`mno`); -- 회원번호
+
+--  회원 권한 테이블
+CREATE TABLE `member_auth` (
+	`userid`    VARCHAR(50) NOT NULL  COMMENT '아이디',
+	`authority` VARCHAR(50) NOT NULL  COMMENT '권한',
+	CONSTRAINT FK_MEMBER_AUTH 
+	FOREIGN KEY(`userid`) REFERENCES `member`(`userid`)
+) COMMENT='회원 권한' 
+COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+-- 회원
+CREATE TABLE `CARD_INFO` (
+	`mno`        INT          NOT NULL COMMENT '회원번호', -- 회원번호
+	`cardco`     VARCHAR(10)  NULL     COMMENT '결제카드사', -- 결제카드사
+	`cardno`     VARCHAR(20)  NULL     COMMENT '결제카드번호', -- 결제카드번호
+	`validity`   VARCHAR(10)  NULL     COMMENT '카드유효년월', -- 카드유효년월
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
+COMMENT '회원 카드';
+
+
 
 -- 운전자
 CREATE TABLE `DRIVER` (

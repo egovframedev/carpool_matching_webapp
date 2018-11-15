@@ -5,5 +5,14 @@
 <configuration>
 	<typeAliases>
 		<package name="com.carto.board.domain"/>
+		<package name="com.carto.member.domain"/>
 	</typeAliases>
+	<typeHandlers>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
+			javaType="com.carto.board.domain.BoardType"/>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
+			javaType="com.carto.member.domain.MemberStatus"/>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
+			javaType="com.carto.member.domain.Gender"/>
+	</typeHandlers>
 </configuration>

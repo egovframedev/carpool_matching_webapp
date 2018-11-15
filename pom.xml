@@ -114,7 +114,7 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
-			<scope>runtime</scope>
+			<!-- <scope>runtime</scope> -->
 		</dependency>
 		<dependency>
 		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
@@ -155,11 +155,16 @@
 		</dependency>
 		
 		<!-- Apache Commons DBCP -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-dbcp2</artifactId>
 		    <version>2.5.0</version>
-		</dependency>
+		</dependency> -->
+		<dependency>
+	        <groupId>commons-dbcp</groupId>
+	        <artifactId>commons-dbcp</artifactId>
+	        <version>1.4</version>
+	    </dependency>
 
 		<!-- Lombok -->
 		<dependency>

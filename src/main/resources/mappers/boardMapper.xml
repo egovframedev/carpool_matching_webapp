@@ -3,5 +3,97 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.carto.mappers.BoardMapper">
+	<resultMap type="BoardDTO" id="boardMap">
+		<id property="bno" column="bno" />
+		<result property="bType" column="btype"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="writer" column="writer"/>
+		<result property="pwd" column="pwd"/>
+		<result property="regDate" column="reg_date"/>
+		<result property="grpNo" column="grpno"/>
+		<result property="step" column="step"/>
+		<result property="depth" column="depth"/>
+		<result property="hit" column="hit"/>
+		<collection property="attachList"  column="bno" 
+			javaType="ArrayList" select="getAttachList"/>		
+	</resultMap>
+	<resultMap type="AttachFileDTO" id="attachMap">
+		<id property="fileNo"  column="fno"/>
+		<result property="bno" column="bno"/>
+		<result property="fileName" column="filename"/>
+		<result property="originalName" column="original_name"/>
+		<result property="uploadPath" column="uploadpath"/>
+		<result property="downloadCnt" column="download_cnt"/>		
+	</resultMap>
+	
+	<!-- 게시글 목록 -->
+	<select id="list" resultMap="boardMap">
+		SELECT bno, title, content, writer, pwd, reg_date, hit, grpno, step, depth, btype 
+		FROM board
+		WHERE bno > 0
+		ORDER BY grpno DESC, step ASC
+	</select>
+	<!-- 첨부파일 가져오기 -->
+	<select id="getAttachList" parameterType="int" resultMap="attachMap">
+		SELECT fno, bno, filename, original_name, uploadpath, extension, download_cnt
+		FROM attachfile
+		WHERE bno = #{bno} 
+	</select>
+	<sql id="search">
+		<if test="searchType != null" >
+			<if test="searchType == 't'.toString()">
+				AND title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				AND content LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND writer LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				AND (title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				AND (content LIKE CONCAT('%', #{keyword}, '%') OR writer LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				AND ( title LIKE CONCAT('%', #{keyword}, '%')
+					OR content LIKE CONCAT('%', #{keyword}, '%') 
+					OR writer LIKE CONCAT('%', #{keyword}, '%'))
+			</if>			
+		</if>
+	</sql>
+	
+	<!-- 글 작성 -->
+	<insert id="create">
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(bno), 0) + 1 FROM board
+		</selectKey>
+		INSERT INTO board
+			(bno, title, content, writer, pwd, reg_date, hit, grpno, step, depth)
+		VALUES
+			(#{bno}, #{title}, #{content}, #{writer}, #{pwd}, sysdate(), 0, #{bno}, 0, 0)
+	</insert>
+	
+	<!-- 글 내용 보기 -->
+	<select id="read" resultMap="boardMap">
+		
+	</select>
+	
+	<!-- 글 수정 -->
+	<update id="update">
+	
+	</update>
+	
+	<!-- 글 삭제 -->
+	<delete id="delete">
+	
+	</delete>
+	
+	<!-- 조회수 증가 -->
+	<update id="addCount">
+	
+	</update>
 	
 </mapper>
