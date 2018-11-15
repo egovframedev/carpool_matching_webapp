@@ -156,10 +156,18 @@
 		
 		<!-- Apache Commons DBCP -->
 		<dependency>
-		    <groupId>commons-dhcp</groupId>
+		    <groupId>commons-dbcp</groupId>
 		    <artifactId>commons-dbcp</artifactId>
 		    <version>1.4</version>
 		</dependency>
+		
+		<!-- 자료형 검사 라이브러리 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.7</version>
+		</dependency>
+		
 
 		<!-- Lombok -->
 		<dependency>
