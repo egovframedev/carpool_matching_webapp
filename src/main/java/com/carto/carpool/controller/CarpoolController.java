@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/carpool")
+@RequestMapping("/carpool/*")
 public class CarpoolController {
 	
-	// 카플 목록조회
 	@GetMapping("/list/{svctype}")
 	public String list(@PathVariable("svctype") String svctype) {
 		String view = "carpool/list_"+ svctype;
@@ -19,7 +18,8 @@ public class CarpoolController {
 	
 	// 카플 상세보기
 	@GetMapping("/detail/{svctype}/{id}")
-	public String detail(@PathVariable("svctype") String svctype, @PathVariable("id") Integer id) {
+	public String detail(@PathVariable("svctype") String svctype, 
+			@PathVariable("id") Integer id) throws Exception{
 		String view = "carpool/detail_" + svctype;
 		return view;
 	}
