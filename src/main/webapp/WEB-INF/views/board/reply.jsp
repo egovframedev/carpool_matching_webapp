@@ -39,12 +39,12 @@
 									<input type="hidden" name="perPageNum" value="${cri.perPageNum}" />
 									<input type="hidden" name="searchType" value="${cri.searchType}" /> 
 									<input type="hidden" name="keyword" value="${cri.keyword}" />
-									<input type="text" name="grpno" value="${boardDTO.grpno }"/>
-									<input type="text" name="step" value="${boardDTO.step }"/>
-									<input type="text" name="depth" value="${boardDTO.depth }"/>
+									<input type="hidden" name="grpno" value="${boardDTO.grpno }"/>
+									<input type="hidden" name="step" value="${boardDTO.step }"/>
+									<input type="hidden" name="depth" value="${boardDTO.depth }"/>
 									
 									<div class="form-group">
-										<label>제목</label><input class="form-control" name="title" value="RE : " />
+										<label>제목</label><input class="form-control" name="title"  placeholder="제목을 입력해주세요"/>
 									</div>
 									<div class="form-group">
 										<label>작성자</label><input class="form-control" name="writer"

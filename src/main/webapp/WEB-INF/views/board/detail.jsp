@@ -41,9 +41,9 @@
 										<input type="hidden" name="searchType"
 											value="${cri.searchType}" /> <input type="hidden"
 											name="keyword" value="${cri.keyword}" />
-										<input type="text" name="grpno" value="${boardDTO.grpno }">
-										<input type="text" name="step" value="${boardDTO.step }"/>
-									<input type="text" name="depth" value="${boardDTO.depth }"/>
+										<input type="hidden" name="grpno" value="${boardDTO.grpno }">
+										<input type="hidden" name="step" value="${boardDTO.step }"/>
+									<input type="hidden" name="depth" value="${boardDTO.depth }"/>
 									</form>
 
 									<h3>${boardDTO.title }
