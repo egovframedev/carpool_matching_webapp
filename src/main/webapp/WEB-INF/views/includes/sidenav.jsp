@@ -51,10 +51,11 @@
 						<span>고객센터</span>
 						<span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span> </a>
 					<ul class="treeview-menu">
-						<li><a href="<c:url value='/board/notice/list'/>">공지사항</a></li>
-						<li><a href="<c:url value='/board/faq/list'/>">자주하는 질문</a></li>
-						<li><a href="<c:url value='/board/qna/list'/>">묻고답하기</a></li>
-					</ul></li>
+					<c:forEach items="${cri.btype.values() }" var="bt">
+						<li><a href="../${bt.small}/list">${bt.btitle }</a></li>
+					</c:forEach>
+					</ul>
+				</li>
 			</ul>
 			<!-- /.sidebar-menu -->
 		</section>

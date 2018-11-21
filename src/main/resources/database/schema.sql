@@ -111,7 +111,7 @@ CREATE TABLE `BOARD` (
 	`reg_date` TIMESTAMP    NULL     COMMENT '작성일', -- 작성일
 	`pwd`      VARCHAR(20)  NULL     COMMENT '비밀번호', -- 비밀번호
 	`hit`      INT          NULL     COMMENT '조회수', -- 조회수
-	`group`    INT          NULL     COMMENT '답변그룹', -- 답변그룹
+	`grpno`    INT          NULL     COMMENT '답변그룹', -- 답변그룹
 	`step`     INT          NULL     COMMENT '답변순서', -- 답변순서
 	`depth`    INT          NULL     COMMENT '답변깊이', -- 답변깊이
 	`btype`    INT          NULL     COMMENT '게시판구분' -- 게시판구분

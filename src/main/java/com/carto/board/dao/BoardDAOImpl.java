@@ -4,33 +4,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.carto.board.domain.BoardVO;
-import com.carto.board.domain.SearchCriteria;
+import com.carto.board.domain.BoardDTO;
+import com.carto.board.domain.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 
-	@Inject
-	private SqlSession session;
-	private static String namespace = "com.carto.mappers.BoardMapper";
-	
+	@Autowired
+	SqlSessionTemplate session;
+	static String namespace = "com.carto.mappers.BoardMapper";
+
 	@Override
-	public void create(BoardVO vo) throws Exception {
-		session.insert(namespace + ".create", vo);
+	public void regist(BoardDTO dto) throws Exception {
+		session.insert(namespace + ".regist", dto);
 	}
 
 	@Override
-	public BoardVO read(Integer bno) throws Exception {		
-		return session.selectOne(namespace + ".read", bno);
+	public BoardDTO detail(Integer bno) throws Exception {		
+		return session.selectOne(namespace + ".detail", bno);
 	}
 
 	@Override
-	public void update(BoardVO vo) throws Exception {
-		session.update(namespace + ".update", vo);
+	public void modify(BoardDTO dto) throws Exception {
+		session.update(namespace + ".modify", dto);
 	}
 
 	@Override
@@ -39,12 +39,12 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> list(SearchCriteria cri) throws Exception {
+	public List<BoardDTO> list(Criteria cri) throws Exception {
 		return session.selectList(namespace + ".list", cri);
 	}
 
 	@Override
-	public int listCount(SearchCriteria cri) throws Exception {
+	public int listCount(Criteria cri) throws Exception {
 		return session.selectOne(namespace + ".listCount", cri);
 	}
 
@@ -63,9 +63,9 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public void addAttach(String fullName, Integer bno) throws Exception {
+	public void addAttach(String filename, Integer bno) throws Exception {
 		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("fullName", fullName);
+		paramMap.put("filename", filename);
 		paramMap.put("bno", bno);
 		session.insert(namespace + ".addAttach", paramMap);
 	}
@@ -81,10 +81,22 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override // 수정된 상태의 파일과 이름과 이미 등록되어 있는 게시물의 번호가 필요함
-	public void replaceAttach(String fullName, Integer bno) throws Exception {
+	public void replaceAttach(String filename, Integer bno) throws Exception {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("bno", bno);
-		paramMap.put("fullName", fullName);		
+		paramMap.put("filename", filename);		
 		session.insert(namespace + ".replaceAttach", paramMap);
 	}
+	
+	@Override
+	public void reply(BoardDTO dto) throws Exception {
+		// TODO Auto-generated method stub
+		session.insert(namespace + ".reply", dto);
+	}
+	
+	@Override
+	public void addreply(BoardDTO dto) throws Exception {
+		session.insert(namespace + ".addreply", dto);
+	}
+	
 }

@@ -6,4 +6,8 @@
 	<typeAliases>
 		<package name="com.carto.board.domain"/>
 	</typeAliases>
+		<typeHandlers>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
+		javaType="com.carto.board.domain.BoardType"/>
+	</typeHandlers>
 </configuration>

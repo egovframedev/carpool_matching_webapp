@@ -1,47 +1,85 @@
 package com.carto.board.domain;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.ToString;
 
 @ToString
+@Alias("criteria")
 public class Criteria {
-	private int page;       // 현재 페이지 번호
-	private int perPageNum; // 페이지 당 보여질 게시글 수 
-	
+
+	private int page; // 현재 페이지 번호
+	private int perPageNum; // 한 페이지당 게시글 수 (10개씩)
+
+	private String searchType;// 제목 t, 작성자w, 내용c, 제목+내용tc
+	private String keyword; // 검색어
+
+//	private String btype; // 게시판 타입
+	private BoardType btype;
+
 	public Criteria() {
+		// TODO Auto-generated constructor stub
 		this.page = 1;
 		this.perPageNum = 10;
 	}
-	
-	public void setPage(int page) {
-		if(page <= 0) {
-			this.page = 1;
-			return;
-		}
-		
-		this.page = page;
-	}
-	
-	// method form Mybatis SQL Mapper
+
 	public int getPage() {
 		return page;
 	}
-	
-	// method form Mybatis SQL Mapper
-	public int getPageStart() {
-		// 시작 데이터 번호 = ( 페이지번호 - 1) * 페이지 당 보여지는 게시글 수
-		return (this.page - 1) * perPageNum;
+
+	public void setPage(int page) {
+		if (page <= 0) {
+			this.page = 1;
+			return;
+		}
+		this.page = page;
 	}
-	
-	// method form Mybatis SQL Mapper
+
 	public int getPerPageNum() {
 		return perPageNum;
 	}
 
 	public void setPerPageNum(int perPageNum) {
-		if(perPageNum <=0 || perPageNum > 100) {
+		if (perPageNum <= 0 || perPageNum > 100) {
 			this.perPageNum = 10;
 			return;
 		}
 		this.perPageNum = perPageNum;
 	}
+
+	public int getPageStart() {
+		return (this.page - 1) * perPageNum;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public BoardType getBtype() {
+		return btype;
+	}
+
+	public void setBtype(BoardType btype) {
+		this.btype = btype;
+	}
+
+	public void strToBtype(String btype) {
+
+		System.out.println("strToBtype(" + btype + ")");
+		this.btype = BoardType.valueOf(btype.toUpperCase());
+	}
+
+
 }
