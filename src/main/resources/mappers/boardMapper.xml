@@ -46,7 +46,7 @@
 	<![CDATA[
 		SELECT *
 		FROM board
-		WHERE bno > 0 and btype = #{btype}
+		WHERE btype = #{btypeNum}
 	]]>
 		<include refid="search" />
 		ORDER BY grpno DESC, step ASC
@@ -57,7 +57,7 @@
 	<![CDATA[
 		SELECT COUNT(bno)
 		FROM board
-		WHERE bno > 0
+		WHERE btype = #{btypeNum}
 	]]>
 		<include refid="search" />
 	</select>

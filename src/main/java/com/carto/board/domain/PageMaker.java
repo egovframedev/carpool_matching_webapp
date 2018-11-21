@@ -32,6 +32,8 @@ public class PageMaker {
 		calcData();
 	}
 	
+	
+	
 	public int getTotalCount() {
 		return totalCount;
 	}

@@ -70,7 +70,11 @@ public class Criteria {
 	public BoardType getBtype() {
 		return btype;
 	}
-
+	
+	public int getBtypeNum() {
+		return this.btype.ordinal(); 
+	}
+	
 	public void setBtype(BoardType btype) {
 		this.btype = btype;
 	}
