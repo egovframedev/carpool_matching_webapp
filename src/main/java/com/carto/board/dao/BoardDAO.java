@@ -1,32 +1,70 @@
 package com.carto.board.dao;
 
 import java.util.List;
-import com.carto.board.domain.BoardVO;
-import com.carto.board.domain.SearchCriteria;
+import com.carto.board.domain.BoardDTO;
+import com.carto.board.domain.Criteria;
 
 public interface BoardDAO {
 	
-	public void create(BoardVO vo) throws Exception;   // 게시글 생성
+	/**
+	 * 게시글 목록
+	 * @param cri 페이지, 검색 기준 정보
+	 * @return
+	 * @throws Exception
+	 */
+	public List<BoardDTO> list(Criteria cri) throws Exception;
+	
+	/**
+	 * 게시글 총 갯수 반환
+	 * @param cri
+	 * @return
+	 * @throws Exception
+	 */
+	public int listCount(Criteria cri) throws Exception; // 검색에 따른 데이터 갯수 반환
+	
+	/**
+	 * 게시글 생성
+	 * @param dto BoardDTO 게시글 객체
+	 * @throws Exception
+	 */
+	public void create(BoardDTO dto) throws Exception;
 
-	public BoardVO read(Integer bno) throws Exception; // 게시글 읽기
+	/**
+	 * 게시글 읽기
+	 * @param bno 게시글 번호
+	 * @return
+	 * @throws Exception
+	 */
+	public BoardDTO read(Integer bno) throws Exception;
 	
-	public void update(BoardVO vo) throws Exception;   // 게시글 수정
+	/**
+	 * 게시글 수정
+	 * @param dto BoardDTO
+	 * @throws Exception
+	 */
+	public void update(BoardDTO dto) throws Exception;  
 	
-	public void delete(Integer bno) throws Exception;  // 게시글 삭제
+	/**
+	 * 게시글 삭제
+	 * @param bno 게시글 번호
+	 * @throws Exception
+	 */
+	public void delete(Integer bno) throws Exception;
 	
-	public List<BoardVO> list(SearchCriteria cri) throws Exception; // 검색에 따른 게시글 목록
 	
-	public int listCount(SearchCriteria cri) throws Exception; // 검색에 따른 데이터 갯수 반환
-	
-	public void updateReplyCnt(Integer bno, int amount) throws Exception; // 댓글 수 갱신
-	
+	/**
+	 * 조회수 카운트 (증가)
+	 * @param bno
+	 * @throws Exception
+	 */
 	public void updateViewCnt(Integer bno) throws Exception; // 조회수 카운트
 	
-	public void addAttach(String fullName, Integer bno) throws Exception;  // 첨부 파일 추가
+	/**
+	 * 댓글 수 갱신
+	 * @param bno
+	 * @param amount
+	 * @throws Exception
+	 */
+	public void updateReplyCnt(Integer bno, int amount) throws Exception; 
 	
-	public List<String> getAttach(Integer bno) throws Exception; // 첨부 파일 목록 가져오기 
-	
-	public void deleteAttach(Integer bno) throws Exception; // 첨부 파일 삭제
-	 
-	public void replaceAttach(String fullName, Integer bno) throws Exception; // 첨부 파일 수정
 }

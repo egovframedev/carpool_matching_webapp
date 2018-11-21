@@ -1,114 +1,196 @@
 package com.carto.board.controller;
 
+import java.beans.PropertyEditorSupport;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import javax.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.carto.board.domain.BoardVO;
-import com.carto.board.domain.PageMaker;
-import com.carto.board.domain.SearchCriteria;
+
+import com.carto.board.domain.BoardAttachDTO;
+import com.carto.board.domain.BoardDTO;
+import com.carto.board.domain.BoardType;
+import com.carto.board.domain.Criteria;
+import com.carto.board.domain.PageDTO;
 import com.carto.board.service.BoardService;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 @Controller
+@Log4j
 @RequestMapping("/board/{btype}/*")
+@AllArgsConstructor
 public class BoardController {
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	@Inject
 	private BoardService service;
 	
-	// 목록 보기 
-	@RequestMapping(value="/list", method=RequestMethod.GET)
+	@InitBinder
+	public void initBTypeBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(BoardType.class, "btype", new PropertyEditorSupport() {
+			@Override
+			public void setAsText(String text) throws IllegalArgumentException {
+				String capitalized = text.toUpperCase();
+				BoardType btype = BoardType.valueOf(capitalized);
+				setValue(btype);
+			}
+		});
+	}
+	
+	// 게시글 목록 보기 
+	@GetMapping("/list")
 	public String list(@PathVariable("btype") String btype,
-			@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
-		cri.setBtype(btype);
+			Criteria cri, Model model) throws Exception {
+		cri.setBtype(btype); // 게시판 유형 설정
+		log.info("list.... " + cri);
+		String viewRes = "board/list_" + btype; // 뷰 경로 설정
 		
-		logger.info(cri.toString());		
 		model.addAttribute("list", service.list(cri));
-		
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		
-		pageMaker.setTotalCount(service.listCount(cri));		
-		model.addAttribute("pageMaker", pageMaker);
-		
-		return "board/list";
+		model.addAttribute("pageMaker", new PageDTO(cri, 123));
+		log.info("list....end...........................................");
+		return viewRes;
 	}
 	
-	// 상세 보기
-	@RequestMapping(value="/read", method=RequestMethod.GET)
-	public String read(@PathVariable("btype") String btype, 
-			@RequestParam("bno") int bno, @ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
-		cri.setBtype(btype);
-		
-		model.addAttribute(service.read(bno));
-		return "board/read";
-	}
-	
-	// 새글 작성
-	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String registGET(@PathVariable("btype") String btype, Model model) throws Exception {
-		logger.info("write get .............................");
-		SearchCriteria cri = new SearchCriteria();
-		cri.setBtype(btype);
+	// 게시글 작성 폼
+	@GetMapping("/write")
+	public String registForm(@PathVariable("btype") String btype, Model model) throws Exception {
+		String viewRes = "board/write_" + btype;
+		log.info( btype + "- regist form .............................");
+		Criteria cri = new Criteria();
+		cri.setBtype(btype.toUpperCase()); // 게시판 유형 설정
 		model.addAttribute("cri", cri);
-		return "board/write";
+		return viewRes;
 	}
 	
-	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
-		logger.info("write get .............................");
-		logger.info(board.toString());
+
+	// 게시글 등록 처리
+	@PostMapping(value="/write")
+	public String registPOST(@PathVariable("btype") String btype,
+			BoardDTO board, RedirectAttributes rttr) throws Exception {
+		log.info(btype + "- regist post .............................");
+		log.info(board.toString());
+		if(board.getAttachList() != null) {
+			board.getAttachList().forEach(attach -> log.info(attach));
+		}
+		log.info("....................................................");
+		service.write(board); // 게시글 생성
 		
-		service.regist(board);
-		
-		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 메세지 설정
-		
-		return "redirect:/board/list";
+		rttr.addFlashAttribute("result", board.getBno()); // 성공 메세지 설정
+		return "redirect:/board/" + btype + "/list"; 
 	}
 	
-	// 게시물 수정 처리
-	@RequestMapping(value="/modify", method=RequestMethod.GET)
-	public String modifyPageGET(@PathVariable("btype") String btype, int bno, 
-			@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
+	// 게시글 조회
+	@GetMapping("/read")
+	public String read(@PathVariable("btype") String btype,
+			@RequestParam("bno") Integer bno, 
+			@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		log.info(btype + "- read get .............................");
+		String viewRes = "board/read_" + btype;
 		cri.setBtype(btype);
-		model.addAttribute(service.read(bno));
-		return "board/modify";
+		
+		model.addAttribute("board", service.detail(bno));
+		
+		return viewRes;
 	}
 	
-	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public String modifyPagePOST( @PathVariable("btype") String btype,
-			BoardVO board, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
+	// 게시글 수정 폼
+	@GetMapping("/modify")
+	public String modifyForm(@PathVariable("btype") String btype,
+			@RequestParam("bno") Integer bno, 
+			@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		log.info(btype + "- modify get .............................");
+		String viewRes = "board/modify_" + btype;
 		cri.setBtype(btype);
-		logger.info(cri.toString());
+		
+		model.addAttribute("board", service.detail(bno));
+		
+		return viewRes;
+	}
+	
+	@PostMapping("/modify")
+	public String modifyPOST(@PathVariable("btype") String btype,
+			BoardDTO board, Criteria cri, RedirectAttributes rttr) throws Exception {
+		cri.setBtype(btype);
+		log.info(btype + "- modify post ........................." + cri.toString());
+		log.info(board);
 		
 		service.modify(board);
 		
-		rttr.addAttribute("page", cri.getPage());
-		rttr.addAttribute("perPageNum", cri.getPerPageNum());
-		rttr.addAttribute("searchType", cri.getSearchType());
-		rttr.addAttribute("keyword", cri.getKeyword());
+//		rttr.addAttribute("page", cri.getPage());
+//		rttr.addAttribute("perPageNum", cri.getPerPageNum());
+//		if(!cri.getKeyword().isEmpty()) {
+//			rttr.addAttribute("searchType", cri.getSearchType());
+//			rttr.addAttribute("keyword", cri.getKeyword());
+//		}
+//		
+		rttr.addFlashAttribute("result", "글을 수정 하였습니다."); // 성공 메세지 설정
 		
-		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 메세지 설정
+		log.info(rttr.toString());
 		
-		logger.info(rttr.toString());
-		
-		return "redirect:/board/list";
+		return "redirect:/board/" + btype + "/list" + cri.getListLink();
 	}
 	
+	@PostMapping("/remove")
+	public String removePost(@PathVariable("btype") String btype, Criteria cri, 
+			@RequestParam("bno") Integer bno, RedirectAttributes rttr) throws Exception {
+		log.info(btype + "- remove post ........................" + bno);
+		
+		List<BoardAttachDTO> attachList = service.getAttachList(bno);
+		
+		service.remove(bno);
+		
+		// delete Attach Files
+		if(!attachList.isEmpty())
+			deleteFiles(attachList);
+		
+		rttr.addFlashAttribute("result", "글을 삭제 하였습니다.");
+		return "redirect:/board/" + btype + "/list" + cri.getListLink();
+	}
 	
-	@RequestMapping("/getAttach/{bno}")
+	@GetMapping(value="/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public List<String> getAttach(@PathVariable("bno") Integer bno) throws Exception {
-		return service.getAttach(bno);
-	}	
+	public ResponseEntity<List<BoardAttachDTO>> getAttachList(Integer bno) throws Exception {
+		log.info("getAttachList " + bno);
+		return new ResponseEntity<List<BoardAttachDTO>>(service.getAttachList(bno), HttpStatus.OK);
+	}
+	
+	private void deleteFiles(List<BoardAttachDTO> attachList) {
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		log.info("delete attach files.....................");
+		log.info(attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get("D:\\upload\\" + attach.getUploadPath() 
+					+ "\\" + attach.getUuid() + "_" + attach.getFileName());
+				Files.deleteIfExists(file);
+				
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get("D:\\upload\\" + attach.getUploadPath() + 
+							"\\s_" + attach.getUuid() + "_" + attach.getFileName());
+					Files.delete(thumbNail);		
+				}
+			} catch(Exception e) {
+				log.error("delete file error" + e.getMessage());
+			} // end catch
+		}); // end foreach
+	}
+	
 }

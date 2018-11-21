@@ -203,6 +203,7 @@
 		    </div>
 		</section>
 		<!-- /.content -->
+		<p>${login}</p>
 	</div>
 <!-- 컨텐츠 끝  -->
 <%@ include file="./includes/footer.jsp"%>

@@ -12,6 +12,7 @@ public class PageMaker {
 	private boolean prev;   // 이전 페이지 링크
 	private boolean next;   // 이후 페이지 링크	
 	private int displayPageNum = 10; //페이지 번호의 수
+	
 	private Criteria cri;  // 현재 페이번호(page_와 페이지당 게시글 수(perPageNum)
 	
 	public void setCri(Criteria cri) {
@@ -104,8 +105,8 @@ public class PageMaker {
 				UriComponentsBuilder.newInstance()
 					.queryParam("page", page)
 					.queryParam("perPageNum", cri.getPerPageNum())
-					.queryParam("searchType", ((SearchCriteria)cri).getSearchType())
-					.queryParam("keyword", ((SearchCriteria)cri).getKeyword())
+					.queryParam("searchType", cri.getSearchType())
+					.queryParam("keyword", cri.getKeyword())					
 					.build();
 		return uriComponents.toString();
 	}

@@ -1,11 +1,15 @@
 package com.carto.board.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
 import lombok.ToString;
 
 @ToString
 public class Criteria {
-	private int page;       // 현재 페이지 번호
-	private int perPageNum; // 페이지 당 보여질 게시글 수 
+	private int page;          // 현재 페이지 번호
+	private int perPageNum;    // 페이지 당 보여질 게시글 수 
+	private String searchType; // 검색 유형
+	private String keyword;    // 검색 키워드
+	private String btype;      // 게시 유형
 	
 	public Criteria() {
 		this.page = 1;
@@ -17,7 +21,6 @@ public class Criteria {
 			this.page = 1;
 			return;
 		}
-		
 		this.page = page;
 	}
 	
@@ -43,5 +46,51 @@ public class Criteria {
 			return;
 		}
 		this.perPageNum = perPageNum;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getBtype() {
+		return btype;
+	}
+
+	public void setBtype(String btype) {
+		this.btype = btype;
+	}
+	
+	public String getBtitle() {
+		switch(btype.toLowerCase()) {
+		case "notice": return "공지사항";
+		case "faq":    return "자주하는질문";
+		case "qna":    return "묻고답하기";
+		default: return "일반게시판";
+		}
+	}
+	
+	public String[] getSearchTypeArr() {
+		return searchType == null ? new String[] {} : searchType.split("");
+	}
+	
+	public String getListLink() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("page", this.page)
+				.queryParam("perPageNum", this.perPageNum)
+				.queryParam("searchType", this.searchType)
+				.queryParam("keyword", this.getKeyword());
+		return builder.toUriString();
 	}
 }

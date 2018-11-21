@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <header class="main-header">
 	<!-- 로고 부분 -->
@@ -13,6 +12,21 @@
 		<!-- 사이드바 토글 버튼 -->
 		<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> 
 			<span class="sr-only">사이드바 토글</span></a>
+		<div class="collapse navbar-collapse pull-left">
+			<ul class="nav navbar-nav">
+            	<li class="active"><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME <span class="sr-only">(current)</span></a></li>
+            	<li><a href="<c:url value='/introduction'/>">서비스 소개</a></li>
+            	<li class="dropdown">
+              		<a href="#" class="dropdown-toggle" data-toggle="dropdown">고객센터 <span class="caret"></span></a>
+              		<ul class="dropdown-menu" role="menu">
+		                <li><a href="<c:url value='/board/notice/list'/>">공지사항</a></li>
+		                <li><a href="<c:url value='/board/faq/list'/>">자주묻는질문</a></li>
+		                <li><a href="<c:url value='/board/qna/list'/>">묻고답하기</a></li>
+		                
+              		</ul>
+              	</li>
+          	</ul>
+		</div>
 		<!-- 상위 메뉴 오른쪽 -->
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
@@ -37,47 +51,6 @@
 							</ul>
 						</li>
 						<li class="footer"><a href="#">내 메세지 전체보기</a></li>
-					</ul>
-				</li>
-				<!-- 알림 메뉴 -->
-				<li class="dropdown notifications-menu">
-					<!-- 토글 버튼 --> 
-					<a href="#" class="dropdown-toggle"	data-toggle="dropdown"> 
-						<i class="fa fa-bell-o"></i> <span class="label label-warning">10</span></a>
-					<ul class="dropdown-menu">
-						<li class="header">새 알림 10 개</li>
-						<li>
-							<ul class="menu">
-								<li><a href="#"> 
-									<i	class="fa fa-users text-aqua"></i> 오늘 5명의 회원이 가입</a>
-								</li>
-							</ul>
-						</li>
-						<li class="footer"><a href="#">알림 전체 보기</a></li>
-					</ul>
-				</li>
-				<!-- 작업 일정 메뉴 -->
-				<li class="dropdown tasks-menu">
-					<!-- 토글 버튼 --> 
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-						<i class="fa fa-flag-o"></i> <span class="label label-danger">9</span></a>
-					<ul class="dropdown-menu">
-						<li class="header">새 작업 9개</li>
-						<li>
-							<ul class="menu">
-								<li><a href="#">
-									<h3>드라이버 승인 처리 <small class="pull-right">20%</small></h3>
-									<div class="progress xs">
-										<div class="progress-bar progress-bar-aqua"	style="width: 20%" 
-											role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-											<span class="sr-only">20% 완료</span>
-										</div>
-									</div>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="footer"><a href="#">전체 보기</a></li>
 					</ul>
 				</li>
 				<!-- 사용자 계정 메뉴 -->
@@ -114,6 +87,7 @@
 						</li>
 					</ul>
 				</li>
+				<!-- 관리자 링크 -->
 				<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li>
 			</ul>
 		</div>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carto.mappers.MemberMapper">
+
+	<!-- 아이디 중복 검사 -->
+	<select id="check_id" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT
+			COUNT(*)
+	    	FROM 
+	    	member 
+	    	where 
+	    	userid = #{id}
+		]]>
+	</select>
+
+	<!-- 이메일 중복 검사 -->
+	<select id="check_email" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT 
+			COUNT(*) 
+			FROM 
+			member 
+			where 
+			email = #{email}
+	    ]]>
+	</select>
+
+	<!-- 회원가입 -->
+	<insert id="join_member">
+        <![CDATA[
+            INSERT 
+            INTO 
+            member
+            (
+               email,
+               userid,
+               name,
+               userpw,
+               phone,
+               regdate,
+               approval_status,
+               approval_key,
+               gender
+            )
+            VALUES
+            (
+               #{email},
+               #{userid},
+               #{name},
+               #{userpw},
+               #{phone},
+               SYSDATE(),
+               'false',
+               #{approval_key},
+               #{gender}
+            )
+        ]]>
+	</insert>
+	
+	<insert id="insertRole">
+		INSERT INTO member_auth
+		(userid, authority)
+		VALUES 
+		( #{userid}, #{authority})
+	</insert>
+
+	<!-- 이메일 인증 -->
+	<update id="approval_member" parameterType="MemberDTO">
+		<![CDATA[
+			UPDATE 
+			member 
+			SET 
+			approval_status = 'true' 
+			where email = #{email} and
+			approval_key = #{approval_key}
+			]]>
+	</update>
+
+	<!-- 로그인 -->
+	<select id="login" resultType="MemberDTO">
+		SELECT mno, mstate, mem.userid, userpw, name, email, pwdate, approval_status, enabled, auth.authority
+		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.userid = auth.userid
+		WHERE mem.userid = #{userid} AND mem.userpw = #{userpw}
+	</select>
+	<!-- 로그인 유지 -->
+	<select id="keepLogin">
+		UPDATE member_auth 
+		SET sessionKey = #{sessionId}, sessionLimit=#{next}
+		WHERE userid = #{userid} 
+	</select>
+	<!-- 세션키로 로그인 체크 -->
+	<select id="checkUserWithSessionKey" resultType="MemberDTO">
+		SELECT mno, mstate, mem.userid, userpw, name, email, pwdate, approval_status, enabled, auth.authority
+		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.userid = auth.userid
+		WHERE mem.userid = #{userid} AND auth.sessionKey=#{value} AND sessionLimit > sysdate()
+	</select>
+<!-- parameterType="memberDto" --> 
+
+	<select id="viewMember"
+		resultType="MemberDTO" >
+		SELECT 
+		name, 
+		userid, 
+		userpw, 
+		regdate 
+		FROM 
+		member 
+		where 
+		userid=#{userid} 
+		and 
+		userpw=#{userpw} 
+	</select>
+<!-- parameterType="memberDto" -->
+
+
+
+</mapper>

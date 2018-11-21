@@ -2,33 +2,33 @@ package com.carto.member.domain;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Data;
 
-/**
- * 회원 DTO 클래스
- * @author 원형재
- * @since 2018-11-12
- */
 @Data
 public class MemberDTO {
-	private Integer mno;
-	private MemberType mtype;
-	// private MemberStatus mstate;
+	private long mno;
+	private MemberStatus mstate;
+	private String userid;
+	private String userpw;
 	private String name;
-	private String id;
-	private String pw;
 	private String birth;
 	private String email;
-	private String tel;
+	private String phone;
 	private Gender gender;
-	private String cardco;
-	private String cardno;
-	private String validity;
-	private int authchk;
-	private String authno;
-	private Date reg_date;
-	private Date login_date;
-	private Date pw_date;
+	private boolean approval_status;
+	private String approval_key;
+	private Date regdate;
+	private Date pwdate;
+	private Date logdate;
 	private String photo;
+	private boolean enabled;
+	private String authority;
 	
+	//비밀번호 확인
+	public boolean matchPassword(String userpw) {
+        return this.userpw.equals(userpw);
+    }
+
 }

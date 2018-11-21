@@ -14,7 +14,6 @@
 	<resources mapping="/css/**"       location="/resources/css/" />
 	<resources mapping="/js/**"        location="/resources/js/" />
 	<resources mapping="/img/**"       location="/resources/img/" />
-	<resources mapping="/webfonts/**"    location="/resources/webfonts/" />
 	<resources mapping="/vendor/**"    location="/resources/vendor/" />
 	<resources mapping="/resources/**" location="/resources/" />
 
@@ -26,5 +25,20 @@
 	<context:component-scan base-package="com.carto.carpool" />
 	<context:component-scan base-package="com.carto.member" />				
 	<context:component-scan base-package="com.carto.board" />		
-	<context:component-scan base-package="com.carto.admin" />		
+	<context:component-scan base-package="com.carto.admin" />
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+	<beans:bean id="loginInterceptor" class="com.carto.common.inteceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="com.carto.common.inteceptor.AuthInterceptor"></beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/loginPost"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/board/**/write"/>
+			<mapping path="/board/**/modify"/>
+			<mapping path="/board/**/remove"/>
+			<beans:ref bean="authInterceptor"/>
+		</interceptor>
+	</interceptors>
 </beans:beans>

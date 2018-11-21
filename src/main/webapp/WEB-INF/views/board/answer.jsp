@@ -1,29 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../includes/header.jsp"%>
-	<!-- Content Wrapper. Containes page content -->
+	<!-- 콘텐츠 시작  -->
 	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
+		<!-- 콘텐츠 헤더 부문(Page header) -->
 		<section class="content-header">
-			<h1>${cri.title} <small>글 쓰기</small></h1>
+			<h1>EXTENSION BOARD <small>New Answer</small></h1>
 			<ol class="breadcrumb">
 				<li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-				<li><a href="<c:url value='/board/notice/list'/>">고객센터</a></li>
-				<li class="active">${cri.title}</li>
+				<li><a href="/xboard/list">확장 게시판</a></li>
+				<li class="active">답글 쓰기</li>
 			</ol>
-		</section>
-		<!-- Main content -->
+		</section> <!-- //.content-header -->	
+		<!-- 메인 콘텐츠 부분 -->
 		<section class="content">
 			<div class="box box-primary">
             	<div class="box-header with-border">
-              		<h3 class="box-title">새 게시글 등록</h3>
+              		<h3 class="box-title">답글 쓰기</h3>
             	</div><!-- /.box-header -->
             <!-- form start -->
-            <form  id="registerForm" role="form" method="post">
+            <form  id="answerForm" role="form" method="post">
+            	<input type="hidden" name="page" value="${cri.page}" />
+            	<input type="hidden" name="perPageNum" value="${cri.perPageNum}" />
+            	<input type="hidden" name="perPageNum" value="${cri.perPageNum}"/>
+				<input type="hidden" name="searchType" value="${cri.searchType}"/>
+				<input type="hidden" name="keyword" value="${cri.keyword}"/>	
+            	<input type="hidden" name="bGroup" value="${parent.bGroup}" />
+            	<input type="hidden" name="bStep" value="${parent.bStep + 1}" />
+            	<input type="hidden" name="bIndent" value="${parent.bIndent + 1}" />
             	<div class="box-body">
                 	<div class="form-group">
                   		<label for="inputTitle">글 제목</label>
-                  		<input type="text" class="form-control" name="title" id="inputTitle" placeholder="제목 입력" required="required">
+                  		<input type="text" class="form-control" name="title" id="inputTitle" placeholder="제목 입력" required="required" value="[답변] ">
                 	</div>
                 	<div class="form-group">
 	                	<label for="inputContent">글 내용</label>
@@ -31,7 +39,7 @@
 	                </div>
                 	<div class="form-group">
                   		<label for="inputWriter">작성자</label>
-                  		<input type="text" class="form-control" name="writer" id="inputWriter" value="${login.uid}" readonly="readonly">
+                  		<input type="text" class="form-control" name="writer" id="inputWriter" value='<c:out value="${login.uid}" default="guest" />' readonly="readonly"/>
                 	</div>
                 	<div class="form-group">
                 		<label>첨부 파일</label>
@@ -93,7 +101,7 @@
 		});
 	});
 	
-	$("#registerForm").submit(function(e){
+	$("#answerForm").submit(function(e){
 		e.preventDefault();
 		var that = $(this);
 		var str = "";

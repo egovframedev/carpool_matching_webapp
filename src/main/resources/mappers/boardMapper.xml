@@ -4,6 +4,72 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.carto.mappers.BoardMapper">
 
+	<!-- 검색 쿼리 -->
+	<sql id="search">
+		<if test="searchType != null" >
+			<if test="searchType == 'T'.toString()">
+				AND title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'C'.toString()">
+				AND content LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'W'.toString()">
+				AND writer LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'TC'.toString()">
+				AND (title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'TW'.toString()">
+				AND (title LIKE CONCAT('%', #{keyword}, '%') OR writer LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'TCW'.toString()">
+				AND ( title LIKE CONCAT('%', #{keyword}, '%')
+					OR content LIKE CONCAT('%', #{keyword}, '%') 
+					OR writer LIKE CONCAT('%', #{keyword}, '%'))
+			</if>			
+		</if>
+	</sql>
+	
+	<sql id="search2">
+		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+			<foreach item="type" collection="searchTypeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type == 'C'.toString()">
+							content LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type == 'W'.toString()">
+							writer LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="list" resultType="BoardDTO">
+	<![CDATA[
+		SELECT bno, title, content, writer, viewcnt, replycnt, regdate, grpno, step, depth, ropen, btype 
+		FROM tbl_board
+		WHERE bno > 0
+	]]>
+		<include refid="search2"/>
+		ORDER BY grpno DESC, step ASC
+		LIMIT #{pageStart}, ${perPageNum}
+	</select>
+	
+	<select id="listCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(bno)
+		FROM tbl_board
+		WHERE bno > 0
+	]]>	
+		<include refid="search"/>
+	</select>
+	
 	<insert id="create">
 		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
 			SELECT IFNULL(MAX(bno), 0) + 1 FROM tbl_board
@@ -12,7 +78,7 @@
 		VALUES (#{bno}, #{title}, #{content}, #{writer}, #{bno})
 	</insert>
 	
-	<select id="read" resultType="BoardVO">
+	<select id="read" resultType="BoardDTO">
 		SELECT bno, title, content, writer, regdate, viewcnt, replycnt, grpno, step, depth
 		FROM tbl_board
 		WHERE bno = #{bno}
@@ -28,53 +94,7 @@
 		DELETE FROM tbl_board
 		WHERE bno = #{bno}
 	</delete>
-	
-	<select id="list" resultType="BoardVO">
-	<![CDATA[
-		SELECT bno, title, writer, regdate, viewcnt, grpno, step, depth
-		FROM tbl_board
-		WHERE bno > 0
-	]]>
-		<include refid="search"/>
-		ORDER BY grpno DESC, step ASC
-		LIMIT #{pageStart}, ${perPageNum}
-	</select>
-	
-	<select id="listCount" resultType="int">
-	<![CDATA[
-		SELECT COUNT(bno)
-		FROM tbl_board
-		WHERE bno > 0
-	]]>	
-		<include refid="search"/>
-	</select>
-	
-	<!-- 검색 쿼리 -->
-	<sql id="search">
-		<if test="searchType != null" >
-			<if test="searchType == 't'.toString()">
-				AND title LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType == 'c'.toString()">
-				AND content LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType == 'w'.toString()">
-				AND writer LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<if test="searchType == 'tc'.toString()">
-				AND (title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%'))
-			</if>
-			<if test="searchType == 'cw'.toString()">
-				AND (content LIKE CONCAT('%', #{keyword}, '%') OR writer LIKE CONCAT('%', #{keyword}, '%'))
-			</if>
-			<if test="searchType == 'tcw'.toString()">
-				AND ( title LIKE CONCAT('%', #{keyword}, '%')
-					OR content LIKE CONCAT('%', #{keyword}, '%') 
-					OR writer LIKE CONCAT('%', #{keyword}, '%'))
-			</if>			
-		</if>
-	</sql>
-	
+		
 	<update id="updateReplyCnt">
 		UPDATE tbl_board 
 		SET replycnt = replycnt + #{amount} 
