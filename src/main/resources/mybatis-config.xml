@@ -5,5 +5,14 @@
 <configuration>
 	<typeAliases>
 		<package name="com.carto.board.domain"/>
+		<package name="com.carto.payment.domain"/>
+		<package name="com.carto.carpool.domain"/>
+		<package name="com.carto.member.domain"/>
 	</typeAliases>
+	<typeHandlers>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
+			javaType="com.carto.carpool.domain.Progress"/>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" 
+			javaType="com.carto.member.domain.Gender"/>
+	</typeHandlers>
 </configuration>

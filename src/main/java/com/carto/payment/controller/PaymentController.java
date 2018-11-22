@@ -23,6 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.carto.carpool.domain.CarpoolMatchDTO;
+import com.carto.carpool.domain.Cp_joinVO;
+import com.carto.carpool.service.CarpoolMatchService;
+import com.carto.carpool.service.CarpoolMatchServiceImpl;
+import com.carto.member.domain.MemberDTO;
 import com.carto.payment.domain.PaymentDTO;
 import com.carto.payment.service.PaymentService;
 
@@ -33,11 +38,22 @@ import lombok.Data;
 public class PaymentController {
 	@Autowired
 	PaymentService payService;
+	@Autowired
+	CarpoolMatchService cmService;
 	
 	@GetMapping("pay/payment")
-	public String payment(final HttpSession session) {
-		/*Final Member member =(Member)session.getAttribute("member");*/
-		/*member*/
+	public String payment(final HttpSession session,Model model) {
+		/*Final Member session =(Member)session.getAttribute("member");*/
+		/* int num= member.mno*/
+		int num=1;
+		MemberDTO driver= (MemberDTO)cmService.SelectDriver(num);
+		Cp_joinVO cpjoin =(Cp_joinVO)cmService.selectMatInfo(num);
+		/*MemberDTO member = MemberService.viewMemeber(session);*/
+		
+		model.addAttribute("driver",driver);
+		model.addAttribute("cpjoin",cpjoin);
+		//model.addAttribute("member",member);
+		
 		return "pay/paytest";
 	}
 	@RequestMapping(value="pay/insertReg",method={RequestMethod.POST})

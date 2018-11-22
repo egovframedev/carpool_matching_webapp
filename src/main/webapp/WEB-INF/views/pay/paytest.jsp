@@ -12,7 +12,6 @@
     <section class="content-header">
       <h1>
         Payment
-        <small>#007612</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -23,8 +22,8 @@
 
     <div class="pad margin no-print">
       <div class="callout callout-info" style="margin-bottom: 0!important;">
-        <h4><i class="fa fa-info"></i> Note:</h4>
-        This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+        <h4><i class="fa fa-info"></i> carTO:</h4>
+        	즐거운 카풀 되셨나요? 
       </div>
     </div>
 
@@ -45,23 +44,20 @@
         <div class="col-sm-4 invoice-col">
           드라이버
           <address>
-            <strong>운전자 이름</strong><br>
-            795 Folsom Ave, Suite 60<br>
-            Phone: <br>
-            Email:
+            <strong>${driver.name}</strong><br>
+            Phone: ${driver.tel}<br>
+            Email: ${driver.email }
           </address>
         </div>
         <!-- /.col -->
-        <div class="col-sm-4 invoice-col">
-          To
-          <address>
-            <strong>동승자 이름</strong><br>
-            795 Folsom Ave, Suite 600<br>
-            San Francisco, CA 94107<br>
-            Phone:<br>
-            Email:
-          </address>
-        </div>
+         <div class="col-sm-4 invoice-col">
+          승객.
+        <%--  <address>
+            <strong>${member.name}</strong><br>
+            Phone: ${member.tel}<br>
+            Email: ${member.email }
+          </address>--%>
+        </div> 
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
           <b>결제 정보</b><br>
@@ -80,17 +76,14 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>이동거리</th>
-              <th>주행 거리</th>
               <th>주행 내역</th>
               <th>결제 금액</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-              <td>Call of Duty</td>
-              <td>455-981-221</td>
-              <td>El snort testosterone trophy driving gloves handsome</td>
+              <td> <I class="fa-arrows-h"/></td>
+              <td></td>
             </tr>
 
             </tbody>
@@ -103,13 +96,12 @@
       <div class="row">
         <!-- accepted payments column -->
         <div class="col-xs-6">
-          <p class="lead">Payment Methods:</p>
-          <img src="../../dist/img/credit/visa.png" alt="Visa">
-          <img src="../../img/credit/mastercard.png" alt="Mastercard">
+          <p class="lead">결제 수단:</p>
+          <img src="<c:url value='/img'/>/credit/visa.png" alt="Visa">
+          <img src="<c:url value='/img'/>/credit/mastercard.png" alt="Mastercard">
 
           <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-            dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+             	신용카드,체크카드로만 결제해주시기 바랍니다.
           </p>
         </div>
         <!-- /.col -->
@@ -119,7 +111,7 @@
           <div class="table-responsive">
             <table class="table">
               <tr>
-                <th style="width:50%">Subtotal:</th>
+                <th style="width:50%">:</th>
                 <td>$250.30</td>
               </tr>
               <tr>
