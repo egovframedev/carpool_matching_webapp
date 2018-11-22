@@ -82,7 +82,7 @@
             </thead>
             <tbody>
             <tr>
-              <td> <I class="fa-arrows-h"/></td>
+              <td>${en}<I class="fa-arrows-h"/></td>
               <td></td>
             </tr>
 
