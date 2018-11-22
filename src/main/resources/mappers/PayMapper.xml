@@ -12,4 +12,9 @@
 		  from payment
 	  order by pay_date desc 
 	</select>
+	<update id="updatePayno">
+		update carpool_match
+		   set payno =#{payno}
+		 where mno=#{mno}
+	</update>
 </mapper>

@@ -44,9 +44,15 @@ public class CarpoolMatchServiceImpl implements CarpoolMatchService {
 	}
 
 	@Override
-	public Object selectMatInfo(int num) {
+	public Object selectMatInfo(Integer num) {
 		// TODO Auto-generated method stub
-		return cmDAO.selectMatInfo(num);
+		return cmDAO.selectMatInfoByMno(num);
+	}
+
+	@Override
+	public Object selectMatInfoByPayno(String num) {
+		// TODO Auto-generated method stub
+		return cmDAO.selectMatInfoByPayno(num);
 	}
 
 }

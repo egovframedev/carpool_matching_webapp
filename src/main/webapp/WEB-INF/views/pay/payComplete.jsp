@@ -28,7 +28,7 @@
 					  <span class="input-group-addon"  style="width:80%;" >
 					  	<div class="text-left">
 					  		<span style="display:inline-block; font-size:14px; line-height:24x; padding-right:12px;">결제 금액:</span>
-					  		<span style="display:inline-block;font-size:24px; line-height:28px; color:red;">9999999</span>
+					  		<span style="display:inline-block;font-size:24px; line-height:28px; color:red;">${cpjoin.charge}</span>
 					  		<span style="display:inline-block;font-size:24px; line-height:28px; color:red;">원</span>
 					  	</div>
 					  </span>
@@ -43,91 +43,23 @@
 		        	<table class="table table-striped">
 		        		<thead>
 		        			<tr class="bg-primary">
-		        				<th style="width:10%">dkkdd</th>
-		        				<th>sdfsd</th>
-		        				<th>sfsd</th>
-		        				<th>sdfsdf</th>
+		        				<th style="width:10%">결제 번호 </th>
+		        				<th>매칭 번호</th>
+		        				<th>결제 금액</th>
+		        				<th>결제 일자</th>
 		        			</tr>
 		        		</thead>
 		        		<tbody>
 		        			<tr>
-		        				<td>item1</td>
-		        				<td>item2</td>
-		        				<td>item3</td>
-		        				<td>item4</td>
-		        			</tr>
-		        			<tr>
-		        				<td>item1</td>
-		        				<td>item2</td>
-		        				<td>item3</td>
-		        				<td>item4</td>
-		        			</tr>
-		        			<tr>
-		        				<td>item1</td>
-		        				<td>item2</td>
-		        				<td>item3</td>
-		        				<td>item4</td>
-		        			</tr>
-		        			<tr>
-		        				<td>item1</td>
-		        				<td>item2</td>
-		        				<td>item3</td>
-		        				<td>item4</td>
+		        				<td>${cpjoin.payno }</td>
+		        				<td>${cpjoin.cpno}</td>
+		        				<td>${cpjoin.charge}</td>
+		        				<td>${reg_date}</td>
 		        			</tr>
 		        		</tbody>	
 		        	</table>
 		        </div>
 		    </div>
-			
-			<div class="row">
-				<div class="col-md-3">
-					<h4 class="title">
-						상품 가격
-					</h4>
-					<div class="price">
-						2,0000원
-					</div>				
-				</div>
-				<div class="col-md-3">
-					<h4 class="title">
-						상품 가격
-					</h4>
-					<div class="price">
-						2,0000원
-					</div>				
-				</div>
-				<div class="col-md-3">
-					<h4 class="title">
-						상품 가격
-					</h4>
-					<div class="price">
-						2,0000원
-					</div>				
-				</div>
-				<div class="col-md-3">
-					<h4 class="title">
-						상품 가격
-					</h4>
-					<div class="price">
-						2,0000원
-					</div>				
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-9">
-					<ul>
-						<li class="lst-titl">타이틀</li>
-						<li class="lst-desc">내용</li>
-					</ul>
-				</div>
-				<div class="col-md-3">
-					<ul>
-						<li class="lst-titl">타이틀</li>
-						<li class="lst-desc">내용1</li>
-						<li class="lst-desc">내용2</li>
-					</ul>
-				</div>
-			</div>			
 		</section>
 		<!-- /.content -->
 	</div>

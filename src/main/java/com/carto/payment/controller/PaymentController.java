@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -65,8 +64,13 @@ public class PaymentController {
 		return "pay/paymentTemp"; 
 		
 	}
-	@GetMapping("pay/payComplete")
-	public String view2() {
+	@GetMapping("pay/complete") 
+	public String complete(String no,Model model) {
+		System.out.println(no);
+		Cp_joinVO cpjoin =(Cp_joinVO)cmService.selectMatInfoByPayno(no);
+		System.out.println(cpjoin.toString());
+		model.addAttribute(cpjoin);
+		
 		return "pay/payComplete";
 	}
 	

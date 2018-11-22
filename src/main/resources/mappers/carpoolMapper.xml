@@ -31,6 +31,8 @@
     ,   CP_INFO.CHARGE
     ,	START_POINT
     ,	END_POINT
+    ,   REG_DATE
+    ,   PAYNO
     FROM 
 		CARPOOL_INFO CP_INFO
 RIGHT JOIN
@@ -39,6 +41,24 @@ RIGHT JOIN
      	CP_INFO.CPNO = CP_MAT.CPNO
  WHERE 
        CP_MAT.MNO=#{MNO}
+   AND CP_MAT.PROGRESS =1
+</select>
+<select id="selectMatInfoByPayno" parameterType="String" resultType="Cp_joinVO">
+  SELECT 
+	    DATE_FORMAT(CP_MAT.MATCH_DATE,"%Y %c/%e") AS match_date
+    ,   CP_INFO.CHARGE
+    ,	START_POINT
+    ,	END_POINT
+    ,   REG_DATE
+    ,   PAYNO
+    FROM 
+		CARPOOL_INFO CP_INFO
+RIGHT JOIN
+		CARPOOL_MATCH CP_MAT
+      ON
+     	CP_INFO.CPNO = CP_MAT.CPNO
+ WHERE 
+       CP_MAT.PAYNO=#{PAYNO}
    AND CP_MAT.PROGRESS =1
 </select>
 

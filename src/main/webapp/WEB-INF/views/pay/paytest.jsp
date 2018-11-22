@@ -34,7 +34,7 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-globe"></i> CarTiyo, Inc.
-            <small class="pull-right">Date: 2/10/2014</small>
+            <small class="pull-right">Date: ${cpjoin.match_date}</small>
           </h2>
         </div>
         <!-- /.col -->
@@ -51,19 +51,19 @@
         </div>
         <!-- /.col -->
          <div class="col-sm-4 invoice-col">
-          승객.
-        <%--  <address>
+          승객
+          <address>
             <strong>${member.name}</strong><br>
             Phone: ${member.tel}<br>
             Email: ${member.email }
-          </address>--%>
+          </address>
         </div> 
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
           <b>결제 정보</b><br>
           <br>
           <b>Order ID:</b> 4F3S8J<br>
-          <b>Payment Due:</b> 2/22/2014<br>
+          <b>Payment Due:</b> <br>
           <b>Account:</b> 968-34567
         </div>
         <!-- /.col -->
@@ -82,8 +82,8 @@
             </thead>
             <tbody>
             <tr>
-              <td>${en}<I class="fa-arrows-h"/></td>
-              <td></td>
+              <td>${cpjoin.start_point} -> ${cpjoin.end_point}</td>
+              <td>${cpjoin.charge}원</td>
             </tr>
 
             </tbody>
@@ -106,25 +106,13 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-6">
-          <p class="lead">Amount Due 2/22/2014</p>
+          <p class="lead">Amount Due ${cpjoin.match_date}</p>
 
           <div class="table-responsive">
             <table class="table">
-              <tr>
-                <th style="width:50%">:</th>
-                <td>$250.30</td>
-              </tr>
-              <tr>
-                <th>Tax (9.3%)</th>
-                <td>$10.34</td>
-              </tr>
-              <tr>
-                <th>Shipping:</th>
-                <td>$5.80</td>
-              </tr>
-              <tr>
-                <th>Total:</th>
-                <td>$265.24</td>
+
+                <th style="width:50%">Total:</th>
+                <td>${cpjoin.charge}원 </td>
               </tr>
             </table>
           </div>
@@ -353,6 +341,11 @@
 </div>
 <!-- ./wrapper -->
 <script>
+function getContextPath(){
+    var offset=location.href.indexOf(location.host)+location.host.length;
+    var ctxPath=location.href.substring(offset,location.href.indexOf('/',offset+1));
+    return ctxPath;
+}
     $("#check_module").click(function () {
         var IMP = window.IMP; // 생략가능
         IMP.init('imp47387021'); 
@@ -429,7 +422,7 @@
                     msg += '\n결제 금액 : ' + rsp.paid_amount;
                     msg += '카드 승인번호 : ' + rsp.apply_num;
                     alert(msg);
-                    window.location = '/'; //완료페이지로 이동
+                    window.location = getContextPath()+'/pay/complete?id=' + rsp.imp_uid  //완료페이지로 이동
                   } else {
                     console.log('결제실패함');
                     //[3] 아직 제대로 결제가 되지 않았습니다.
