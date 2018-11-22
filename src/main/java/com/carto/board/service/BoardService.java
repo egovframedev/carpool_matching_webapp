@@ -2,24 +2,25 @@ package com.carto.board.service;
 
 import java.util.List;
 
-import com.carto.board.domain.BoardAttachDTO;
 import com.carto.board.domain.BoardDTO;
 import com.carto.board.domain.Criteria;
 
 public interface BoardService {
-	
-	public void write(BoardDTO board) throws Exception;
-	
-	public BoardDTO detail(Integer bno) throws Exception;
-	
-	public void modify(BoardDTO board) throws Exception;
-	
-	public void remove(Integer bno) throws Exception;
-	
-	public List<BoardDTO> list(Criteria cri) throws Exception;
-	
+
+	public void regist(BoardDTO dto) throws Exception; // 글 작성
+
+	public BoardDTO detail(Integer bno) throws Exception; // 글 상세보기
+
+	public void modify(BoardDTO dto) throws Exception; // 글 수정
+
+	public void delete(Integer bno) throws Exception; // 글 삭제
+
+	public List<BoardDTO> list(Criteria cri) throws Exception; // 글 목록
+
 	public int listCount(Criteria cri) throws Exception;
+
+	public List<String> getAttach(Integer bno) throws Exception;
 	
-	public List<BoardAttachDTO> getAttachList(Integer bno) throws Exception;
+	public void reply(BoardDTO dto) throws Exception;   // 답글 생성
 	
 }

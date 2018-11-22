@@ -1,51 +1,54 @@
 package com.carto.board.domain;
 
-import org.springframework.web.util.UriComponentsBuilder;
+import org.apache.ibatis.type.Alias;
+
 import lombok.ToString;
 
 @ToString
+@Alias("criteria")
 public class Criteria {
-	private int page;          // 현재 페이지 번호
-	private int perPageNum;    // 페이지 당 보여질 게시글 수 
-	private String searchType; // 검색 유형
-	private String keyword;    // 검색 키워드
-	private String btype;      // 게시 유형
-	
+
+	private int page; // 현재 페이지 번호
+	private int perPageNum; // 한 페이지당 게시글 수 (10개씩)
+
+	private String searchType;// 제목 t, 작성자w, 내용c, 제목+내용tc
+	private String keyword; // 검색어
+
+//	private String btype; // 게시판 타입
+	private BoardType btype;
+
 	public Criteria() {
+		// TODO Auto-generated constructor stub
 		this.page = 1;
 		this.perPageNum = 10;
 	}
-	
+
+	public int getPage() {
+		return page;
+	}
+
 	public void setPage(int page) {
-		if(page <= 0) {
+		if (page <= 0) {
 			this.page = 1;
 			return;
 		}
 		this.page = page;
 	}
-	
-	// method form Mybatis SQL Mapper
-	public int getPage() {
-		return page;
-	}
-	
-	// method form Mybatis SQL Mapper
-	public int getPageStart() {
-		// 시작 데이터 번호 = ( 페이지번호 - 1) * 페이지 당 보여지는 게시글 수
-		return (this.page - 1) * perPageNum;
-	}
-	
-	// method form Mybatis SQL Mapper
+
 	public int getPerPageNum() {
 		return perPageNum;
 	}
 
 	public void setPerPageNum(int perPageNum) {
-		if(perPageNum <=0 || perPageNum > 100) {
+		if (perPageNum <= 0 || perPageNum > 100) {
 			this.perPageNum = 10;
 			return;
 		}
 		this.perPageNum = perPageNum;
+	}
+
+	public int getPageStart() {
+		return (this.page - 1) * perPageNum;
 	}
 
 	public String getSearchType() {
@@ -64,33 +67,23 @@ public class Criteria {
 		this.keyword = keyword;
 	}
 
-	public String getBtype() {
+	public BoardType getBtype() {
 		return btype;
 	}
-
-	public void setBtype(String btype) {
+	
+	public int getBtypeNum() {
+		return this.btype.ordinal(); 
+	}
+	
+	public void setBtype(BoardType btype) {
 		this.btype = btype;
 	}
-	
-	public String getBtitle() {
-		switch(btype.toLowerCase()) {
-		case "notice": return "공지사항";
-		case "faq":    return "자주하는질문";
-		case "qna":    return "묻고답하기";
-		default: return "일반게시판";
-		}
+
+	public void strToBtype(String btype) {
+
+		System.out.println("strToBtype(" + btype + ")");
+		this.btype = BoardType.valueOf(btype.toUpperCase());
 	}
-	
-	public String[] getSearchTypeArr() {
-		return searchType == null ? new String[] {} : searchType.split("");
-	}
-	
-	public String getListLink() {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
-				.queryParam("page", this.page)
-				.queryParam("perPageNum", this.perPageNum)
-				.queryParam("searchType", this.searchType)
-				.queryParam("keyword", this.getKeyword());
-		return builder.toUriString();
-	}
+
+
 }

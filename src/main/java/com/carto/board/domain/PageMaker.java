@@ -2,18 +2,22 @@ package com.carto.board.domain;
 
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.ToString;
 
 @ToString
 public class PageMaker {
+
 	private int totalCount; // 전체 데이터 수
-	private int startPage;  // 시작 페이지 번호
-	private int endPage;    // 끝 페이지 번호
-	private boolean prev;   // 이전 페이지 링크
-	private boolean next;   // 이후 페이지 링크	
-	private int displayPageNum = 10; //페이지 번호의 수
+	private int startPage; // 시작 페이지 번호
+	private int endPage; // 끝 페이지 번호
+	private boolean prev; // 이전 페이지 링크
+	private boolean next; // 이후 페이지 링크
 	
+	private int displayPageNum = 10; //페이지 번호의 수
+
 	private Criteria cri;  // 현재 페이번호(page_와 페이지당 게시글 수(perPageNum)
+	
 	
 	public void setCri(Criteria cri) {
 		this.cri = cri;
@@ -27,6 +31,8 @@ public class PageMaker {
 		this.totalCount = totalCount;
 		calcData();
 	}
+	
+	
 	
 	public int getTotalCount() {
 		return totalCount;
@@ -105,9 +111,10 @@ public class PageMaker {
 				UriComponentsBuilder.newInstance()
 					.queryParam("page", page)
 					.queryParam("perPageNum", cri.getPerPageNum())
-					.queryParam("searchType", cri.getSearchType())
-					.queryParam("keyword", cri.getKeyword())					
+					.queryParam("searchType", ((Criteria)cri).getSearchType())
+					.queryParam("keyword", ((Criteria)cri).getKeyword())
 					.build();
 		return uriComponents.toString();
 	}
+	
 }

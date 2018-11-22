@@ -27,8 +27,8 @@ ENGINE=InnoDB;
 CREATE TABLE `member_auth` (
 	`userid` VARCHAR(50) NOT NULL COMMENT '아이디',
 	`authority` VARCHAR(50) NOT NULL COMMENT '권한',
-	`sessionKey` VARCHAR(100) NULL DEFAULT NULL,
-	`sessionLimit` TIMESTAMP NULL DEFAULT NULL,
+	`sessionKey` VARCHAR(100) NULL DEFAULT NULL COMMENT '로그인유지키',
+	`sessionLimit` TIMESTAMP NULL DEFAULT NULL COMMENT '로그인유지시간',
 	INDEX `FK_MEMBER_AUTH` (`userid`),
 	CONSTRAINT `FK_MEMBER_AUTH` FOREIGN KEY (`userid`) REFERENCES `member` (`userid`)
 )
@@ -116,22 +116,19 @@ CREATE TABLE `BOARD` (
 	`title`    VARCHAR(200) NULL     COMMENT '제목', -- 제목
 	`content`  TEXT         NULL     COMMENT '내용', -- 내용
 	`writer`   VARCHAR(50)  NULL     COMMENT '작성자ID', -- 작성자ID
-	`reg_date` TIMESTAMP    NULL     COMMENT '작성일', -- 작성일
 	`pwd`      VARCHAR(20)  NULL     COMMENT '비밀번호', -- 비밀번호
+	`reg_date` TIMESTAMP    NULL     COMMENT '작성일', -- 작성일
 	`hit`      INT          NULL     COMMENT '조회수', -- 조회수
-	`group`    INT          NULL     COMMENT '답변그룹', -- 답변그룹
+	`grpno`    INT          NULL     COMMENT '답변그룹', -- 답변그룹
 	`step`     INT          NULL     COMMENT '답변순서', -- 답변순서
 	`depth`    INT          NULL     COMMENT '답변깊이', -- 답변깊이
 	`btype`    INT          NULL     COMMENT '게시판구분' -- 게시판구분
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '게시판';
-
 -- 게시판
 ALTER TABLE `BOARD`
 	ADD CONSTRAINT `PK_BOARD` -- 게시판 기본키
-		PRIMARY KEY (
-			`bno` -- 게시판번호
-		);
+		PRIMARY KEY (`bno`);  -- 게시판번호
 
 -- 첨부파일
 CREATE TABLE `ATTACHMENT` (

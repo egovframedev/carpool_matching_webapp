@@ -2,20 +2,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <header class="main-header">
 	<!-- 로고 부분 -->
-	<a href="index2.html" class="logo"> 
+	<a href="<c:url value='/'/>" class="logo"> 
 		<!-- 작은 로고 50x50 pixels -->
 		<span class="logo-mini"><b>CTO</b></span>
 		<span class="logo-lg"><b>CAR</b>POOL</span>
 	</a>
 	<!-- 헤더 상위 메뉴 -->
 	<nav class="navbar navbar-static-top" role="navigation">
+		<c:if test="${!empty login}"> 
 		<!-- 사이드바 토글 버튼 -->
 		<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> 
 			<span class="sr-only">사이드바 토글</span></a>
+		</c:if>
 		<div class="collapse navbar-collapse pull-left">
 			<ul class="nav navbar-nav">
             	<li class="active"><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME <span class="sr-only">(current)</span></a></li>
-            	<li><a href="<c:url value='/introduction'/>">서비스 소개</a></li>
+            	<li><a href="<c:url value='/board/introduction'/>">서비스 소개</a></li>
             	<li class="dropdown">
               		<a href="#" class="dropdown-toggle" data-toggle="dropdown">고객센터 <span class="caret"></span></a>
               		<ul class="dropdown-menu" role="menu">
@@ -30,6 +32,11 @@
 		<!-- 상위 메뉴 오른쪽 -->
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
+				<c:if test="${empty login}">
+				<li><a href="<c:url value='/login'/>"><i class="fa fa-sign-in"></i> 로그인</a></li>
+				<li><a href="<c:url value='/member/join/step1'/>"><i class="fa fa-user-plus"></i> 회원가입</a></li>
+				</c:if>
+				<c:if test="${!empty login}">
 				<!-- 메세지 메뉴 -->			
 				<li class="dropdown messages-menu">
 					<!-- 토글 버튼 --> 
@@ -82,13 +89,14 @@
 								<a href="#" class="btn btn-default btn-flat">내프로필</a>
 							</div>
 							<div class="pull-right">
-								<a href="#" class="btn btn-default btn-flat">로그아웃</a>
+								<a href="<c:url value='/logout'/>" class="btn btn-default btn-flat">로그아웃</a>
 							</div>
 						</li>
 					</ul>
 				</li>
 				<!-- 관리자 링크 -->
 				<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li>
+				</c:if>
 			</ul>
 		</div>
 	</nav>

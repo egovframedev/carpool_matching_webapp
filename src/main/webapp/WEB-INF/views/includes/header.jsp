@@ -20,11 +20,21 @@
   <script src="<c:url value="/"/>vendor/jquery/dist/jquery.min.js"></script>
   <script src="<c:url value="/"/>vendor/bootstrap/dist/js/bootstrap.min.js"></script>	
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body
+<c:if test="${!empty login}"> 
+	class="hold-transition skin-blue sidebar-mini"
+</c:if>
+<c:if test="${empty login}"> 
+	class="layout-top-nav skin-blue" style="height:auto; min-height:100%;"
+</c:if>
+>
+
 <div class="wrapper">
   <!-- 상단 메인 헤더 시작 -->
   <%@ include file="topnav.jsp" %>	
   <!-- 상단 메인 헤더 끝 -->
   <!-- 사이드바 메뉴 시작-->
+  <c:if test="${!empty login}">
   <%@ include file="sidenav.jsp" %>
+  </c:if>
   <!-- // 사이드바 메뉴 끝 -->

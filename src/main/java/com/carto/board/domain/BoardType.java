@@ -1,15 +1,21 @@
 package com.carto.board.domain;
 
 public enum BoardType {
-	NORMAL("일반게시판"), NOTICE("공지사항"), FAQ("자주하는질문"), QNA("묻고답하기");
+	NOTICE("공지사항"), FAQ("자주묻는질문"), QNA("묻고답하기");
 	
-	private String desc;
+	private String btitle;
 	
-	private BoardType(String description) {
-		this.desc = description;
+	private BoardType(String btitle) {
+		this.btitle = btitle;
 	}
 	
-	public String getDesc() {
-		return desc;
+	public String getBtitle() {
+		return btitle;
 	}
+	
+	public String getSmall() {
+		return this.toString().toLowerCase();
+	}
+	
+
 }
