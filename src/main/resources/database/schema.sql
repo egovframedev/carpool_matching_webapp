@@ -172,6 +172,24 @@ CREATE TABLE `PAYMENT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '결제내역';
 
+-- 메세지
+CREATE TABLE `message` (
+	`mid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '메세지번호',
+	`receiver` VARCHAR(50) NOT NULL COMMENT '수신인',
+	`sender` VARCHAR(50) NOT NULL COMMENT '송신인',
+	`body` TEXT NOT NULL COMMENT '내용',
+	`open_date` TIMESTAMP NULL DEFAULT NULL COMMENT '개봉날짜',
+	`send_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '전송날짜',
+	PRIMARY KEY (`mid`),
+	INDEX `FK_SENDER_UID` (`sender`),
+	INDEX `FK_RECEIVER_UID` (`receiver`),
+	CONSTRAINT `FK_RECEIVER_UID` FOREIGN KEY (`receiver`) REFERENCES `member` (`userid`),
+	CONSTRAINT `FK_SENDER_UID` FOREIGN KEY (`sender`) REFERENCES `member` (`userid`)
+)
+COMMENT='메세지'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
 -- 결제내역
 ALTER TABLE `PAYMENT`
 	ADD CONSTRAINT `PK_PAYMENT` -- 결제내역 기본키
@@ -184,16 +202,6 @@ ALTER TABLE `DRIVER`
 	ADD CONSTRAINT `FK_MEMBER_TO_DRIVER` -- 회원 -> 운전자
 		FOREIGN KEY (
 			`mno` -- 회원번호
-		)
-		REFERENCES `MEMBER` ( -- 회원
-			`mno` -- 회원번호
-		);
-
--- 카풀정보
-ALTER TABLE `CARPOOL_INFO`
-	ADD CONSTRAINT `FK_MEMBER_TO_CARPOOL_INFO` -- 회원 -> 카풀정보
-		FOREIGN KEY (
-			`mno` -- 작성회원번호
 		)
 		REFERENCES `MEMBER` ( -- 회원
 			`mno` -- 회원번호

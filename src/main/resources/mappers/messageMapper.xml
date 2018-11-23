@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carto.mappers.MessageMapper">
+	<resultMap id="messageMap" type="MessageDTO">
+		<id property="msgId" column="msg_id"/>
+		<result property="msgType" column="msg_type" 
+			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="MessageType"/>
+		<result property="receiver" column="receiver"/>
+		<result property="sender" column="sender"/>
+		<result property="body" column="body"/>
+		<result property="openDate" column="open_date"/>
+		<result property="sendDate" column="send_date"/>
+	</resultMap>
+</mapper>
