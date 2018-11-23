@@ -70,10 +70,8 @@ public class BoardController {
 	public String read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model)
 			throws Exception {
 		log.info("detail---------------------------------------");
-		System.out.println("getbtype " + cri.getBtype()); // NOTICE
-		System.out.println("getbtype + title " + cri.getBtype().getBtitle()); // 공지사항
-
 		model.addAttribute(boardservice.detail(bno));
+
 		return "board/detail";
 	}
 
@@ -124,11 +122,6 @@ public class BoardController {
 		log.info(cri.toString());
 
 		boardservice.modify(board);
-
-		rttr.addAttribute("page", cri.getPage());
-		rttr.addAttribute("perPageNum", cri.getPerPageNum());
-		rttr.addAttribute("searchType", cri.getSearchType());
-		rttr.addAttribute("keyword", cri.getKeyword());
 
 		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 메세지 설정
 
@@ -186,4 +179,4 @@ public class BoardController {
 		return boardservice.getAttach(bno);
 	}
 
-	}
+}
