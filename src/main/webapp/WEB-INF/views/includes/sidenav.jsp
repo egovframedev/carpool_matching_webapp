@@ -10,7 +10,7 @@
 						class="img-circle" alt="User Image">
 				</div>
 				<div class="pull-left info">
-					<p>카풀 관리자</p>
+					<p>${login.name}[${login.userid}]</p>
 					<!-- Status -->
 					<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 				</div>
@@ -35,16 +35,16 @@
 					<a href="<c:url value='/'/>"><i class="fa fa-home"></i><span>HOME</span></a>
 				</li>
 				<li>
-					<a href="<c:url value='/carpool/list/riding'/>"><i class="fa fa-user-circle"></i><span>카풀요청</span></a>
+					<a href="<c:url value='/carpool/request/list'/>"><i class="fa fa-user-circle"></i><span>카풀요청</span></a>
 				</li>
 				<li>
-					<a href="<c:url value='/carpool/list/driving'/>"><i class="fa fa-car"></i><span>카플제공</span></a>
+					<a href="<c:url value='/carpool/provide/list'/>"><i class="fa fa-car"></i><span>카플제공</span></a>
 				</li>
 				<li>
-					<a href="<c:url value='/carpool/sharing'/>"><i class="fa fa-users"></i><span>카풀동승</span></a>
+					<a href="<c:url value='/carpool/riding'/>"><i class="fa fa-users"></i><span>카풀동승</span></a>
 				</li>
 				<li>
-					<a href="<c:url value='/carpool/log'/>"><i class="fa fa-user-circle"></i><span>카플내역</span></a>
+					<a href="<c:url value='/carpool/riding/log'/>"><i class="fa fa-user-circle"></i><span>카플내역</span></a>
 				</li>
 				<li class="treeview">
 					<a href="#"><i class="fa fa-fax"></i> 

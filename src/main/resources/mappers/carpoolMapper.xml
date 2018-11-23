@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carto.mappers.CarpoolMapper">
+	<resultMap  id="carpoolMap" type="CarpoolDTO">
+		<id property="cpno" column="cpno" />
+		<result property="cptype" column="cptype"/>
+		<result property="startPoint" column="start_point" />
+		<result property="startLong" column="start_long" />
+		<result property="startLat" column="start_lat" />
+		<result property="endPoint" column="end_point" />
+		<result property="endLong" column="end_long" />
+		<result property="endLat" column="end_lat" />
+		<result property="startDateTime" column="start_datetime" />
+		<result property="mno" column="mno" />
+		<result property="regDate" column="regDate" />
+		<result property="charge" column="charge" />
+		<result property="seatNum" column="seat_num" />
+		<result property="seatOpt" column="seat_opt" />
+		<result property="driveOpt" column="drive_opt" />
+		<result property="trunkUse" column="trunk_use" />
+		<result property="smokeUse" column="smoke_use" />
+		<result property="reqMsg" column="req_msg" />
+	</resultMap>
+	
+	<insert id="insertCarpool">
+		INSERT INTO carpool_info (
+			cptype, mno, 
+			start_point, start_long, start_lat,
+			end_point, end_long, end_lat,
+			start_datetime, charge,
+			seat_num, seat_opt, drive_opt, trunk_use, smoke_use
+			req_msg,
+			reg_date
+		) VALUES (
+			#{cptype}, #{mno}, 
+			#{startPoint}, #{startLong}, #{startLat},
+			#{endPoint}, #{endLong}, #{endLat},
+			#{startDateTime}, #{charge},
+			#{seatNum}, #{seatOpt}, #{driveOpt}, #{trunkUse}, #{smokeUse}
+			#{reqMsg},
+			sysdate()
+		)
+	</insert>
+	
+	<select id="getList" resultMap="carpoolMap">
+		SELECT * FROM carpool_info
+		<where>
+			<if test="searchStart != null">
+				AND startPoint LIKE CONCAT('%', #{searchStart}, '%')
+			</if>
+			<if test="searchEnd != null">
+				AND endPoint LIKE CONCAT('%', #{searchEnd}, '%')
+			</if>
+			<if test="startDateTime != null">
+				AND startDateTime >= #{startDateTime}
+			</if>
+		</where>
+		ORDER BY startDateTime DESC;
+	</select>
+</mapper>

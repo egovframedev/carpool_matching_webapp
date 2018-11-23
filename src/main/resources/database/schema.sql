@@ -59,30 +59,30 @@ CREATE TABLE `DRIVER` (
 COMMENT '운전자';
 
 -- 카풀정보
-CREATE TABLE `CARPOOL_INFO` (
-	`cpno`        INT          NOT NULL COMMENT '카풀번호', -- 카풀번호
-	`start_point` VARCHAR(200) NULL     COMMENT '출발지 주소', -- 출발지 주소
-	`end_point`   VARCHAR(200) NULL     COMMENT '목적지 주소', -- 목적지 주소
-	`start_loc`   VARCHAR(100) NULL     COMMENT '출발지 좌표', -- 출발지 좌표
-	`end_loc`     VARCHAR(100) NULL     COMMENT '목적지 좌표', -- 목적지 좌표
-	`seat_num`    TINYINT      NULL     COMMENT '카풀인원', -- 카풀인원
-	`charge`      INT          NULL     COMMENT '금액', -- 금액
-	`seat_opt`    TINYINT      NULL     COMMENT '자리설정', -- 자리설정
-	`drive_opt`   TINYINT      NULL     COMMENT '운행조건', -- 운행조건
-	`trunk_use`   TINYINT      NULL     COMMENT '트렁크이용', -- 트렁크이용
-	`smoke_use`   TINYINT      NULL     COMMENT '흡연여부', -- 흡연여부
-	`req_msg`     VARCHAR(300) NULL     COMMENT '요구사항', -- 요구사항
-	`mno`         INT          NULL     COMMENT '작성회원번호', -- 작성회원번호
-	`reg_date`    TIMESTAMP    NULL     COMMENT '작성날자' -- 작성날자
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
-COMMENT '카풀정보';
-
--- 카풀정보
-ALTER TABLE `CARPOOL_INFO`
-	ADD CONSTRAINT `PK_CARPOOL_INFO` -- 카풀정보 기본키
-		PRIMARY KEY (
-			`cpno` -- 카풀번호
-		);
+CREATE TABLE `carpool_info` (
+	`cpno` INT(11) NOT NULL AUTO_INCREMENT COMMENT '카풀번호',
+	`start_point` VARCHAR(200) NULL DEFAULT NULL COMMENT '출발지 주소',
+	`cptype` TINYINT(1) NULL DEFAULT NULL,
+	`end_point` VARCHAR(200) NULL DEFAULT NULL COMMENT '목적지 주소',
+	`start_long` VARCHAR(50) NULL DEFAULT NULL COMMENT '출발지 좌표(경도)',
+	`start_lat` VARCHAR(50) NULL DEFAULT NULL COMMENT '출발지 좌표(위도)',
+	`end_long` VARCHAR(50) NULL DEFAULT NULL COMMENT '목적지 좌표(경동)',
+	`end_lat` VARCHAR(50) NULL DEFAULT NULL COMMENT '목적지 좌표(위도)',
+	`start_datetime` TIMESTAMP NULL DEFAULT NULL COMMENT '출발시간',
+	`seat_num` TINYINT(4) NULL DEFAULT NULL COMMENT '카풀인원',
+	`charge` INT(11) NULL DEFAULT NULL COMMENT '금액',
+	`seat_opt` TINYINT(1) NULL DEFAULT NULL COMMENT '자리설정',
+	`drive_opt` TINYINT(2) NULL DEFAULT NULL COMMENT '운행조건',
+	`trunk_use` TINYINT(1) NULL DEFAULT NULL COMMENT '트렁크이용',
+	`smoke_use` TINYINT(1) NULL DEFAULT NULL COMMENT '흡연여부',
+	`req_msg` VARCHAR(300) NULL DEFAULT NULL COMMENT '요구사항',
+	`mno` INT(11) NULL DEFAULT NULL COMMENT '작성회원번호',
+	`reg_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성날자',
+	PRIMARY KEY (`cpno`), -- 카풀정보 기본키
+	INDEX `FK_MEMBER_TO_CARPOOL_INFO` (`mno`),
+	CONSTRAINT `FK_MEMBER_TO_CARPOOL_INFO` FOREIGN KEY (`mno`) REFERENCES `member` (`mno`)
+) COMMENT='카풀정보'
+COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 -- 주소록
 CREATE TABLE `ADDRESS` (

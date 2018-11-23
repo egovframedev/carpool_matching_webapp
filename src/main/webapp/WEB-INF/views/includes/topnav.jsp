@@ -64,12 +64,12 @@
 				<li class="dropdown user user-menu">
 					<a href="#" class="dropdown-toggle"	data-toggle="dropdown"> 
 						<img src="<c:url value="/"/>img/user2-160x160.jpg" class="user-image" alt="User Image">
-						<span class="hidden-xs">카풀관리자</span>
+						<span class="hidden-xs">${login.name}[${login.userid}]</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li class="user-header">
 							<img src="<c:url value="/"/>img/user2-160x160.jpg" class="img-circle" alt="User Image">
-							<p>카풀 관리자 - 웹 개발자 <small>2018년11월</small></p>
+							<p>${login.name} <small>2018년11월</small></p>
 						</li>
 						<li class="user-body">
 							<div class="row">

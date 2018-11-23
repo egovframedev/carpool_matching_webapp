@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../includes/header.jsp"%>
 <style>
@@ -213,7 +212,7 @@
 							<li><a href="#">»</a></li>
 						</ul>
 						<div class="btn-group pull-right">
-							<button type="button" class="btn btn-primary pull-right">
+							<button type="button" class="btn btn-primary pull-right" onclick="location.href='regist'">
 								<i class="fa fa-plus"></i> 카풀 등록
 							</button>
 						</div>
