@@ -2,6 +2,7 @@ package com.carto.board.service;
 
 import java.util.List;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.board.domain.BoardDTO;
 import com.carto.board.domain.Criteria;
 
@@ -19,7 +20,7 @@ public interface BoardService {
 
 	public int listCount(Criteria cri) throws Exception;
 
-	public List<String> getAttach(Integer bno) throws Exception;
+	public List<AttachfileDTO> getAttach(Integer bno) throws Exception;
 	
 	public void reply(BoardDTO dto) throws Exception;   // 답글 생성
 	

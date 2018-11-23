@@ -1,6 +1,8 @@
 package com.carto.board.domain;
 
 import java.util.Date;
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
@@ -19,6 +21,8 @@ public class BoardDTO {
 	private Integer step;
 	private Integer depth;
 	private BoardType btype;
-	private String[] files;  // 첨부 파일	
+	
+	//private String[] files;  // 첨부 파일	
+	private List<AttachfileDTO> attachList;
 
 }

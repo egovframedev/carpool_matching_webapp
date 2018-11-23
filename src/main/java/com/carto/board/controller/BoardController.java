@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.board.domain.BoardDTO;
 import com.carto.board.domain.BoardType;
 import com.carto.board.domain.Criteria;
@@ -70,10 +71,9 @@ public class BoardController {
 	public String read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model)
 			throws Exception {
 		log.info("detail---------------------------------------");
-		System.out.println("getbtype " + cri.getBtype()); // NOTICE
-		System.out.println("getbtype + title " + cri.getBtype().getBtitle()); // 공지사항
 
 		model.addAttribute(boardservice.detail(bno));
+		
 		return "board/detail";
 	}
 
@@ -93,7 +93,7 @@ public class BoardController {
 		log.info("registPOST---------------------------------------");
 		cri.strToBtype(btype);
 		log.info(board.toString());
-
+		
 		boardservice.regist(board);
 
 		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 메세지 설정
@@ -124,11 +124,6 @@ public class BoardController {
 		log.info(cri.toString());
 
 		boardservice.modify(board);
-
-		rttr.addAttribute("page", cri.getPage());
-		rttr.addAttribute("perPageNum", cri.getPerPageNum());
-		rttr.addAttribute("searchType", cri.getSearchType());
-		rttr.addAttribute("keyword", cri.getKeyword());
 
 		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 메세지 설정
 
@@ -182,7 +177,7 @@ public class BoardController {
 
 	@RequestMapping("/getAttach/{bno}")
 	@ResponseBody
-	public List<String> getAttach(@PathVariable("bno") Integer bno) throws Exception {
+	public List<AttachfileDTO> getAttach(@PathVariable("bno") Integer bno) throws Exception {
 		return boardservice.getAttach(bno);
 	}
 

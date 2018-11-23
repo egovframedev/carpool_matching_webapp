@@ -109,21 +109,8 @@
 	</insert>
 
 	<update id="addreply" parameterType="boardDTO">
-
 		update board set step=step+1
 		where grpno = #{grpno} and step >#{step}
-
-	</update>
-
-
-
-
-
-	<update id="updateReplyCnt">
-		UPDATE board
-		SET replycnt = replycnt + #{amount}
-		WHERE
-		bno = #{bno}
 	</update>
 
 	<!-- 조회수 자동 증가 -->

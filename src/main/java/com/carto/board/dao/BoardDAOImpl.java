@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.board.domain.BoardDTO;
 import com.carto.board.domain.Criteria;
 
@@ -49,15 +50,6 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void updateReplyCnt(Integer bno, int amount) throws Exception {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("bno", bno);
-		paramMap.put("amount", amount);
-		
-		session.update(namespace + ".updateReplyCnt", paramMap);
-	}
-	
-	@Override
 	public void updateViewCnt(Integer bno) throws Exception {
 		session.update(namespace + ".updateViewCnt", bno);
 	}
@@ -71,7 +63,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<String> getAttach(Integer bno) throws Exception {
+	public List<AttachfileDTO> getAttach(Integer bno) throws Exception {
 		return session.selectList(namespace + ".getAttach", bno);
 	}
 
@@ -88,6 +80,7 @@ public class BoardDAOImpl implements BoardDAO {
 		session.insert(namespace + ".replaceAttach", paramMap);
 	}
 	
+	// 답글 등록
 	@Override
 	public void reply(BoardDTO dto) throws Exception {
 		// TODO Auto-generated method stub
