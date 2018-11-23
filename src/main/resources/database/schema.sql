@@ -168,7 +168,8 @@ COMMENT '첨부파일';
 CREATE TABLE `PAYMENT` (
 	`payno`    VARCHAR(100) NOT NULL COMMENT '결제번호', -- 결제번호
 	`pay_date` TIMESTAMP    NULL     COMMENT '결제일자', -- 결제일자
-	`amount`   INT          NULL     COMMENT '결제금액' -- 결제금액
+	`amount`   INT          NULL     COMMENT '결제금액'  -- 결제금액
+	`apply_num`VARCHAR(100) NULL     COMMENT '승인번호', -- 승인번호
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '결제내역';
 
