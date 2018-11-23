@@ -144,16 +144,17 @@ ALTER TABLE `BOARD`
 		PRIMARY KEY (`bno`);  -- 게시판번호
 
 -- 첨부파일
-CREATE TABLE `ATTACHMENT` (
-	`fno`           INT          NULL COMMENT '파일번호', -- 파일번호
-	`bno`           INT          NULL COMMENT '게시판번호', -- 게시판번호
-	`filename`      VARCHAR(200) NULL COMMENT '파일이름', -- 파일이름
-	`original_name` VARCHAR(200) NULL COMMENT '원래파일명', -- 원래파일명
-	`uploadpath`    VARCHAR(200) NULL COMMENT '업로드경로', -- 업로드경로
-	`extension`     VARCHAR(10)  NULL COMMENT '확장자명', -- 확장자명
-	`download_cnt`  INT          NULL COMMENT '다운로드수' -- 다운로드수
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
-COMMENT '첨부파일';
+CREATE TABLE `attachfile` (
+  `fno` 		int(11) NOT NULL AUTO_INCREMENT COMMENT '파일번호', -- 파일번호
+  `bno` 		int(11) DEFAULT NULL COMMENT '게시판번호', -- 게시판번호
+  `filename` 	varchar(200) NOT NULL COMMENT '파일이름', -- 파일이름
+  `uploadpath` 	varchar(200) DEFAULT NULL COMMENT '업로드경로',-- 업로드경로
+  `uuid` 		varchar(100) DEFAULT NULL COMMENT 'uuid',-- uuid
+  `fileType` 	tinyint(4) DEFAULT NULL COMMENT '파일타입',-- 파일타입
+  PRIMARY KEY (`fno`),
+  KEY `FK_BOARD_TO_ATTACHFILE` (`bno`),
+  CONSTRAINT `FK_BOARD_TO_ATTACHMENT` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='첨부파일';
 
 
 
