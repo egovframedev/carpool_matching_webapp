@@ -3,42 +3,49 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.carto.mappers.BoardMapper">
+
 	<!-- 게시글 쓰기 -->
 	<insert id="regist" parameterType="boardDTO">
+
 		<selectKey order="BEFORE" keyProperty="bno"
 			resultType="java.lang.Integer">
 			select IFNULL(MAX(bno),0)+1 from board
 		</selectKey>
-		INSERT INTO board (
-			bno, title, content, writer, hit, grpno, step, depth, btype
-		) VALUES (
-			#{bno}, #{title}, #{content}, #{writer}, -1, #{bno}, 0, 0, #{btype}
-		)
+		insert into
+		board(bno, title, content, writer, hit, grpno, step,
+		depth,
+		btype) values
+		(#{bno}, #{title}, #{content}, #{writer},
+		-1, #{bno}, 0,0,
+		#{btype})
+
 	</insert>
-	
+
 	<!-- 게시글 불러오기 -->
-	<select id="detail" parameterType="boardDTO" resultType="BoardDTO">
-		SELECT * FROM board WHERE bno = #{bno}
+	<select id="detail" parameterType="boardDTO"
+		resultType="BoardDTO">
+		select * from board where bno = #{bno}
 	</select>
 
 	<!-- 게시글 수정 -->
 	<update id="modify" parameterType="boardDTO">
-		UPDATE board 
-		SET	title = #{title}, 
-			content=#{content}
-		WHERE bno = #{bno}
+		update board set
+		title=#{title}, content=#{content}
+		where bno = #{bno}
 	</update>
 
 	<!-- 게시글 삭제 -->
 	<delete id="delete" parameterType="boardDTO">
 		DELETE FROM board
-		WHERE bno = #{bno}
+		WHERE bno =
+		#{bno}
 	</delete>
 
 	<!-- 게시글 목록 -->
 	<select id="list" resultType="boardDTO" parameterType="criteria">
 	<![CDATA[
-		SELECT * FROM board
+		SELECT *
+		FROM board
 		WHERE btype = #{btypeNum}
 	]]>
 		<include refid="search" />
@@ -68,38 +75,75 @@
 				AND writer LIKE CONCAT('%', #{keyword}, '%')
 			</if>
 			<if test="searchType == 'tc'.toString()">
-				AND (title LIKE CONCAT('%', #{keyword}, '%') 
-					OR content LIKE CONCAT('%', #{keyword}, '%'))
+				AND (title LIKE CONCAT('%', #{keyword}, '%') OR content
+				LIKE CONCAT('%', #{keyword}, '%'))
 			</if>
 			<if test="searchType == 'cw'.toString()">
-				AND (content LIKE CONCAT('%', #{keyword}, '%')
-				 OR writer LIKE CONCAT('%', #{keyword}, '%'))
+				AND (content LIKE CONCAT('%', #{keyword}, '%') OR writer
+				LIKE CONCAT('%', #{keyword}, '%'))
 			</if>
 			<if test="searchType == 'tcw'.toString()">
 				AND ( title LIKE CONCAT('%', #{keyword}, '%')
-					OR content LIKE CONCAT('%', #{keyword}, '%')
-					OR writer LIKE CONCAT('%', #{keyword}, '%'))
+				OR content
+				LIKE CONCAT('%', #{keyword}, '%')
+				OR writer LIKE CONCAT('%',
+				#{keyword}, '%'))
 			</if>
 		</if>
 	</sql>
 
 	<!-- 게시글 답글 작성 -->
 	<insert id="reply" parameterType="boardDTO">
+
 		<selectKey order="BEFORE" keyProperty="bno"
 			resultType="java.lang.Integer">
-			SELECT IFNULL(MAX(bno),0)+1 FROM board
+			select IFNULL(MAX(bno),0)+1 from board
 		</selectKey>
-		INSERT INTO board(
-			bno, title, content, writer, hit, grpno, step, depth, btype
-		) VALUES (
-			#{bno}, #{title}, #{content}, #{writer}, -1, 
-			#{grpno}, #{step} +1, #{depth} +1, #{btype}
-		)
+		insert into
+		board(bno, title, content, writer, hit, grpno, step,
+		depth,
+		btype) values
+		(#{bno}, #{title}, #{content}, #{writer},
+		-1, #{grpno},
+		#{step} +1, #{depth} +1, #{btype})
+
 	</insert>
 
 	<update id="addreply" parameterType="boardDTO">
-		UPDATE board 
-		SET step = step+1
-		WHERE grpno = #{grpno} AND step > #{step}
+		update board set step=step+1
+		where grpno = #{grpno} and step >#{step}
 	</update>
+
+	<!-- 조회수 자동 증가 -->
+	<update id="updateViewCnt">
+		UPDATE board
+		SET hit = hit + 1
+		WHERE bno = #{bno}
+	</update>
+
+	<!-- 첨부파일 -->
+	<insert id="addAttach">
+		INSERT INTO attachfile (filename, bno)
+		VALUES
+		(#{filename}, #{bno})
+	</insert>
+
+	<select id="getAttach" resultType="string">
+		SELECT filename FROM
+		attachfile
+		WHERE bno = #{bno}
+		ORDER BY reg_date;
+	</select>
+
+	<delete id="deleteAttach">
+		DELETE FROM attachfile
+		WHERE bno = #{bno}
+	</delete>
+
+	<insert id="replaceAttach">
+		INSERT INTO attachfile (filename, bno)
+		VALUES
+		(#{filename}, #{bno})
+	</insert>
+
 </mapper>
