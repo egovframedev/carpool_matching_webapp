@@ -57,6 +57,7 @@ public class PaymentController {
 		cmService.updateCom(paymentDTO.getPayno(), session);
 		return "pay/paymentTemp"; 
 		
+		
 	}
 	@GetMapping("pay/complete") 
 	public String complete(HttpServletRequest res,Model model,HttpSession session) {
