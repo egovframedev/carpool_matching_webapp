@@ -101,7 +101,7 @@ CREATE TABLE `CARPOOL_MATCH` (
 	`match_date` TIMESTAMP    NULL COMMENT '매칭날짜', -- 매칭날짜
 	`progress`   TINYINT      NULL COMMENT '진행상황', -- 진행상황 (대기 0 ,승인 1 , 완료 2 취소 3)
 	`payno`      VARCHAR(100) NULL COMMENT '결제번호'  -- 결제번호
-	'isdriver'   TINYINT	  NULL COMMENT '드라이버 체크' --드라이버 (1 드라이버,0 동승자)
+	`isdriver`   TINYINT	  NULL COMMENT '드라이버 체크' -- 드라이버 (1 드라이버,0 동승자)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '카풀매칭';
 
 -- 주소록
@@ -168,10 +168,29 @@ COMMENT '첨부파일';
 CREATE TABLE `PAYMENT` (
 	`payno`    VARCHAR(100) NOT NULL COMMENT '결제번호', -- 결제번호
 	`pay_date` TIMESTAMP    NULL     COMMENT '결제일자', -- 결제일자
-	`amount`   INT          NULL     COMMENT '결제금액' -- 결제금액
+	`amount`   INT          NULL     COMMENT '결제금액'  -- 결제금액
+	`apply_num`VARCHAR(100) NULL     COMMENT '승인번호', -- 승인번호
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '결제내역';
 
+-- 메세지
+CREATE TABLE `message` (
+	`mid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '메세지번호',
+	`receiver` VARCHAR(50) NOT NULL COMMENT '수신인',
+	`sender` VARCHAR(50) NOT NULL COMMENT '송신인',
+	`body` TEXT NOT NULL COMMENT '내용',
+	`open_date` TIMESTAMP NULL DEFAULT NULL COMMENT '개봉날짜',
+	`send_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '전송날짜',
+	PRIMARY KEY (`mid`),
+	INDEX `FK_SENDER_UID` (`sender`),
+	INDEX `FK_RECEIVER_UID` (`receiver`),
+	CONSTRAINT `FK_RECEIVER_UID` FOREIGN KEY (`receiver`) REFERENCES `member` (`userid`),
+	CONSTRAINT `FK_SENDER_UID` FOREIGN KEY (`sender`) REFERENCES `member` (`userid`)
+)
+COMMENT='메세지'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
 -- 결제내역
 ALTER TABLE `PAYMENT`
 	ADD CONSTRAINT `PK_PAYMENT` -- 결제내역 기본키
@@ -184,16 +203,6 @@ ALTER TABLE `DRIVER`
 	ADD CONSTRAINT `FK_MEMBER_TO_DRIVER` -- 회원 -> 운전자
 		FOREIGN KEY (
 			`mno` -- 회원번호
-		)
-		REFERENCES `MEMBER` ( -- 회원
-			`mno` -- 회원번호
-		);
-
--- 카풀정보
-ALTER TABLE `CARPOOL_INFO`
-	ADD CONSTRAINT `FK_MEMBER_TO_CARPOOL_INFO` -- 회원 -> 카풀정보
-		FOREIGN KEY (
-			`mno` -- 작성회원번호
 		)
 		REFERENCES `MEMBER` ( -- 회원
 			`mno` -- 회원번호
