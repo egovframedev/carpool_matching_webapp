@@ -82,10 +82,10 @@
 							<c:forEach var="board" items="${list}" varStatus="status">
 								<tr>
 									<td>${board.bno}</td>
-									<td>
-									<c:forEach begin="1" end="${board.depth}" >&nbsp;&nbsp;</c:forEach>
-									<c:if test="${board.step gt 0 }"><small class="label label-warning">RE:</small>&nbsp;</c:if>
-  									<a href="detail${pageMaker.makeSearch(pageMaker.cri.page)}&bno=${board.bno}">${board.title}</a>
+									<td><c:forEach begin="1" end="${board.depth}">&nbsp;&nbsp;</c:forEach>
+										<c:if test="${board.step gt 0 }">
+											<small class="label label-warning">RE:</small>&nbsp;</c:if> <a
+										href="detail${pageMaker.makeSearch(pageMaker.cri.page)}&bno=${board.bno}">${board.title}</a>
 									</td>
 									<td>${board.writer}</td>
 									<td><fmt:formatDate value="${board.reg_date}"
@@ -128,39 +128,29 @@
 </div>
 <!-- /.content-wrapper -->
 <script>
-	$(document)
-			.ready(
-					function() {
-						if (test = "${! empty msg}") {
-							var result = '${msg}';
-						}
-						if (result == 'SUCCESS') {
-							alert("처리가 완료되었습니다.");
-						}
-
-						$("#btnSearch")
-								.on(
-										"click",
-										function(evt) {
-											evt.preventDefault();
-											console
-													.log("btnSearch Click......");
-											self.location = "list"
-													+ '${pageMaker.makeQuery(1)}'
-													+ '&searchType='
-													+ $(
-															"select[name='searchType'] option:selected")
-															.val()
-													+ "&keyword="
-													+ $('#inputKeyword').val();
-										});
-
-						$("#btnNew").on("click", function(evt) {
-							evt.preventDefault();
-							console.log("btnNew Click......");
-							self.location = "regist";
-						});
-					});
+	$(document).ready(function() {
+			if (test = "${! empty msg}") {
+				var result = '${msg}';
+			}
+			if (result == 'SUCCESS') {
+				alert("처리가 완료되었습니다.");
+			}
+			$("#btnSearch").on("click",function(evt) {
+					evt.preventDefault();
+					console.log("btnSearch Click......");
+					self.location = "list"
+	 					+ '${pageMaker.makeQuery(1)}'
+						+ '&searchType='
+						+ $("select[name='searchType'] option:selected").val()
+						+ "&keyword="
+						+ $('#inputKeyword').val();
+			});
+			$("#btnNew").on("click", function(evt) {
+				evt.preventDefault();
+				console.log("btnNew Click......");
+				self.location = "regist";
+			});
+	});
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

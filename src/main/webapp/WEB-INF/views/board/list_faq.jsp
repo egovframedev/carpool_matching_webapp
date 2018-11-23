@@ -75,7 +75,6 @@
 var formObj = $("form[role='form']");
 var rootPath = '<c:url value="/"/>';
 var boardPath = rootPath + 'board/${cri.btype.small}';
-
 //글 수정
 	function modifyGo(bno){
 		formObj.attr("action", boardPath + "/modify");
@@ -113,14 +112,12 @@ var boardPath = rootPath + 'board/${cri.btype.small}';
 		if (result == 'SUCCESS') {
 			alert("처리가 완료되었습니다.");
 		} 
-
 		// 글작성 부분 
 		$("#btnNew").on("click", function(evt) {
 			evt.preventDefault();
 			console.log("btnNew Click......");
 			self.location = "regist";
 		});
-
 	});
 </script>
 

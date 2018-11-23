@@ -80,7 +80,6 @@
 		var formObj = $("form[role='form']");
 		var rootPath = '<c:url value="/"/>';
 		var boardPath = rootPath + 'board/${cri.btype}';
-
 		//게시물 목록으로 이동
 		$("#btnList").on("click", function() {
 			formObj.attr("action", boardPath + "/list");

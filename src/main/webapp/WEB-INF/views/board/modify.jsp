@@ -74,6 +74,18 @@
 							<!-- /. box -->
 						</form>
 						<!-- /. form -->
+						<div class="box box-solid">
+							<div class="box-header with-border">
+								<div class="form-group uploadDiv" style="margin-bottom: 0;">
+									<input type="file" name="uploadFile" multiple="multiple" />
+								</div>
+							</div>
+							<div class="box-body clearfix" style="min-height: 120px;">
+								<div class="uploadResult">
+									<ul></ul>
+								</div>
+							</div>
+						</div>
 					</div>
 					<!-- /.col -->
 				</div>
@@ -85,12 +97,151 @@
 <!-- /.content-wrapper -->
 
 <script type="text/javascript">
-	var formObj = $("form[role='form']");
-	var rootPath = '<c:url value="/"/>';
-	var boardPath = rootPath + 'board/${cri.btype.small}';
-
+	
+var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+var maxSize = 5242880; // 5MB
+var boardPath = '<c:url value="/board/${cri.btype}/"/>'; 
+var ctxPath = '<c:url value="/"/>';
+var formObj = $("form[name='modForm']");
+var bno = '<c:out value="${board.bno}"/>';
+//var csrfHeaderName = "${_csrf.headerName}";
+//var csrfTokenValue = "${_csrf.token}";
+$.getJSON( boardPath + "getAttachList", {bno: bno}, function(arr){
+	// console.log(arr);
+	var str = "";
+	$(arr).each(function(i, attach){
+		// image type
+		if(attach.fileType) {
+			var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.filename);
+			str += '<li data-path="'+attach.uploadpath + '" data-uuid="' + attach.uuid 
+				+ '" data-filename="'+ attach.filename +'" data-type="'+ attach.fileType +'"><div>';	
+			str += '<button type="button" data-file="'+ fileCallPath +'" data-type="image" class="btn btn-warning btn-sm"><i class="fa fa-times"></i></button><br/>';
+			str += '<img src="<c:url value="/"/>display?filename=' + fileCallPath + '" class="img-thumbnail" />';
+			str += '<span>'+ attach.filename +'</span>';
+			str += "</div></li>";
+		} else  {
+			str += '<li data-path="'+attach.uploadpath + '" data-uuid="' + attach.uuid 
+				+ '" data-filename="'+ attach.filename +'" data-type="'+ attach.fileType +'"><div>';
+			str += '<button type="button" data-file="'+ fileCallPath +'" data-type="file" class="btn btn-warning btn-sm"><i class="fa fa-times"></i></button><br/>';
+			str += '<img src="<c:url value="/"/>img/attach.png" class="img-thumbnail"></a>';
+			str += '<span>'+ attach.filename +'</span>';
+			str += '</div></li>';
+		}
+	});
+	$(".uploadResult ul").html(str);
+});
+function checkExtension(filename, fileSize) {
+	
+	if(fileSize >= maxSize) {
+		alert("파일 사이즈 초과");
+		return false;
+	}
+	
+	if(regex.test(filename)) {
+		alert("해당 종류의 파일은 업로드할 수 없습니다.");
+		return false;
+	}
+	return true;
+}
+$("input[type='file']").change(function(e) {
+	var formData = new FormData();
+	var inputFile = $("input[name='uploadFile']");
+	var files = inputFile[0].files;
+	
+	console.log("파일 변경 됨.");
+	console.log(files);
+	
+	for(var i = 0; i < files.length; i++) {
+		if(!checkExtension(files[i].name, files[i].size)) {
+			return false;
+		}
+		formData.append("uploadFile", files[i]);
+	}
+	
+	$.ajax({
+		url: ctxPath + 'uploadAjaxAction',
+		processData: false,
+		contentType: false,
+		data: formData,
+		type: 'POST',
+		dataType: 'json',
+		//beforeSend: function(xhr) {
+		//	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		//},
+		success: function(result) {
+			console.log(result);
+			showUploadResult(result); // 업로드 처리 함수
+		}
+	}); // $.ajax
+}); // input[type='file']
+function showUploadResult(uploadResultArr) {
+	if(!uploadResultArr || uploadResultArr.length == 0) {
+		return; 
+	}
+	var uploadUL = $(".uploadResult ul");
+	var str = "";
+	$(uploadResultArr).each(function(i, obj){
+		// image type
+		if(obj.image) {
+			var fileCallPath = encodeURIComponent(obj.uploadpath + "/s_" + obj.uuid + "_" + obj.filename);
+			str += '<li data-path="'+obj.uploadpath + '" data-uuid="' + obj.uuid 
+				+ '" data-filename="'+ obj.filename +'" data-type="'+ obj.image +'"><div>';
+			str += '<span>'+ obj.filname +'</span>';
+			str += '<button type="button" data-file="'+ fileCallPath +'" data-type="image" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button><br/>';
+			str += '<img src="'+ ctxPath + 'display?filename=' + fileCallPath + '" alt="' + obj.filename + '" />';
+			str += "</div></li>";
+		} else  {
+			var fileCallPath = encodeURIComponent(obj.uploadpath + "/_" + obj.uuid + "_" + obj.filename);
+			var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+			str += '<li data-path="'+obj.uploadpath + '" data-uuid="' + obj.uuid 
+				+ '" data-filename="'+ obj.filename +'" data-type="'+ obj.image +'"><div>';
+			str += '<span>'+ obj.filename +'</span>';
+			str += '<button type="button" data-file="'+ fileCallPath +'" data-type="file" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button><br/>';
+			str += '<img src="' + ctxPath + 'img/attach.png"></a>';
+			str += '</div></li>';				}
+	});
+	uploadUL.append(str);
+}
+$(".uploadResult").on("click", "button", function(e){
+	console.log("delete file");
+	if(confirm("파일을 삭제하시겠습니까?")) {
+		var targetLi = $(this).closest("li");
+		targetLi.remove();
+	}
+});
+// 게시글 수정 처리 하기
+$("#btnSubmit").on("click", function(e){
+	e.preventDefault();
+	console.log("submit clicked");
+	var str ="";
+	$(".uploadResult ul li").each(function(i, obj){
+		var jobj = $(obj);
+		console.dir(jobj);				
+		str += '<input type="hidden" name="attachList[' + i + '].filename" value="'+ jobj.data("filename") +'"/>';
+		str += '<input type="hidden" name="attachList[' + i + '].uuid" value="'+ jobj.data("uuid") +'"/>';
+		str += '<input type="hidden" name="attachList[' + i + '].uploadpath" value="'+ jobj.data("path") +'"/>';
+		str += '<input type="hidden" name="attachList[' + i + '].fileType" value="'+ jobj.data("type") +'"/>';
+	});
+	fromObj.append(str).submit();
+});
+$("#btnRemove").on("click", function(e){
+	e.preventDefault();
+	if(confirm("삭제하시겠습니까?")) {
+		formObj.attr("action", boardPath + "/remove");
+	} else {
+		return false;
+	}
+	formObj.submit();
+});
+});
+	
+	//뒤로가기
 	function back() {
+		var formObj = $("form[role='form']");
+		var rootPath = '<c:url value="/"/>';
+		var boardPath = rootPath + 'board/${cri.btype.small}';
 		var btype = ${cri.btype.ordinal()};
+		
 		if (btype == 1) { //faq 일 경우 상세보기 페이지 없음/ 리스트로 보내줌
 			self.location = boardPath + "/list";
 		}

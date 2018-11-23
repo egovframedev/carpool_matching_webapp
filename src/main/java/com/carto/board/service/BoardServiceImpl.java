@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.carto.board.dao.AttachDAO;
 import com.carto.board.dao.BoardDAO;
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.board.domain.BoardDTO;
 import com.carto.board.domain.Criteria;
 
@@ -16,75 +18,79 @@ import com.carto.board.domain.Criteria;
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
-	BoardDAO dao;
+	BoardDAO boardDAO;
+
+	@Autowired
+	AttachDAO attachDAO;
 
 	@Override
 	public void regist(BoardDTO dto) throws Exception {
-		dao.regist(dto); // 게시글 생성
-
-		String[] files = dto.getFiles();
-
-		if (files == null) {
+		boardDAO.regist(dto); // 게시글 생성
+		
+		if (dto.getAttachList() == null || dto.getAttachList().size() <= 0) {
 			return;
 		}
 
-		for (String filename : files) {
-			dao.addAttach(filename, dto.getBno()); // 해당 게시글 관련 첨부 목록 데이터 추가
+		for (AttachfileDTO attach : dto.getAttachList()) {
+			attach.setBno(dto.getBno());
+			attachDAO.insert(attach);
 		}
+
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public BoardDTO detail(Integer bno) throws Exception {
-		dao.updateViewCnt(bno); // 조회수 증가
-		return dao.detail(bno); // 해당 게시글 가져오기
+		boardDAO.updateViewCnt(bno); // 조회수 증가
+		
+		return boardDAO.detail(bno); // 해당 게시글 가져오기
 	}
 
 	@Transactional
 	@Override
 	public void modify(BoardDTO dto) throws Exception {
-		dao.modify(dto);
+		boardDAO.modify(dto);
 
-		Integer bno = dto.getBno();
+		attachDAO.deleteAll(dto.getBno());
 
-		dao.deleteAttach(bno); // 해당 게시글 관련 첨부파일 테이블에서 데이터 삭제
+		boardDAO.modify(dto); // 게시글 업데이트
 
-		/*
-		 * String[] files = dto.getFiles(); // 수정된 첨부파일 데이터 가져와서
-		 * 
-		 * if (files == null) { return; }
-		 * 
-		 * for (String filename : files) { dao.replaceAttach(filename, bno); // 다시 해당
-		 * 게시글 관련 첨부파일 데이터 추가 }
-		 */
+		if (dto.getAttachList().size() > 0) {
+			for (AttachfileDTO attach : dto.getAttachList()) {
+				attach.setBno(dto.getBno());
+				attachDAO.insert(attach);
+			}
+		}
+
 	}
 
 	@Transactional
 	@Override
 	public void delete(Integer bno) throws Exception {
-		// dao.deleteAttach(bno); // 해당 게시글 관련 첨부파일 테이블에서 데이터 삭제
-		dao.delete(bno); // 해당 게시글 삭제
+		attachDAO.deleteAll(bno);  // 첨부파일 삭제
+		boardDAO.delete(bno); // 해당 게시글 삭제
 	}
 
 	@Override
 	public List<BoardDTO> list(Criteria cri) throws Exception {
-		return dao.list(cri);
+		return boardDAO.list(cri);
 	}
 
 	@Override
 	public int listCount(Criteria cri) throws Exception {
-		return dao.listCount(cri);
+		return boardDAO.listCount(cri);
 	}
 
 	@Override
-	public List<String> getAttach(Integer bno) throws Exception {
-		return dao.getAttach(bno);
+	public List<AttachfileDTO> getAttach(Integer bno) throws Exception {
+		return boardDAO.getAttach(bno);
 	}
 
+	// 답글 작성 부분
 	@Override
 	public void reply(BoardDTO dto) throws Exception {
-		dao.addreply(dto);
-		dao.reply(dto);
+		boardDAO.addreply(dto);
+		boardDAO.reply(dto);
 	}
 
 }

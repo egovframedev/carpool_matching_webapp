@@ -2,6 +2,7 @@ package com.carto.board.dao;
 
 import java.util.List;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.board.domain.BoardDTO;
 import com.carto.board.domain.Criteria;
 
@@ -19,13 +20,11 @@ public interface BoardDAO {
 	
 	public int listCount(Criteria cri) throws Exception; // 검색에 따른 데이터 갯수 반환
 	
-	public void updateReplyCnt(Integer bno, int amount) throws Exception; // 댓글 수 갱신
-	
 	public void updateViewCnt(Integer bno) throws Exception; // 조회수 카운트
 	
 	public void addAttach(String filename, Integer bno) throws Exception;  // 첨부 파일 추가
 	
-	public List<String> getAttach(Integer bno) throws Exception; // 첨부 파일 목록 가져오기 
+	public List<AttachfileDTO> getAttach(Integer bno) throws Exception; // 첨부 파일 목록 가져오기 
 	
 	public void deleteAttach(Integer bno) throws Exception; // 첨부 파일 삭제
 	 

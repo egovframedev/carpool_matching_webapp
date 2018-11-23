@@ -101,7 +101,7 @@ CREATE TABLE `CARPOOL_MATCH` (
 	`match_date` TIMESTAMP    NULL COMMENT '매칭날짜', -- 매칭날짜
 	`progress`   TINYINT      NULL COMMENT '진행상황', -- 진행상황 (대기 0 ,승인 1 , 완료 2 취소 3)
 	`payno`      VARCHAR(100) NULL COMMENT '결제번호'  -- 결제번호
-	'isdriver'   TINYINT	  NULL COMMENT '드라이버 체크' --드라이버 (1 드라이버,0 동승자)
+	`isdriver`   TINYINT	  NULL COMMENT '드라이버 체크' -- 드라이버 (1 드라이버,0 동승자)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '카풀매칭';
 
 -- 주소록
