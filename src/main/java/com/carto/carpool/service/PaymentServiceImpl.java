@@ -40,4 +40,5 @@ public class PaymentServiceImpl implements PaymentService {
 		return payDAO.selectList();
 	}
  
+	
 }
