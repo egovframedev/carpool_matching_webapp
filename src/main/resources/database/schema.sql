@@ -1,41 +1,34 @@
 -- 회원
 CREATE TABLE `member` (
-	`mno` INT(11) NOT NULL AUTO_INCREMENT COMMENT '회원번호',
-	`mstate` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '회원상태',
-	`userid` VARCHAR(50) NOT NULL COMMENT '아이디',
-	`userpw` VARCHAR(128) NOT NULL COMMENT '비밀번호',
-	`name` VARCHAR(50) NOT NULL COMMENT '이름',
-	`birth` VARCHAR(10) NULL DEFAULT NULL COMMENT '생년월일',
-	`email` VARCHAR(50) NOT NULL COMMENT '이메일',
-	`phone` VARCHAR(20) NULL DEFAULT NULL COMMENT '전화번호',
-	`gender` TINYINT(4) NULL DEFAULT '1' COMMENT '성별',
-	`approval_status` VARCHAR(6) NULL DEFAULT 'false' COMMENT '이메일인증상태',
-	`approval_key` VARCHAR(10) NULL DEFAULT NULL COMMENT '이메일 인증키',
-	`regdate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '가입날짜',
-	`pwdate` TIMESTAMP NULL DEFAULT NULL COMMENT '비번변경일자',
-	`logdate` TIMESTAMP NULL DEFAULT NULL COMMENT '로그인최근날짜',
-	`photo` VARCHAR(100) NULL DEFAULT NULL COMMENT '프로필사진',
-	`enabled` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '사용여부',
+	`mno`          INT(11)       NOT NULL AUTO_INCREMENT COMMENT '회원번호',
+	`mstate`       TINYINT(4)    NOT NULL DEFAULT '0'    COMMENT '회원상태',
+	`userid`       VARCHAR(50)   NOT NULL                COMMENT '아이디',
+	`userpw`       VARCHAR(128)  NOT NULL                COMMENT '비밀번호',
+	`name`         VARCHAR(50)   NOT NULL                COMMENT '이름',
+	`birth`        VARCHAR(10)   NULL DEFAULT NULL       COMMENT '생년월일',
+	`email`        VARCHAR(50)   NOT NULL                COMMENT '이메일',
+	`phone`        VARCHAR(20)   NULL DEFAULT NULL       COMMENT '전화번호',
+	`gender`       TINYINT(4)    NULL DEFAULT '1'        COMMENT '성별',
+	`approval_status` VARCHAR(6) NULL DEFAULT 'false'    COMMENT '이메일인증상태',
+	`approval_key` VARCHAR(10)   NULL DEFAULT NULL       COMMENT '이메일 인증키',
+	`regdate`      TIMESTAMP     NULL DEFAULT CURRENT_TIMESTAMP COMMENT '가입날짜',
+	`pwdate`       TIMESTAMP     NULL DEFAULT NULL       COMMENT '비번변경일자',
+	`logdate`      TIMESTAMP     NULL DEFAULT NULL       COMMENT '로그인최근날짜',
+	`photo`        VARCHAR(100)  NULL DEFAULT NULL       COMMENT '프로필사진',
+	`enabled`      TINYINT(4)    NOT NULL DEFAULT '1'    COMMENT '사용여부',
 	PRIMARY KEY (`mno`),
 	UNIQUE INDEX `IX_USERID` (`userid`),
 	UNIQUE INDEX `IX_EMAIL` (`email`)
-)
-COMMENT='회원'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB;
+) COMMENT='회원' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 CREATE TABLE `member_auth` (
-	`userid` VARCHAR(50) NOT NULL COMMENT '아이디',
-	`authority` VARCHAR(50) NOT NULL COMMENT '권한',
-	`sessionKey` VARCHAR(100) NULL DEFAULT NULL COMMENT '로그인유지키',
-	`sessionLimit` TIMESTAMP NULL DEFAULT NULL COMMENT '로그인유지시간',
+	`userid`       VARCHAR(50)  NOT NULL          COMMENT '아이디',
+	`authority`    VARCHAR(50)  NOT NULL          COMMENT '권한',
+	`sessionKey`   VARCHAR(100) NULL DEFAULT NULL COMMENT '로그인유지키',
+	`sessionLimit` TIMESTAMP    NULL DEFAULT NULL COMMENT '로그인유지시간',
 	INDEX `FK_MEMBER_AUTH` (`userid`),
 	CONSTRAINT `FK_MEMBER_AUTH` FOREIGN KEY (`userid`) REFERENCES `member` (`userid`)
-)
-COMMENT='회원 권한'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
+) COMMENT='회원 권한' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 -- 운전자
 CREATE TABLE `DRIVER` (
@@ -60,35 +53,62 @@ COMMENT '운전자';
 
 -- 카풀정보
 CREATE TABLE `carpool_info` (
-	`cpno` INT(11) NOT NULL AUTO_INCREMENT COMMENT '카풀번호',
-	`start_point` VARCHAR(200) NULL DEFAULT NULL COMMENT '출발지 주소',
-	`cptype` TINYINT(1) NULL DEFAULT NULL,
-	`end_point` VARCHAR(200) NULL DEFAULT NULL COMMENT '목적지 주소',
-	`start_long` VARCHAR(50) NULL DEFAULT NULL COMMENT '출발지 좌표(경도)',
-	`start_lat` VARCHAR(50) NULL DEFAULT NULL COMMENT '출발지 좌표(위도)',
-	`end_long` VARCHAR(50) NULL DEFAULT NULL COMMENT '목적지 좌표(경동)',
-	`end_lat` VARCHAR(50) NULL DEFAULT NULL COMMENT '목적지 좌표(위도)',
-	`start_datetime` TIMESTAMP NULL DEFAULT NULL COMMENT '출발시간',
-	`seat_num` TINYINT(4) NULL DEFAULT NULL COMMENT '카풀인원',
-	`charge` INT(11) NULL DEFAULT NULL COMMENT '금액',
-	`seat_opt` TINYINT(1) NULL DEFAULT NULL COMMENT '자리설정',
-	`drive_opt` TINYINT(2) NULL DEFAULT NULL COMMENT '운행조건',
-	`trunk_use` TINYINT(1) NULL DEFAULT NULL COMMENT '트렁크이용',
-	`smoke_use` TINYINT(1) NULL DEFAULT NULL COMMENT '흡연여부',
-	`req_msg` VARCHAR(300) NULL DEFAULT NULL COMMENT '요구사항',
-	`mno` INT(11) NULL DEFAULT NULL COMMENT '작성회원번호',
-	`reg_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성날자',
+	`cpno`           INT(11)      NOT NULL AUTO_INCREMENT COMMENT '카풀번호',
+	`start_point`    VARCHAR(200) NULL DEFAULT NULL COMMENT '출발지 주소',
+	`cptype`         TINYINT(1)   NULL DEFAULT NULL,
+	`end_point`      VARCHAR(200) NULL DEFAULT NULL COMMENT '목적지 주소',
+	`start_long`     VARCHAR(50)  NULL DEFAULT NULL COMMENT '출발지 좌표(경도)',
+	`start_lat`      VARCHAR(50)  NULL DEFAULT NULL COMMENT '출발지 좌표(위도)',
+	`end_long`       VARCHAR(50)  NULL DEFAULT NULL COMMENT '목적지 좌표(경동)',
+	`end_lat`        VARCHAR(50)  NULL DEFAULT NULL COMMENT '목적지 좌표(위도)',
+	`start_datetime` TIMESTAMP    NULL DEFAULT NULL COMMENT '출발시간',
+	`seat_num`       TINYINT(4)   NULL DEFAULT NULL COMMENT '카풀인원',
+	`charge`         INT(11)      NULL DEFAULT NULL COMMENT '금액',
+	`seat_opt`       TINYINT(1)   NULL DEFAULT NULL COMMENT '자리설정',
+	`drive_opt`      TINYINT(2)   NULL DEFAULT NULL COMMENT '운행조건',
+	`trunk_use`      TINYINT(1)   NULL DEFAULT NULL COMMENT '트렁크이용',
+	`smoke_use`      TINYINT(1)   NULL DEFAULT NULL COMMENT '흡연여부',
+	`req_msg`        VARCHAR(300) NULL DEFAULT NULL COMMENT '요구사항',
+	`mno`            INT(11)      NULL DEFAULT NULL COMMENT '작성회원번호',
+	`reg_date`       TIMESTAMP    NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성날자',
 	PRIMARY KEY (`cpno`), -- 카풀정보 기본키
 	INDEX `FK_MEMBER_TO_CARPOOL_INFO` (`mno`),
 	CONSTRAINT `FK_MEMBER_TO_CARPOOL_INFO` FOREIGN KEY (`mno`) REFERENCES `member` (`mno`)
 ) COMMENT='카풀정보'
 COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
+CREATE TABLE `carpool_match` (
+	`mno`        INT(11)      NOT NULL          COMMENT '회원번호',
+	`cpno`       INT(11)      NOT NULL          COMMENT '카풀번호',
+	`match_date` TIMESTAMP    NULL DEFAULT NULL COMMENT '매칭날짜',
+	`progress`   TINYINT(4)   NULL DEFAULT NULL COMMENT '진행상황(대기 0, 승인 1, 완료 2, 취소 3)',
+	`payno`      VARCHAR(100) NULL DEFAULT NULL COMMENT '결제번호',
+	`isdriver`   TINYINT(1)   NULL DEFAULT NULL COMMENT '드라이버 체크(드라이버1, 동승자0)',
+	PRIMARY KEY (`mno`, `cpno`),
+	INDEX `FK_CARPOOL_INFO_TO_CARPOOL_MATCH` (`cpno`),
+	INDEX `FK_PAYMENT_TO_CARPOOL_MATCH` (`payno`),
+	CONSTRAINT `FK_CARPOOL_INFO_TO_CARPOOL_MATCH` FOREIGN KEY (`cpno`) REFERENCES `carpool_info` (`cpno`),
+	CONSTRAINT `FK_MEMBER_TO_CARPOOL_MATCH` FOREIGN KEY (`mno`) REFERENCES `member` (`mno`),
+	CONSTRAINT `FK_PAYMENT_TO_CARPOOL_MATCH` FOREIGN KEY (`payno`) REFERENCES `payment` (`payno`)
+) COMMENT='카풀매칭' COLLATE='utf8_general_ci' ENGINE=InnoDB
+;
+
+-- 카풀매칭
+CREATE TABLE `CARPOOL_MATCH` (
+	`matchno`    INT          NULL COMMENT '매칭번호', -- 매칭번호
+	`mno`        INT          NULL COMMENT '회원번호', -- 회원번호
+	`cpno`       INT          NULL COMMENT '카풀번호', -- 카풀번호
+	`match_date` TIMESTAMP    NULL COMMENT '매칭날짜', -- 매칭날짜
+	`progress`   TINYINT      NULL COMMENT '진행상황', -- 진행상황 (대기 0 ,승인 1 , 완료 2 취소 3)
+	`payno`      VARCHAR(100) NULL COMMENT '결제번호'  -- 결제번호
+	'isdriver'   TINYINT	  NULL COMMENT '드라이버 체크' --드라이버 (1 드라이버,0 동승자)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '카풀매칭';
+
 -- 주소록
 CREATE TABLE `ADDRESS` (
 	`mno`       INT          NULL COMMENT '회원번호', -- 회원번호
 	`addr_type` TINYINT      NULL COMMENT '주소구분', -- 주소구분
-	`address`   VARCHAR(200) NULL COMMENT '주소지', -- 주소지
+	`address`   VARCHAR(200) NULL COMMENT '주소지',   -- 주소지
 	`location`  VARCHAR(100) NULL COMMENT '주소좌표' -- 주소좌표
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '주소록';
@@ -142,17 +162,7 @@ CREATE TABLE `ATTACHMENT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '첨부파일';
 
--- 카풀매칭
-CREATE TABLE `CARPOOL_MATCH` (
-	`matchno`    INT          NULL COMMENT '매칭번호', -- 매칭번호
-	`mno`        INT          NULL COMMENT '회원번호', -- 회원번호
-	`cpno`       INT          NULL COMMENT '카풀번호', -- 카풀번호
-	`match_date` TIMESTAMP    NULL COMMENT '매칭날짜', -- 매칭날짜
-	`progress`   TINYINT      NULL COMMENT '진행상황', -- 진행상황 (대기 0 ,승인 1 , 완료 2 취소 3)
-	`payno`      VARCHAR(100) NULL COMMENT '결제번호' -- 결제번호
-	'isdriver'   TINYINT	  NULL COMMENT '드라이버 체크' --드라이버 (1 드라이버,0 동승자)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
-COMMENT '카풀매칭';
+
 
 -- 결제내역
 CREATE TABLE `PAYMENT` (
@@ -219,42 +229,9 @@ ALTER TABLE `GRADE`
 			`mno` -- 회원번호
 		);
 
--- 첨부파일
-ALTER TABLE `ATTACHMENT`
-	ADD CONSTRAINT `FK_BOARD_TO_ATTACHMENT` -- 게시판 -> 첨부파일
-		FOREIGN KEY (
-			`bno` -- 게시판번호
-		)
-		REFERENCES `BOARD` ( -- 게시판
-			`bno` -- 게시판번호
-		);
 
--- 카풀매칭
-ALTER TABLE `CARPOOL_MATCH`
-	ADD CONSTRAINT `FK_MEMBER_TO_CARPOOL_MATCH` -- 회원 -> 카풀매칭
-		FOREIGN KEY (
-			`mno` -- 회원번호
-		)
-		REFERENCES `MEMBER` ( -- 회원
-			`mno` -- 회원번호
-		);
 
--- 카풀매칭
-ALTER TABLE `CARPOOL_MATCH`
-	ADD CONSTRAINT `FK_CARPOOL_INFO_TO_CARPOOL_MATCH` -- 카풀정보 -> 카풀매칭
-		FOREIGN KEY (
-			`cpno` -- 카풀번호
-		)
-		REFERENCES `CARPOOL_INFO` ( -- 카풀정보
-			`cpno` -- 카풀번호
-		);
 
--- 카풀매칭
-ALTER TABLE `CARPOOL_MATCH`
-	ADD CONSTRAINT `FK_PAYMENT_TO_CARPOOL_MATCH` -- 결제내역 -> 카풀매칭
-		FOREIGN KEY (
-			`payno` -- 결제번호
-		)
-		REFERENCES `PAYMENT` ( -- 결제내역
-			`payno` -- 결제번호
-		);
+
+
+

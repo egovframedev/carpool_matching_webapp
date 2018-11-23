@@ -24,6 +24,18 @@
 		<result property="reqMsg" column="req_msg" />
 	</resultMap>
 	
+	<resultMap id="carpoolMatchMap" type="CarpoolMatchDTO">
+		<id property="matchno" column="matchno" />
+		<result property="mno" column="mat_mno"/>
+		<result property="cpno" column="cpno"/>
+		<result property="matchDate" column="match_date"/>
+		<result property="progress" column="progress"/>
+		<result property="payno" column="payno"/>
+		<result property="driverChk" column="isdriver"/>
+		<collection property="CarpoolDTO" resultMap="carpoolMap" fetchType="lazy"/>
+	</resultMap>
+	
+	<!-- 카풀 요청/제공 관련 -->
 	<insert id="insertCarpool">
 		INSERT INTO carpool_info (
 			cptype, mno, 
@@ -57,6 +69,39 @@
 				AND startDateTime >= #{startDateTime}
 			</if>
 		</where>
-		ORDER BY startDateTime DESC;
+		ORDER BY startDateTime DESC
 	</select>
+	
+	<!-- 결제 관련 쿼리 -->
+	<select id="selectMatInfo" parameterType="Integer" resultType="carpoolMatchMap">
+  		SELECT 
+  			matchno,
+  			mat.mno AS mat_mno,
+	    	match_date,
+    		charge,
+    		start_point,
+		    end_point,
+		    reg_date,
+		    payno
+    	FROM carpool_info cp
+		RIGHT JOIN carpool_match mat ON  cp.cpno = mat.cpno
+ 		WHERE mat.mno = #{mno}
+  			 AND mat.progress = 1
+	</select>
+	<select id="selectMatInfoByPayno" parameterType="String" resultType="carpoolMatchMap">
+		SELECT 
+		    matchno,
+  			mat.mno AS mat_mno,
+	    	match_date,
+    		charge,
+    		start_point,
+		    end_point,
+		    reg_date,
+		    payno
+	    FROM carpool_info cp
+		RIGHT JOIN carpool_match mat ON  cp.cpno = mat.cpno
+	 	WHERE mat  mat.payno = #{payno}
+	  		AND mat.progress =1
+	</select>
+	
 </mapper>
