@@ -9,4 +9,4 @@ public interface PaymentService {
 	public Object SelectOne(int num);
 	public Integer RemoveOne(int num);
 	public List<PaymentDTO> selectList();
-}
+} 

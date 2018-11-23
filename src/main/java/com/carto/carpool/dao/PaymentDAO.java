@@ -10,4 +10,5 @@ public interface PaymentDAO {
 	public CarpoolMatchDTO selectOne(int num);            // 결제 정보 가져오기
 	public List<PaymentDTO> selectList();        // 결제 목록
 	public Integer removeOne(int num);           // 결제 삭제
+	
 }

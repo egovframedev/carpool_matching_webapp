@@ -30,4 +30,4 @@ public class CarpoolDTO {
 	
 	private String reqMsg;        // 요구사항
 	
-}
+} 

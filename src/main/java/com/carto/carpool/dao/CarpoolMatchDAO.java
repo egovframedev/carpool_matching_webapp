@@ -16,3 +16,4 @@ public interface CarpoolMatchDAO {
 	public Object selectMatInfoByPayno(HashMap<String, Object> map);
 	public Object updateCom(HashMap<String, Object> map);
 }
+ 

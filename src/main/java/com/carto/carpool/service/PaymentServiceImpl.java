@@ -39,5 +39,5 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<PaymentDTO> selectList() {
 		return payDAO.selectList();
 	}
-
+ 
 }

@@ -83,4 +83,5 @@ public class PaymentController {
 	public String view4() {
 		return "pay/paytest";
 	}
+	
 }
