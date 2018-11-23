@@ -82,7 +82,7 @@
 
 	<!-- 로그인 -->
 	<select id="login" resultType="MemberDTO">
-		SELECT mno, mstate, mem.userid, userpw, name, email, pwdate, approval_status, enabled, auth.authority
+		SELECT mno, mstate, mem.userid, userpw, name,phone,email, pwdate, approval_status, enabled, auth.authority
 		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.userid = auth.userid
 		WHERE mem.userid = #{userid} AND mem.userpw = #{userpw}
 	</select>

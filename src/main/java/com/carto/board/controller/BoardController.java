@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.board.domain.BoardDTO;
 import com.carto.board.domain.BoardType;
 import com.carto.board.domain.Criteria;
@@ -175,7 +176,7 @@ public class BoardController {
 
 	@RequestMapping("/getAttach/{bno}")
 	@ResponseBody
-	public List<String> getAttach(@PathVariable("bno") Integer bno) throws Exception {
+	public List<AttachfileDTO> getAttach(@PathVariable("bno") Integer bno) throws Exception {
 		return boardservice.getAttach(bno);
 	}
 

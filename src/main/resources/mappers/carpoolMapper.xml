@@ -2,8 +2,9 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.carto.mappers.CarpoolMapper">
-	<resultMap  id="carpoolMap" type="CarpoolDTO">
+	<mapper namespace="com.carto.mappers.carpoolMapper">
+	
+       <resultMap  id="carpoolMap" type="CarpoolDTO">
 		<id property="cpno" column="cpno" />
 		<result property="cptype" column="cptype"/>
 		<result property="startPoint" column="start_point" />
@@ -14,7 +15,7 @@
 		<result property="endLat" column="end_lat" />
 		<result property="startDateTime" column="start_datetime" />
 		<result property="mno" column="mno" />
-		<result property="regDate" column="regDate" />
+		<result property="regDate" column="reg_date" />
 		<result property="charge" column="charge" />
 		<result property="seatNum" column="seat_num" />
 		<result property="seatOpt" column="seat_opt" />
@@ -29,12 +30,12 @@
 		<result property="mno" column="mat_mno"/>
 		<result property="cpno" column="cpno"/>
 		<result property="matchDate" column="match_date"/>
-		<result property="progress" column="progress"/>
+		<result property="progress" column="progress" 
+			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="Progress"/>
 		<result property="payno" column="payno"/>
 		<result property="driverChk" column="isdriver"/>
-		<collection property="CarpoolDTO" resultMap="carpoolMap" fetchType="lazy"/>
+		<collection property="carpool" resultMap="carpoolMap"/>
 	</resultMap>
-	
 	<!-- 카풀 요청/제공 관련 -->
 	<insert id="insertCarpool">
 		INSERT INTO carpool_info (
@@ -73,22 +74,23 @@
 	</select>
 	
 	<!-- 결제 관련 쿼리 -->
-	<select id="selectMatInfo" parameterType="Integer" resultType="carpoolMatchMap">
+	<select id="selectMatInfo" parameterType="int" resultMap="carpoolMatchMap">
   		SELECT 
   			matchno,
   			mat.mno AS mat_mno,
-	    	match_date,
+	    	mat.match_date,
     		charge,
     		start_point,
 		    end_point,
-		    reg_date,
+		    cp.reg_date,
 		    payno
     	FROM carpool_info cp
-		RIGHT JOIN carpool_match mat ON  cp.cpno = mat.cpno
+		RIGHT JOIN carpool_match mat ON  cp.cpno = mat.cpno 
  		WHERE mat.mno = #{mno}
   			 AND mat.progress = 1
 	</select>
-	<select id="selectMatInfoByPayno" parameterType="String" resultType="carpoolMatchMap">
+	<!-- 세션의 결제리스트출력용 -->
+ 	<select id="selectMatInfoByPayno" parameterType="hashmap" resultMap="carpoolMatchMap">
 		SELECT 
 		    matchno,
   			mat.mno AS mat_mno,
@@ -100,8 +102,29 @@
 		    payno
 	    FROM carpool_info cp
 		RIGHT JOIN carpool_match mat ON  cp.cpno = mat.cpno
-	 	WHERE mat  mat.payno = #{payno}
-	  		AND mat.progress =1
-	</select>
+	 	WHERE  mat.payno = #{payno}
+	  	  AND mat.progress =2
+	  	  AND mat.mno=#{mno}
+	</select> 
+	<update id="updateCom" parameterType="hashmap">
+		   UPDATE carpool_match
+		   SET progress=#{progress}
+		   	,  payno = #{payno}
+		   WHERE matchno=(SELECT matchno
+			FROM (SELECT matchno
+					FROM carpool_match
+				   WHERE mno=#{mno}) a)
+	</update>
 	
+	<select id="selectDriver" resultType="memberDTO" parameterType="Integer">
+		SELECT * 
+ 		  FROM member 
+ 		 WHERE MNO =
+					(SELECT MNO 
+					   FROM CARPOOL_MATCH 
+					  WHERE   carpool_match.isdriver= 1
+							   AND MATCHNO = (SELECT MATCHNO
+												FROM CARPOOL_MATCH
+											    WHERE MNO=#{MNO}))
+	</select>
 </mapper>
