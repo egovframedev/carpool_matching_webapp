@@ -5,12 +5,48 @@
 <mapper namespace="com.carto.mappers.MessageMapper">
 	<resultMap id="messageMap" type="MessageDTO">
 		<id property="msgId" column="msg_id"/>
-		<result property="msgType" column="msg_type" 
-			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="MessageType"/>
+		<result property="msgType" column="msg_type"/>
 		<result property="receiver" column="receiver"/>
 		<result property="sender" column="sender"/>
 		<result property="body" column="body"/>
 		<result property="openDate" column="open_date"/>
 		<result property="sendDate" column="send_date"/>
 	</resultMap>
+	
+	<select id="selectMsgList" resultMap="messageMap">
+		SELECT * 
+		FROM message
+		<where>
+			<if test="senderId != null">
+				sender = #{senderId}
+			</if>
+			<if test="targetId != null">
+				AND receiver = #{targetId}
+			</if>
+			<if test="type != null">
+				AND msg_type = #{type.ordinal}
+			</if>
+		</where>
+		ORDER BY msg_id DESC
+		LIMIT #{pageStart}, ${perPageNum}
+	</select>
+	
+	<insert id="insertMsg">
+		INSERT INTO message (
+			msg_type, receiver, sender, body, open_date, send_date
+		) VALUES (
+			#{msgType}, #{receiver}, #{sender}, #{body}, #{openDate}, sysdate()
+		)
+	</insert>
+	
+	<select id="selectMsg" parameterType="int" resultMap="messageMap">
+		SELECT *
+		FROM message
+		WHERE msg_id = #{msgId}
+	</select>
+	
+	<delete id="deleteMsg" parameterType="int">
+		DELETE FROM message
+		WHERE msg_id = #{msgId}
+	</delete>	
 </mapper>

@@ -73,7 +73,7 @@
 	</select>
 	
 	<!-- 결제 관련 쿼리 -->
-	<select id="selectMatInfo" parameterType="Integer" resultType="carpoolMatchMap">
+	<select id="selectMatInfo" parameterType="Integer" resultMap="carpoolMatchMap">
   		SELECT 
   			matchno,
   			mat.mno AS mat_mno,
@@ -88,7 +88,7 @@
  		WHERE mat.mno = #{mno}
   			 AND mat.progress = 1
 	</select>
-	<select id="selectMatInfoByPayno" parameterType="String" resultType="carpoolMatchMap">
+	<select id="selectMatInfoByPayno" parameterType="String" resultMap="carpoolMatchMap">
 		SELECT 
 		    matchno,
   			mat.mno AS mat_mno,

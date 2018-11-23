@@ -18,26 +18,22 @@ public class MessageDAOImpl implements MessageDAO  {
 	
 	@Override
 	public int insertMsg(MessageDTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.insert(NAMESPACE + ".insertMsg", dto);
 	}
 
 	@Override
 	public MessageDTO selectMsg(Integer msgId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne(NAMESPACE + ".selectMsg", msgId);
 	}
 
 	@Override
 	public List<MessageDTO> selectMsgList(MessageCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectList(NAMESPACE + ".selectMsgList", cri);
 	}
 
 	@Override
 	public int deleteMsg(Integer msgId) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.delete(NAMESPACE + ".deleteMsg", msgId);
 	}
 
 }
