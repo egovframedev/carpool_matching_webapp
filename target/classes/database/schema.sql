@@ -137,7 +137,7 @@ CREATE TABLE `BOARD` (
 	`content`  TEXT         NULL     COMMENT '내용', -- 내용
 	`writer`   VARCHAR(50)  NULL     COMMENT '작성자ID', -- 작성자ID
 	`pwd`      VARCHAR(20)  NULL     COMMENT '비밀번호', -- 비밀번호
-	`reg_date` TIMESTAMP    NULL     COMMENT '작성일', -- 작성일
+	`reg_date` TIMESTAMP 	NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일', -- 작성일
 	`hit`      INT          NULL     COMMENT '조회수', -- 조회수
 	`grpno`    INT          NULL     COMMENT '답변그룹', -- 답변그룹
 	`step`     INT          NULL     COMMENT '답변순서', -- 답변순서
