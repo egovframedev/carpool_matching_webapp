@@ -29,7 +29,6 @@
 	.bigPicture { position: relative; display: flex;; justify-content: center; align-item: center;}
 	.bigPicture img { width: 600px;}
 </style>
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<div class="col-sm-offset-1 col-sm-10">

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ include file="../includes/header.jsp"%>
-
 <style>
 	.uploadResult { width: 100%; background-color: #eee;}
 	.uploadResult ul {display:flex; flex-flow: row; justify-content:center; align-items: center;}
@@ -190,6 +189,7 @@
 			});
 			uploadUL.append(str);
 		}
+		
 		
 		var formObj = $("#writeForm");
 		$("button[type='submit']").on("click", function(e){

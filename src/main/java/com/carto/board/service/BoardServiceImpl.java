@@ -47,6 +47,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.detail(bno); // 해당 게시글 가져오기
 	}
 	
+	
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public List<AttachfileDTO> findBno(Integer bno) throws Exception {

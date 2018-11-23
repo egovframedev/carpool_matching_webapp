@@ -120,6 +120,7 @@
 		SET hit = hit + 1
 		WHERE bno = #{bno}
 	</update>
+	
 
 	<!-- 첨부파일 -->
 	<insert id="addAttach">

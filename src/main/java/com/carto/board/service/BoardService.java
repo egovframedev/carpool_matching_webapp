@@ -26,4 +26,5 @@ public interface BoardService {
 
 	public List<AttachfileDTO> findBno(Integer bno) throws Exception; //첨부파일 불러오기
 	
+	
 }

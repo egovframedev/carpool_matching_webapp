@@ -20,6 +20,7 @@ public class AttachDAOImpl implements AttachDAO {
 		System.out.println(dto);
 		session.insert(namespace + ".insert", dto);
 	}
+	
 
 	@Override
 	public void delete(String uuid) {

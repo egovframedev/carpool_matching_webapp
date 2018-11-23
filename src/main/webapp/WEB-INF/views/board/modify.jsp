@@ -115,6 +115,7 @@
 		}
 	}
 	
+	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880; // 5MB
 	var ctxPath = '<c:url value="/"/>';
@@ -124,6 +125,7 @@
 
 	 $(document).ready(function() {
 		 var formObj = $("#modifyForm");
+		 
 		 
 		//게시글 수정 처리 하기
 		 $("#btnSubmit").on("click", function(e){

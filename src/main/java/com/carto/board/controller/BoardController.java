@@ -77,6 +77,7 @@ public class BoardController {
 		return "board/detail";
 	}
 
+	
 	// 새 게시글 작성
 	@RequestMapping(value = "/regist", method = RequestMethod.GET)
 	public String registGET(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri, Model model)

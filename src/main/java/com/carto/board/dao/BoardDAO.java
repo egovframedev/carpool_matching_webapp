@@ -33,6 +33,5 @@ public interface BoardDAO {
 	public void reply(BoardDTO dto) throws Exception;   // 답글 생성
 
 	public void addreply(BoardDTO dto) throws Exception;   
-	
 
 }

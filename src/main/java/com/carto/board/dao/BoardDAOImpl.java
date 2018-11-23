@@ -19,6 +19,7 @@ public class BoardDAOImpl implements BoardDAO {
 	SqlSessionTemplate session;
 	static String namespace = "com.carto.mappers.BoardMapper";
 
+	
 	@Override
 	public void regist(BoardDTO dto) throws Exception {
 		session.insert(namespace + ".regist", dto);

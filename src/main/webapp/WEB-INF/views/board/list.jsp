@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@page session="false"%>
 <%@ include file="../includes/header.jsp"%>
+
 <!-- Content Wrapper. Containes page content -->
 <div class="content-wrapper">
 	<div class="col-sm-offset-1 col-sm-10">

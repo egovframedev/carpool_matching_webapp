@@ -189,6 +189,7 @@ public class FileController {
 		try {
 			String downloadName = null;
 			
+			
 			if(userAgent.contains("Trident")) {
 				log.info("IE Browser");
 				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+", " ");
