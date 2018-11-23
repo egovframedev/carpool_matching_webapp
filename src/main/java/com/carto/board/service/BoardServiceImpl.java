@@ -41,17 +41,21 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public BoardDTO detail(Integer bno) throws Exception {
+		attachDAO.findByBno(bno); // 첨부파일 가져오기
 		boardDAO.updateViewCnt(bno); // 조회수 증가
 		
 		return boardDAO.detail(bno); // 해당 게시글 가져오기
+	}
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
+	@Override
+	public List<AttachfileDTO> findBno(Integer bno) throws Exception {
+		return attachDAO.findByBno(bno); // 첨부파일 가져오기
 	}
 
 	@Transactional
 	@Override
 	public void modify(BoardDTO dto) throws Exception {
-		boardDAO.modify(dto);
-
-		attachDAO.deleteAll(dto.getBno());
 
 		boardDAO.modify(dto); // 게시글 업데이트
 

@@ -23,5 +23,7 @@ public interface BoardService {
 	public List<AttachfileDTO> getAttach(Integer bno) throws Exception;
 	
 	public void reply(BoardDTO dto) throws Exception;   // 답글 생성
+
+	public List<AttachfileDTO> findBno(Integer bno) throws Exception; //첨부파일 불러오기
 	
 }

@@ -35,9 +35,9 @@
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		<interceptor>
-			<mapping path="/board/**/write"/>
+			<mapping path="/board/**/regist"/>
 			<mapping path="/board/**/modify"/>
-			<mapping path="/board/**/remove"/>
+			<mapping path="/board/**/delete"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>

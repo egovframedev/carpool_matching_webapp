@@ -72,6 +72,7 @@ public class BoardController {
 			throws Exception {
 		log.info("detail---------------------------------------");
 		model.addAttribute(boardservice.detail(bno));
+		model.addAttribute(boardservice.findBno(bno));
 
 		return "board/detail";
 	}
@@ -117,7 +118,7 @@ public class BoardController {
 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modifyPagePOST(@PathVariable("btype") String btype, BoardDTO board, Criteria cri,
-			RedirectAttributes rttr) throws Exception {
+			RedirectAttributes rttr, Model model) throws Exception {
 		log.info("modifyPOST--------------------------------");
 		cri.strToBtype(btype);
 		log.info(cri.toString());
@@ -174,9 +175,9 @@ public class BoardController {
 		return "redirect:/board/" + btype + "/detail?bno=" + board.getBno();
 	}
 
-	@RequestMapping("/getAttach/{bno}")
+	@RequestMapping("/getAttachList")
 	@ResponseBody
-	public List<AttachfileDTO> getAttach(@PathVariable("bno") Integer bno) throws Exception {
+	public List<AttachfileDTO> getAttach(@RequestParam("bno") Integer bno) throws Exception {
 		return boardservice.getAttach(bno);
 	}
 

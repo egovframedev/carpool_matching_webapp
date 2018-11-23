@@ -171,7 +171,7 @@
 				
 				// image type
 				if(obj.image) {
-					var fileCallPath = encodeURIComponent(obj.uploadpath + "/" + obj.uuid + "_" + obj.filename);
+					var fileCallPath = encodeURIComponent(obj.uploadpath + "/s_" + obj.uuid + "_" + obj.filename);
 					str += '<li data-path="'+obj.uploadpath + '" data-uuid="' + obj.uuid 
 						+ '" data-filename="'+ obj.filename +'" data-type="'+ obj.image +'"><div>';
 					str += '<span>'+ obj.filename +'</span>';

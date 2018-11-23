@@ -128,11 +128,9 @@
 		(#{filename}, #{bno})
 	</insert>
 
-	<select id="getAttach" resultType="string">
-		SELECT filename FROM
-		attachfile
+	<select id="getAttach" resultType="attachfileDTO">
+		SELECT * FROM attachfile
 		WHERE bno = #{bno}
-		ORDER BY reg_date;
 	</select>
 
 	<delete id="deleteAttach">

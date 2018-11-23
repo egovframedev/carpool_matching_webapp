@@ -4,6 +4,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page session="false"%>
 <%@ include file=".././includes/header.jsp"%>
+
+<style type="text/css">
+	.board-block {border-top: 1px solid #f4f4f4; padding-top: 10px; margin-top: 10px; font-size: 16px; color:#666;}
+	.board-block .info {list-style: none; padding-left: 10px; overflow: hidden; }
+	.info li, .hit-head, .hit-num { display: inline-block; padding-left: 10px;};
+	.info li.info-head, .hit-head {color: #ddd;}
+	.info li.info-desc {width: 200px;}
+	.hit-num {width: 100px;}
+	.board-attach { padding: 1em; border-top: 1px solid #e1e1e; border-bottom: 1px solid #e1e1e1; background-color: #eee;}
+	.board-attach ul {list-style: none; margin-bottom: 0; padding: 0; }
+	.board-attach ul li {display: inline-block; padding-right: 1.2em;}
+	.board-attach a {color: #333;}
+	.board-attach .fa { color: #888; font-size: 1.2em; padding-right: 8px;}
+	.uploadResult { width: 100%; background-color: #eee;}
+	.uploadResult ul {display:flex; flex-flow: row; justify-content:center; align-items: center;}
+	.uploadResult ul li { position: relative; list-style: none; padding: 10px; align-content: center; text-align: center; }
+	.uploadResult ul li img {height: 80px;}
+	.uploadResult ul li span {color: white;}
+	.uploadResult .del {display: block; position: absolute; top: 0; right: 0; font-size: 20px; font-weight: bold;
+		line-height: 24px;width: 24px; background-color: #e1e1e1;border-radius: 50%;color: red; cursor:pointer;}
+	.bigPictureWrapper {position: absolute; display: none; justify-content: center; align-items: center;top: 0%;
+		width: 100%;height: 100%; background-color: gray; z-index: 100;	background: rgba(255,255,255,0.5);}
+	.bigPicture { position: relative; display: flex;; justify-content: center; align-item: center;}
+	.bigPicture img { width: 600px;}
+</style>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<div class="col-sm-offset-1 col-sm-10">
@@ -69,17 +95,17 @@
 
 							<div class="box-footer">
 								<div class="pull-right">
-									<button type="button" class="btn btn-default" id="btnList">
+									<button type="button" class="btn btn-default" id="btnList" onclick="listGo()">
 										<i class="fa fa-list"></i> 목록
 									</button>
 								</div>
-								<button type="button" class="btn btn-default" id="btnRemove">
+								<button type="button" class="btn btn-default" id="btnRemove" onclick="removeGo()">
 									<i class="fa fa-trash-o"></i> 삭제
 								</button>
-								<button type="button" class="btn btn-default" id="btnModify">
+								<button type="button" class="btn btn-default" id="btnModify"onclick="modifyGo()">
 									<i class="fa fa-edit"></i> 수정
 								</button>
-								<button type="button" class="btn btn-default" id="btnReply">
+								<button type="button" class="btn btn-default" id="btnReply"onclick="replyGo()">
 									<i class="fa fa-pencil"></i> 답글 작성
 								</button>
 							</div>
@@ -110,10 +136,49 @@
 <!-- /.content-wrapper -->
 
 <script type="text/javascript">
+	var bno=${boardDTO.bno};
+	var formObj = $("form[role='form']");
+	var rootPath = '<c:url value="/"/>';
+	var boardPath = rootPath + 'board/${cri.btype.small}';
+	
+	//게시물 목록으로 이동
+	function listGo(){
+		self.location = boardPath + "/list?page=${cri.page}";
+	}
+	//수정 페이지로 이동
+	function modifyGo(){
+		formObj.attr("action", boardPath + "/modify");
+		formObj.attr("method", "get");
+		formObj.submit();
+	}
+	//답글 작성 페이지로 이동
+	function replyGo(){
+		formObj.attr("action", boardPath + "/reply");
+		formObj.attr("method", "get");
+		formObj.submit();
+	}
+	//게시글 삭제
+	function removeGo(){
+		var arr = [];
+		var delConfirm = confirm('해당 게시글을 삭제합니까?');
+		if (delConfirm) {
+			$(".uploadedList li").each(function(index) {
+				arr.push($(this).attr("data-src"));
+			});
+			if (arr.length > 0) {
+				$.post("/deleteAllFiles", {
+					files : arr
+				}, function() {
+					// 첨부 파일 삭제 처리.
+				});
+			}
+			formObj.attr("action", boardPath + "/delete");
+			formObj.submit();
+		}
+	}
+
+
 	$(document).ready(function(){
-		var boardPath = '<c:url value="/board/${cri.btype}/"/>'; 
-		var bno = ${board.bno};
-		var formObj = $("form[role='form']");
 		
 		/* var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
@@ -124,14 +189,13 @@
 		})  */
 		
 		(function(){
-			$.getJSON( boardPath + "getAttachList", {bno: bno} , function(arr){
+			$.getJSON( boardPath + "/getAttachList", {bno: bno} , function(arr){
 				// console.log(arr);
-				alert(arr);
 				var str = "";
 				$(arr).each(function(i, attach){
 					// image type
 					if(attach.fileType) {
-						var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.filename);
+						var fileCallPath = encodeURIComponent(attach.uploadpath + "/s_" + attach.uuid + "_" + attach.filename);
 						str += '<li data-path="'+attach.uploadpath + '" data-uuid="' + attach.uuid 
 							+ '" data-filename="'+ attach.filename +'" data-type="'+ attach.fileType +'"><div>';						
 						str += '<img src="<c:url value="/"/>display?filename=' + fileCallPath + '" class="img-thumbnail" />';
@@ -172,52 +236,6 @@
 			setTimeout(function(){
 				$('.bigPictureWrapper').hide();
 			}, 1000)
-		});
-		
-		
-		
-		
-		
-		
-		
-		//var bno=${boardDTO.bno};
-		var formObj = $("form[role='form']");
-		var rootPath = '<c:url value="/"/>';
-		var boardPath = rootPath + 'board/${cri.btype.small}';
-		//게시물 목록으로 이동
-		$("#btnList").on("click", function() {
-			self.location = boardPath + "/list?page=${cri.page}";
-		});
-		// 수정 페이지로 이동
-		$("#btnModify").on("click", function() {
-			formObj.attr("action", boardPath + "/modify");
-			formObj.attr("method", "get");
-			formObj.submit();
-		});
-		// 답글 작성 페이지로 이동
-		$("#btnReply").on("click", function() {
-			formObj.attr("action", boardPath + "/reply");
-			formObj.attr("method", "get");
-			formObj.submit();
-		});
-		// 삭제 페이지로 이동
-		$("#btnRemove").on("click", function() {
-			var arr = [];
-			var delConfirm = confirm('해당 게시글을 삭제합니까?');
-			if (delConfirm) {
-				$(".uploadedList li").each(function(index) {
-					arr.push($(this).attr("data-src"));
-				});
-				if (arr.length > 0) {
-					$.post("/deleteAllFiles", {
-						files : arr
-					}, function() {
-						// 첨부 파일 삭제 처리.
-					});
-				}
-				formObj.attr("action", boardPath + "/delete");
-				formObj.submit();
-			}
 		});
 		
 	});
