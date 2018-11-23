@@ -80,7 +80,7 @@ COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 -- 카풀매칭
 CREATE TABLE `carpool_match` (
-	`matchno`   INT(11) NOT NULL AUTO_INCREMENT COMMENT '매치번호',
+	`matchno`    INT(11) NOT NULL AUTO_INCREMENT COMMENT '매칭번호',
 	`mno`        INT(11)      NOT NULL           COMMENT '회원번호',
 	`cpno`       INT(11)      NOT NULL           COMMENT '카풀번호',
 	`match_date` TIMESTAMP    NULL DEFAULT NULL  COMMENT '매칭날짜',
@@ -161,8 +161,8 @@ COMMENT '첨부파일';
 CREATE TABLE `PAYMENT` (
 	`payno`    VARCHAR(100) NOT NULL COMMENT '결제번호', -- 결제번호
 	`pay_date` TIMESTAMP    NULL     COMMENT '결제일자', -- 결제일자
-	`amount`   INT          NULL     COMMENT '결제금액'  -- 결제금액
-	`apply_num`VARCHAR(100) NULL     COMMENT '승인번호', -- 승인번호
+	`amount`   INT          NULL     COMMENT '결제금액',  -- 결제금액
+	`apply_num`VARCHAR(100) NULL     COMMENT '승인번호' -- 승인번호
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '결제내역';
 
