@@ -17,5 +17,4 @@ public enum BoardType {
 		return this.toString().toLowerCase();
 	}
 	
-
 }

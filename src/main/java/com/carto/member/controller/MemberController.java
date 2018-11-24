@@ -79,13 +79,13 @@ public class MemberController {
 
 	// 로그인 처리
 	@RequestMapping(value = "/loginPost", method=RequestMethod.POST)
-	public String loginPost(LoginDTO dto, HttpSession session, Model model, RedirectAttributes rttr) throws Exception {
+	public String loginPost(LoginDTO dto, HttpSession session, Model model, RedirectAttributes rttr) {
 		log.info("POST /loginPost ..... " + dto);
 		MemberDTO loginMember = null;
 		try {
 			loginMember= service.login(dto);
 			log.info(loginMember);
-			if(loginMember == null) return null;
+			if(loginMember == null) return "redirect:/login";
 			if(dto.isUseCookie()) {
 				int amount = 60 * 60 * 24 * 7;
 				Date sessionLimit = new Date(System.currentTimeMillis()+(1000*amount));
@@ -98,6 +98,11 @@ public class MemberController {
 			log.info("비인가 사용자 입니다.");
 			rttr.addFlashAttribute("error", "등록하신 이메일을 통하여 인증바랍니다.");
 			return "redirect:/login";
+		} catch(NullPointerException e) {
+			rttr.addFlashAttribute("error", "존재하지 않은 계정이거나 잘못 입력하였습니다.");
+			return "redirect:/login";
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return null;
