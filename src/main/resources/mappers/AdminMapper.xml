@@ -5,10 +5,12 @@
 <mapper namespace="com.carto.mappers.AdminMapper">
 
 	<!-- 회원관리 목록 -->
-	<select id="memberList" resultType="memberDTO" parameterType="memberDTO">
+	<select id="memberList" resultType="memberDTO"
+		parameterType="memberDTO">
 		select *
 		from member mem, member_auth m_auth
-		where mem.userid=m_auth.userid;
+		where
+		mem.userid=m_auth.userid;
 	</select>
 
 	<!-- 페이징 -->
@@ -19,7 +21,7 @@
 		<include refid="search" />
 	</select>
 
-	<!-- 검색 쿼리  아이디 이름 전화번호 회원타입 이메일-->
+	<!-- 검색 쿼리 아이디 이름 전화번호 회원타입 이메일 -->
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 'id'.toString()">
@@ -32,12 +34,22 @@
 				AND phone LIKE CONCAT('%', #{keyword}, '%')
 			</if>
 			<if test="searchType == 'type'.toString()">
-				AND (authority LIKE CONCAT('%', #{keyword}, '%') 
+				AND (authority LIKE CONCAT('%', #{keyword}, '%')
 			</if>
 			<if test="searchType == 'email'.toString()">
-				AND (email LIKE CONCAT('%', #{keyword}, '%') 
+				AND (email LIKE CONCAT('%', #{keyword}, '%')
 			</if>
 		</if>
 	</sql>
+
+	<select id="selectMember" resultType="memberDTO">
+		select *
+		from member mem,
+		member_auth m_auth
+		where
+		mem.userid=m_auth.userid
+		and mem.mno = #{mno}
+
+	</select>
 
 </mapper>

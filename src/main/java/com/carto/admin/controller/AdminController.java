@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carto.admin.service.AdminService;
 import com.carto.board.domain.Criteria;
@@ -40,17 +41,18 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String membermodifyGET() {
+	public String membermodifyGET(@RequestParam("mno") int mno, Model model) throws Exception {
 		log.info("membermodifyGET-----------------------");
-		
+
+		model.addAttribute("member", adminservice.selectMember(mno));
+
 		return "admin/memberModify";
 	}
 
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String membermodifyPOST() {
 		log.info("membermodifyPOST-----------------------");
-		
-		
+
 		return "admin/memberList";
 	}
 

@@ -83,7 +83,7 @@
 							</thead>
 							<tbody>
 								<form role="form" action="" method="post">
-								<input type="hidden" id="mno" name="mno" />
+									<input type="hidden" id="mno" name="mno" />
 									<c:forEach var="member" items="${list}" varStatus="status">
 										<tr role="row">
 											<td>${member.mno}</td>
@@ -94,7 +94,8 @@
 											<td>${member.authority}</td>
 											<td>${member.email}</td>
 											<td>${member.approval_status}</td>
-											<td><a href="<c:url value='/admin/member/modify?mno=#{mno }'/>"><i class="fa fa-pencil-square-o"></i></a></td>
+											<td><a  onclick="modifyGo(${member.mno })"><i
+													class="fa fa-pencil-square-o"></i></a></td>
 											<td><a href=""><i class="fa fa-trash"></i></a></td>
 											<td><a href=""><i class="fa fa-file-image-o"></i></a></td>
 										</tr>
@@ -135,19 +136,30 @@
 </div>
 
 <script>
-	$(document).ready(function() {
-		$("#btnSearch").on("click",function(evt) {
+	$(document).ready(function() {	
+		$("#btnSearch").on("click",	function(evt) {
 			evt.preventDefault();
 			console.log("btnSearch Click......");
-			self.location = "list"	
+			self.location = "list"
 							+ '${pageMaker.makeQuery(1)}'
 							+ '&searchType='
 							+ $("select[name='searchType'] option:selected").val()
 							+ "&keyword="
 							+ $('#inputKeyword').val();
-			});
+		});
 	});
 	
+	function modifyGo(mno){
+		var formObj = $("form[role='form']");
+		var rootPath = '<c:url value="/"/>';
+		var boardPath = rootPath + 'admin/member';
+		
+		formObj.attr("action", boardPath + "/modify");
+		formObj.attr("method", "get");
+		$("#mno").val(mno);
+		formObj.submit();
+		
+	}
 </script>
 
 <%@ include file="../includes/footer.jsp"%>

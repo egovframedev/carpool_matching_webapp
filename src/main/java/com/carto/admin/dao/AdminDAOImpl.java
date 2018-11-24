@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.carto.board.domain.Criteria;
+import com.carto.member.domain.MemberDTO;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -26,4 +27,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return session.selectOne(namespace + ".listCount", cri);
 	}
 
+	@Override
+	public MemberDTO selectMember(Integer mno) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".selectMember" ,mno);
+	}
 }

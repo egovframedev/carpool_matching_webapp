@@ -20,9 +20,57 @@
 			</ol>
 		</section>
 		<!-- Main content -->
+		<form action="" method="post">
+			<input type="hidden" id="mno" name="mno" />
 
-
-
+			<div class="col-md-4">
+				<div class="box box-widget widget-user">
+					<div class="widget-user-header bg-aqua-active">
+						<h3 class="widget-user-username">id ${member.userid }</h3>
+						<h5 class="widget-user-desc">name ${memberDTO.name }</h5>
+					</div>
+					<div class="widget-user-image">
+						<img class="img-circle" src="../dist/img/user1-128x128.jpg"
+							alt="회원 사진">
+					</div>
+					<div class="box-footer">
+						<div class="row">
+							<div class="col-sm-4 border-right">
+								<div class="description-block">
+									<h5 class="description-header">3,200</h5>
+									<span class="description-text">매상</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-4 border-right">
+								<div class="description-block">
+									<h5 class="description-header">13,000</h5>
+									<span class="description-text">다음</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-4">
+								<div class="description-block">
+									<h5 class="description-header">35 세</h5>
+									<span class="description-text">제작품</span>
+								</div>
+								<!-- /.description-block -->
+							</div>
+							<!-- /.col -->
+						</div>
+						<!-- /.row -->
+					</div>
+					<div class="box-footer no-padding">
+						<ul class="nav nav-stacked">
+							<li><input type="text" value="${memberDTO.userid }"></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /.widget-user -->
+			</div>
+		</form>
 
 	</div>
 </div>
