@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolInfoDTO;
 
 public interface CarpoolDAO {
 	/**
@@ -19,5 +20,5 @@ public interface CarpoolDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CarpoolDTO> getList(CarpoolCriteria cri) throws Exception;
+	public List<CarpoolInfoDTO> getList(CarpoolCriteria cri) throws Exception;
 }

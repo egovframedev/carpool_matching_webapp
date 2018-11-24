@@ -2,17 +2,23 @@ package com.carto.carpool.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolInfoDTO;
 import com.carto.carpool.service.CarpoolService;
 
 import lombok.extern.log4j.Log4j;
@@ -37,9 +43,13 @@ public class CarpoolRequestController {
 	
 	// 카풀 요청 리스트
 	@GetMapping("/request/list") 
-	public String list() {
+	public String list(@ModelAttribute("cri") CarpoolCriteria cri, Model model) throws Exception {
 		log.info("GET /request/list.............");
 		String view = "carpool/list_request";
+		
+		List<CarpoolInfoDTO> carpoolList = service.list(cri);
+		model.addAttribute("list", carpoolList);
+		//carpoolList.forEach(carpool -> log.info(carpool));
 		return view;
 	}
 	
@@ -59,5 +69,12 @@ public class CarpoolRequestController {
 		} else {
 			return null;
 		}
+	}
+	
+	@GetMapping("/request/detail")
+	public String detail(@RequestParam("cpno") Integer cpno) throws Exception {
+		log.info("GET /request/detail.............cpno:" + cpno);
+		String view = "carpool/detail_request";
+		return view;
 	}
 }

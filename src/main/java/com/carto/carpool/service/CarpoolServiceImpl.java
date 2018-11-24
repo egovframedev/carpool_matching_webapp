@@ -1,13 +1,12 @@
 package com.carto.carpool.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.carto.carpool.dao.CarpoolDAO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolInfoDTO;
 
 @Service
 public class CarpoolServiceImpl implements CarpoolService {
@@ -23,7 +22,7 @@ public class CarpoolServiceImpl implements CarpoolService {
 
 	// 카풀 목록 서비스
 	@Override
-	public List<CarpoolDTO> list(CarpoolCriteria cri) throws Exception {
+	public List<CarpoolInfoDTO> list(CarpoolCriteria cri) throws Exception {
 		return carpoolDAO.getList(cri);
 	}
 

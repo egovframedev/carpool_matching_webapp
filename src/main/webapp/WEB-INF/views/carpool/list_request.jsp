@@ -34,13 +34,13 @@
 							<div class="col-md-6">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-map-marker text-danger" aria-hidden="true"></i> 출발지</span>
-									<input type="text" class="form-control" name="startPoint" placeholder="출발지 입력...">							
+									<input type="text" class="form-control" name="searchStart" placeholder="출발지 입력...">							
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-map-marker text-primary" aria-hidden="true"></i> 도착지</span>
-									<input type="text" class="form-control" name="endPoint" placeholder="도착지 입력...">							
+									<input type="text" class="form-control" name="searchEnd" placeholder="도착지 입력...">							
 								</div>
 							</div>
 						</div>
@@ -48,9 +48,9 @@
 							<div class="col-md-6">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i> 출발일자</span>
-									<input type="date" class="form-control" name="startDate" placeholder="출발일자" />
+									<input type="date" class="form-control" name="searchDate" placeholder="출발일자" />
 									<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발시간</span>
-									<input type="text" class="form-control" name="startTime" placeholder="출발시잔" />
+									<input type="text" class="form-control" name="searchTime" placeholder="출발시간 예 9:00" />
 								</div>
 							</div>
 						</div>
@@ -83,121 +83,46 @@
 									<th>출발지 <i class="fa fa-long-arrow-right"
 										aria-hidden="true"></i> 도착지
 									</th>
-									<th>유형</th>
-									<th>인원/금액</th>
+									<th>카풀조건</th>
+									<th>인원(좌석)</th>
+									<th>금액(1인당)</th>
 								</tr>
 							<thead>
 							<tbody>
+							<c:forEach var="cpinfo" items="${list}" varStatus="num">
 								<tr>
-									<td>100</td>
-									<td><img src="<c:url value="/img/user3-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><a href="<c:url value='/carpool/detail/riding/100'/>">
-										<span class="start-point">인천 연수구 신연수역</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></a>
+									<td>${num.index + 1}</td>
+									<td><c:choose><%-- 프로필 사진 처리 --%>
+										<c:when test="${!empty cpinfo.user.photo}">
+											<img src="<c:url value="/img/user3-128x128.jpg"/>"
+												alt="profile" class="img-circle" style="width: 50px" /> 
+										</c:when>
+										<c:when test="${cpinfo.user.gender.string eq 'MALE'}">
+											<img src="<c:url value="/img/avatar_male_3.png"/>"
+												alt="male" class="img-circle" style="width: 50px" /> 
+										</c:when>
+										<c:when test="${cpinfo.user.gender.string eq 'FEMALE'}">
+											<img src="<c:url value="/img/avatar_female_1.png"/>"
+												alt="male" class="img-circle" style="width: 50px" /> 
+										</c:when>
+										<c:otherwise>
+											<img src="<c:url value="/img/avatar_female_6.png"/>"
+												alt="male" class="img-circle" style="width: 50px" /> 
+										</c:otherwise>
+										</c:choose>
+										<span class="user-name">${cpinfo.user.name}</span></td>
+									<td><a href="detail?cpno=${cpinfo.carpool.cpno}">
+										<span class="start-point">${cpinfo.carpool.startPoint}</span> 
+										<span class="arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+										<span class="end-point">${cpinfo.carpool.endPoint}</span></a>
 									</td>
-									<td><span class="label label-success">요청중</span></td>
-									<td>4 / 5000원</td>
+									<td>
+										<span class="label label-success">요청중</span>
+									</td>
+									<td>${cpinfo.carpool.seatNum}</td>
+									<td>${cpinfo.carpool.charge}원</td>
 								</tr>
-								<tr>
-									<td>99</td>
-									<td><img src="<c:url value="/img/user2-160x160.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-warning">마감</span></td>
-									<td>2 / 8000원</td>
-								</tr>
-								<tr>
-									<td>98</td>
-									<td><img src="<c:url value="/img/user1-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-primary">취소</span></td>
-									<td>2 / 8000원</td>
-								</tr>
-								<tr>
-									<td>97</td>
-									<td><img src="<c:url value="/img/user4-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-danger">긴급</span></td>
-									<td>2 / 10000원</td>
-								</tr>
-								<tr>
-									<td>96</td>
-									<td><img src="<c:url value="/img/user5-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-danger">긴급 요청</span></td>
-									<td>2 / 10000원</td>
-								</tr>
-								<tr>
-									<td>95</td>
-									<td><img src="<c:url value="/img/user4-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-danger">긴급 요청</span></td>
-									<td>2 / 10000원</td>
-								</tr>
-								<tr>
-									<td>94</td>
-									<td><img src="<c:url value="/img/user3-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-danger">긴급 요청</span></td>
-									<td>2 / 10000원</td>
-								</tr>
-								<tr>
-									<td>93</td>
-									<td><img src="<c:url value="/img/user8-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-danger">긴급 요청</span></td>
-									<td>2 / 10000원</td>
-								</tr>
-								<tr>
-									<td>92</td>
-									<td><img src="<c:url value="/img/user7-128x128.jpg"/>"
-										alt="profile" class="img-circle" style="width: 50px" /> <span
-										class="user-name">Johnson</span></td>
-									<td><span class="start-point">수원 팔달구 수원시청</span> <span
-										class="arrow"><i class="fa fa-long-arrow-right"
-											aria-hidden="true"></i></span> <span class="end-point">서울 종로구
-											종각역</span></td>
-									<td><span class="label label-danger">긴급 요청</span></td>
-									<td>2 / 10000원</td>
-								</tr>
+							</c:forEach>							
 							</tbody>
 						</table>
 					</div>
