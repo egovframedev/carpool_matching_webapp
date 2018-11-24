@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carto.mappers.AdminMapper">
+
+	<!-- 회원관리 목록 -->
+	<select id="memberList" resultType="memberDTO" parameterType="memberDTO">
+		select *
+		from member mem, member_auth m_auth
+		where mem.userid=m_auth.userid;
+	</select>
+
+	<!-- 페이징 -->
+	<select id="listCount" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(mno) FROM member, member_auth
+	]]>
+		<include refid="search" />
+	</select>
+
+	<!-- 검색 쿼리  아이디 이름 전화번호 회원타입 이메일-->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'id'.toString()">
+				AND userid LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'nm'.toString()">
+				AND name LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tel'.toString()">
+				AND phone LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'type'.toString()">
+				AND (authority LIKE CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="searchType == 'email'.toString()">
+				AND (email LIKE CONCAT('%', #{keyword}, '%') 
+			</if>
+		</if>
+	</sql>
+
+</mapper>
