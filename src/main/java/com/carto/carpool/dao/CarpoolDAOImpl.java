@@ -1,11 +1,10 @@
 package com.carto.carpool.dao;
 
 import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolInfoDTO;
@@ -26,6 +25,16 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 	@Override
 	public List<CarpoolInfoDTO> getList(CarpoolCriteria cri) throws Exception {
 		return session.selectList(NAMESPACE + ".getList", cri);
+	}
+
+	@Override
+	public CarpoolInfoDTO getCarpool(Integer cpno) throws Exception {
+		return session.selectOne(NAMESPACE + ".getCarpool", cpno);
+	}
+
+	@Override
+	public List<CPMatchingDTO> getMatchingList(Integer cpno) throws Exception {
+		return session.selectList(NAMESPACE + ".getMatchingList", cpno);
 	}
 
 }

@@ -1,12 +1,8 @@
 package com.carto.carpool.service;
 
-import java.util.HashMap;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import com.carto.carpool.domain.CarpoolMatchDTO;
-
 
 public interface CarpoolMatchService {
 	public Integer insertOne(CarpoolMatchDTO cmDTO);

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolInfoDTO;
+import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.service.CarpoolService;
 
 import lombok.extern.log4j.Log4j;
@@ -72,9 +74,19 @@ public class CarpoolRequestController {
 	}
 	
 	@GetMapping("/request/detail")
-	public String detail(@RequestParam("cpno") Integer cpno) throws Exception {
+	public String detail(@RequestParam("cpno") Integer cpno, Model model) throws Exception {
 		log.info("GET /request/detail.............cpno:" + cpno);
 		String view = "carpool/detail_request";
+		CarpoolInfoDTO cpinfo = service.detail(cpno);
+		model.addAttribute("cpinfo", cpinfo);
 		return view;
+	}
+	
+	@GetMapping("/request/getMatching")
+	public String getMatching(@RequestParam("cpno") Integer cpno, Model model) throws Exception {
+		log.info("GET /request/getMatching.............cpno:" + cpno);
+		List<CPMatchingDTO> matchList = service.matchingList(cpno);
+		model.addAttribute("matchList", matchList);
+		return "carpool/matching_request";
 	}
 }

@@ -2,6 +2,7 @@ package com.carto.carpool.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.carto.member.domain.MemberDTO;
 import lombok.Data;
 
 @Data

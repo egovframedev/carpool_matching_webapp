@@ -1,9 +1,7 @@
 package com.carto.carpool.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import com.carto.carpool.domain.CarpoolMatchDTO;
 
 public interface CarpoolMatchDAO {

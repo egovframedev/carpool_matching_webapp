@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.carto.carpool.dao.CarpoolDAO;
+import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolInfoDTO;
@@ -26,5 +27,15 @@ public class CarpoolServiceImpl implements CarpoolService {
 		return carpoolDAO.getList(cri);
 	}
 
-	
+	// 카풀 내용 서비스
+	@Override
+	public CarpoolInfoDTO detail(Integer cpno) throws Exception {
+		return carpoolDAO.getCarpool(cpno);
+	}
+
+	// 카풀 매칭 목록 서비스
+	@Override
+	public List<CPMatchingDTO> matchingList(Integer cpno) throws Exception {
+		return carpoolDAO.getMatchingList(cpno);
+	}
 }

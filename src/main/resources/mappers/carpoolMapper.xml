@@ -75,9 +75,10 @@
 	<select id="getList" resultMap="carpoolInfoMap">
 		SELECT 
 			cpno, cptype, start_point, start_long, start_lat,
-			end_point, end_long, end_lat, start_datetime, charge,
+			end_point, end_long, end_lat, 
+			start_datetime, charge,
 			seat_num, seat_opt, drive_opt, trunk_use, smoke_use,
-			req_msg, cp.reg_date, 
+			cp.reg_date, 
 			cp.mno, mb.userid, mb.name, mb.gender, mb.photo
 		FROM carpool_info cp, member mb
 		<where>
@@ -94,19 +95,39 @@
 		</where>
 		ORDER BY start_datetime DESC
 	</select>
+	
+	<select id="getCarpool" parameterType="int" resultMap="carpoolInfoMap">
+		SELECT 
+			cpno, cptype, start_point, start_long, start_lat,
+			end_point, end_long, end_lat, start_datetime, charge,
+			seat_num, seat_opt, drive_opt, trunk_use, smoke_use,
+			req_msg, cp.reg_date, 
+			cp.mno, mb.userid, mb.name, mb.gender, mb.photo
+		FROM carpool_info cp, member mb
+		WHERE cp.mno = mb.mno 
+			AND cp.cpno = #{cpno}
+	</select>
+	
+	<select id="getMatchingList" resultType="CPMatchingDTO">
+		SELECT 
+			matchno, match_date As matchDate, progress, 
+			mat.mno, mem.userid, mem.name
+		FROM carpool_match mat, member mem
+		WHERE mat.mno = mem.mno 
+			AND mat.cpno = #{cpno}
+	</select>
 
 	<!-- 결제 관련 쿼리 -->
-	<select id="selectMatInfo" parameterType="int"
-		resultMap="carpoolMatchMap">
+	<select id="selectMatInfo" parameterType="int" resultMap="carpoolMatchMap">
 		SELECT
-		matchno,
-		mat.mno AS mat_mno,
-		mat.match_date,
-		charge,
-		start_point,
-		end_point,
-		cp.reg_date,
-		payno
+			matchno,
+			mat.mno AS mat_mno,
+			mat.match_date,
+			charge,
+			start_point,
+			end_point,
+			cp.reg_date,
+			payno
 		FROM carpool_info cp
 		RIGHT JOIN carpool_match mat ON cp.cpno = mat.cpno
 		WHERE mat.mno = #{mno}

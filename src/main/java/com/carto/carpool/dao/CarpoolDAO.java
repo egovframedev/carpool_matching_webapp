@@ -2,6 +2,7 @@ package com.carto.carpool.dao;
 
 import java.util.List;
 
+import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolInfoDTO;
@@ -21,4 +22,20 @@ public interface CarpoolDAO {
 	 * @throws Exception
 	 */
 	public List<CarpoolInfoDTO> getList(CarpoolCriteria cri) throws Exception;
+	
+	/**
+	 * 카풀 상세 정보
+	 * @param cpno
+	 * @return
+	 * @throws Exception
+	 */
+	public CarpoolInfoDTO getCarpool(Integer cpno) throws Exception;
+	
+	/**
+	 * 동승 제의 목록
+	 * @param cpno
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CPMatchingDTO> getMatchingList(Integer cpno) throws Exception;
 }
