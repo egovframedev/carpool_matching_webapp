@@ -27,7 +27,7 @@
 				<div class="box box-widget widget-user">
 					<div class="widget-user-header bg-aqua-active">
 						<h3 class="widget-user-username">id ${member.userid }</h3>
-						<h5 class="widget-user-desc">name ${memberDTO.name }</h5>
+						<h5 class="widget-user-desc">name ${member.name }</h5>
 					</div>
 					<div class="widget-user-image">
 						<img class="img-circle" src="../dist/img/user1-128x128.jpg"
@@ -64,7 +64,7 @@
 					</div>
 					<div class="box-footer no-padding">
 						<ul class="nav nav-stacked">
-							<li><input type="text" value="${memberDTO.userid }"></li>
+							<li><input type="text" value="${member.userid }"></li>
 						</ul>
 					</div>
 				</div>

@@ -1,5 +1,7 @@
 package com.carto.admin.dao;
 
+import java.util.HashMap;
+
 import org.springframework.stereotype.Repository;
 
 import com.carto.board.domain.Criteria;
@@ -13,6 +15,10 @@ public interface AdminDAO {
 
 	public int listCount(Criteria cri) throws Exception; //페이징
 	
-	public MemberDTO selectMember(Integer mno) throws Exception; // 회원 불러오기
+	public MemberDTO selectMember(Integer mno) throws Exception; // 회원 한명 불러오기
+	
+	public void modifyMember(HashMap<String,Object> map) throws Exception; // 회원 정보 수정
+	
+	public void deleteMember(Integer mno) throws Exception; // 회원 삭제처리
 
 }

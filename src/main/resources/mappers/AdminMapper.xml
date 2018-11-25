@@ -49,7 +49,19 @@
 		where
 		mem.userid=m_auth.userid
 		and mem.mno = #{mno}
-
 	</select>
+
+	<update id="modifyMember" parameterType="hashmap">
+		update member mem , member_auth m_auth
+		   set mem.approval_status = #{approval_status}
+		     , m_auth.authority =#{authority}
+		where mem.mno = #{mno} and m_auth.userid = #{userid}
+	</update>
+
+	<update id="deleteMember" parameterType="memberDTO">
+		update member set
+		mstate = 1
+		where mno = #{mno}
+	</update>
 
 </mapper>

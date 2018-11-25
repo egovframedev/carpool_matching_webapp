@@ -78,12 +78,14 @@
 									<th style="width: 10%;">회원 타입</th>
 									<th style="width: 10%;">이메일</th>
 									<th style="width: 10%;">이메일 인증</th>
+									<th style="width: 10%;">가입일자</th>
 									<th style="width: 10%;" colspan="3"></th>
 								</tr>
 							</thead>
 							<tbody>
 								<form role="form" action="" method="post">
-									<input type="hidden" id="mno" name="mno" />
+									<input type="hidden" id="mno" name="mno" /> <input
+										type="hidden" id="userid" name="userid" />
 									<c:forEach var="member" items="${list}" varStatus="status">
 										<tr role="row">
 											<td>${member.mno}</td>
@@ -91,13 +93,32 @@
 											<td>${member.name}</td>
 											<td>${member.gender}</td>
 											<td>${member.phone}</td>
-											<td>${member.authority}</td>
+											<td><select name="authority">
+													<c:if test="${member.authority eq 'ROLE_DRIVER'}">
+														<option value="ROLE_DRIVER">ROLE_DRIVER</option>
+														<option value="ROLE_RIDER">ROLE_RIDER</option>
+													</c:if>
+													<c:if test="${member.authority eq 'ROLE_RIDER'}">
+														<option value="ROLE_RIDER">ROLE_RIDER</option>
+														<option value="ROLE_DRIVER">ROLE_DRIVER</option>
+													</c:if>
+
+
+
+											</select></td>
 											<td>${member.email}</td>
-											<td>${member.approval_status}</td>
-											<td><a  onclick="modifyGo(${member.mno })"><i
+											<td><select name="approval_status">
+													<option value="${member.approval_status}">${member.approval_status}</option>
+													<option value="true">true</option>
+													<option value="false">false</option>
+											</select></td>
+											<td><fmt:formatDate value="${member.regdate}"
+													pattern="yyyy-MM-dd HH:mm" /></td>
+											<td><a onclick="modifyGo(${member.mno })"><i
 													class="fa fa-pencil-square-o"></i></a></td>
-											<td><a href=""><i class="fa fa-trash"></i></a></td>
-											<td><a href=""><i class="fa fa-file-image-o"></i></a></td>
+											<td><a onclick="removeGo(${member.mno })"><i
+													class="fa fa-trash"></i></a></td>
+											<td><a onclick=""><i class="fa fa-file-image-o"></i></a></td>
 										</tr>
 									</c:forEach>
 								</form>
@@ -130,8 +151,6 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </div>
 
@@ -149,17 +168,25 @@
 		});
 	});
 	
-	function modifyGo(mno){
-		var formObj = $("form[role='form']");
-		var rootPath = '<c:url value="/"/>';
-		var boardPath = rootPath + 'admin/member';
+		//수정
+		function modifyGo(mno){
+			var formObj = $("form[role='form']");
+			
+			formObj.attr("action", "modify");
+			formObj.attr("method", "post");
+			$("#mno").val(mno);
+			formObj.submit();
+		}
 		
-		formObj.attr("action", boardPath + "/modify");
-		formObj.attr("method", "get");
-		$("#mno").val(mno);
-		formObj.submit();
-		
-	}
+		//삭제
+		function removeGo(mno){
+			var formObj = $("form[role='form']");
+			
+			formObj.attr("action", "delete");
+			formObj.attr("method", "post");
+			$("#mno").val(mno);
+			formObj.submit();
+		}
 </script>
 
 <%@ include file="../includes/footer.jsp"%>
