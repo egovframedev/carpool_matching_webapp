@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ include file="../includes/header.jsp"%>
-
 <style>
 	.uploadResult { width: 100%; background-color: #eee;}
 	.uploadResult ul {display:flex; flex-flow: row; justify-content:center; align-items: center;}
@@ -17,10 +16,9 @@
 	.bigPicture { position: relative; display: flex;; justify-content: center; align-item: center;}
 	.bigPicture img { width: 600px;}
 </style>
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-	<div class="col-sm-offset-1 col-sm-10">
+	<div class="container">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>${cri.btype.btitle}
@@ -33,12 +31,11 @@
 				<li class="active">${cri.btype.btitle}</li>
 			</ol>
 		</section>
-
 		<!-- Main content -->
 		<section class="content container-fluid">
 			<section class="content">
 				<div class="row">
-					<div class="col-md-10 col-md-offset-1">
+					<div class="col-md-12">
 						<!-- form -->
 						<form method="post" role="form" action="regist" name="writeForm" id="writeForm">
 							<div class="box box-primary">
@@ -59,8 +56,8 @@
 									</div>
 									<div class="form-group">
 										<label>내용</label>
-										<textarea id="taContent" class="form-control" name="content"
-											style="height: 300px"></textarea>
+										<textarea id="content-editor" class="form-control" name="content"
+											style="height: 400px"></textarea>
 									</div>
 									<!-- 	<div class="form-group">
 										<label>첨부 파일</label><i class="fa fa-fw fa-paperclip"></i>
@@ -85,7 +82,6 @@
 							</div>
 						</form>
 						<!-- /. form -->
-
 						<div class="box box-solid">
 							<div class="box-header with-border">
 								<div class="form-group uploadDiv" style="margin-bottom: 0;">
@@ -94,22 +90,18 @@
 							</div>
 							<div class="box-body clearfix" style="min-height: 120px;">
 								<div class="uploadResult">
-									<ul>
-									
+									<ul>									
 									</ul>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- /.col -->
+					</div><!-- /.col -->
 				</div>
 			</section>
-		</section>
-		<!-- /.content -->
+		</section><!-- /.content -->
 	</div>
-</div>
-<!-- /.content-wrapper -->
-<script src="<c:url value='/'/>vendor/ckeditor/ckeditor.js"></script>
+</div><!-- /.content-wrapper -->
+<script src="<c:url value='/vendor'/>/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -117,7 +109,7 @@
 		var ctxPath = '<c:url value="/"/>';
 		
 		// CK 에디터 추가
-		//CKEDITOR.replace('inputContent');
+		CKEDITOR.replace('content-editor');
 		
 		function checkExtension(filename, fileSize) {
 			if(fileSize >= maxSize) {

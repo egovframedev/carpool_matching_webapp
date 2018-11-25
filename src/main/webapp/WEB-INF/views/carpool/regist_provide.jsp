@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
- 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../includes/header.jsp"%>
  <link rel="stylesheet" href="<c:url value='/vendor'/>/bootstrap-daterangepicker/daterangepicker.css">
@@ -9,11 +9,11 @@
 		<div class="container">
 			<!-- 컨텐츠 헤더 부분(Page header) -->
 			<section class="content-header">
-				<h1><i class="fa fa-slideshare" aria-hidden="true"></i>
-						카풀 요청<small>카풀 등록 폼</small></h1>
+				<h1><i class="fa fa-car" aria-hidden="true"></i>
+						카풀 제공<small>카풀 등록 폼</small></h1>
 				<ol class="breadcrumb">
 					<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>			
-					<li><a href="<c:url value='/carpool/request/list'/>"><i class="fa fa-user-circle"></i>카풀 요청</a></li>
+					<li><a href="<c:url value='/carpool/provide/list'/>"><i class="fa fa-car"></i>카풀 제공</a></li>
 					<li class="active">카풀 등록 폼</li>
 				</ol>
 			</section>	
@@ -22,7 +22,7 @@
 				<div class="box box-danger">
 	              	<form role="form" action="regist" method="post" class="form-horizontal">
 	              		<input type="hidden" name="mno" value="${login.mno}" />
-	              		<input type="hidden" name="cptype" value="1" />
+	              		<input type="hidden" name="cptype" value="2" />
 	            	<div class="box-body">
 	                	<div class="form-group">
 	                		<label for="startPoint" class="col-sm-2 control-label">출발지</label>

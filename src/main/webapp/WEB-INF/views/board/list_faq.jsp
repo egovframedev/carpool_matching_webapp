@@ -6,15 +6,14 @@
 <%@ include file="../includes/header.jsp"%>
 <!-- Content Wrapper. Containes page content -->
 <div class="content-wrapper">
-	<div class="col-sm-offset-1 col-sm-10">
+	<div class="container">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>${cri.btype.btitle}
 				<small>목록보기 </small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href=" <c:url value='/'/>"><i class="fa fa-home"></i>
-						Home</a></li>
+				<li><a href=" <c:url value='/'/>"><i class="fa fa-home"></i>Home</a></li>
 				<li><a href="<c:url value='/board/notice/list'/>">고객센터</a></li>
 				<li class="active">${cri.btype.btitle}</li>
 			</ol>
@@ -32,11 +31,8 @@
 						</button>
 					</div>
 				</div>
-
 				<form role="form" action="" method="post">
 					<input type="hidden" id="bno" name="bno" />
-
-
 					<div class="box-body">
 						<c:forEach var="board" items="${list}" varStatus="status">
 							<div class="panel panel-default">
