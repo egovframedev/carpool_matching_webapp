@@ -3,6 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.carto.mappers.CarpoolMapper">
+
 	<!-- 카풀 맵 -->
 	<resultMap id="carpoolMap" type="CarpoolDTO">
 		<id property="cpno" column="cpno" />
@@ -37,20 +38,28 @@
 		<result property="driverChk" column="isdriver" />
 		<collection property="carpool" resultMap="carpoolMap" />
 	</resultMap>
-	<!-- 카풀 - 회원 관계 맵 -->
-	<resultMap id="carpoolInfoMap" type="CarpoolInfoDTO">
-		<association property="carpool" column="cpno" 
-			javaType="CarpoolDTO" resultMap="carpoolMap"/>
-		<association property="user" column="mno" 
-			javaType="com.carto.member.domain.MemberDTO">
+	<!-- 카풀 요청 맵 -->
+	<resultMap id="carpoolRequestMap" type="CarpoolRequestDTO" extends="carpoolMap">
+		<association property="user" column="mno" javaType="MemberDTO">
 			<id property="mno" column="mno"/>
 			<result property="userid" column="userid"/>
 			<result property="name" column="name"/>
 			<result property="gender" column="gender"/>
 			<result property="photo" column="photo"/>
-		</association>	
+		</association>
 	</resultMap>
-
+	
+	<!-- 카풀 제공 맵 -->
+	<resultMap id="carpoolProvideMap" type="CarpoolProvideDTO" extends="carpoolMap">
+		<association property="user" column="mno" javaType="MemberDTO">
+			<id property="mno" column="mno"/>
+			<result property="userid" column="userid"/>
+			<result property="name" column="name"/>
+			<result property="gender" column="gender"/>
+			<result property="photo" column="photo"/>
+		</association>
+	</resultMap>
+	
 	<!-- 카풀 요청/제공 관련 -->
 	<insert id="insertCarpool">
 		INSERT INTO carpool_info (
@@ -72,17 +81,14 @@
 		)
 	</insert>
 
-	<select id="getList" resultMap="carpoolInfoMap">
-		SELECT 
-			cpno, cptype, start_point, start_long, start_lat,
-			end_point, end_long, end_lat, 
-			start_datetime, charge,
+	<select id="getProvideList" resultMap="carpoolProvideMap">
+		SELECT cpno, cptype, start_point, start_long, start_lat,
+			end_point, end_long, end_lat, start_datetime, charge,
 			seat_num, seat_opt, drive_opt, trunk_use, smoke_use,
-			cp.reg_date, 
-			cp.mno, mb.userid, mb.name, mb.gender, mb.photo
+			cp.reg_date, cp.mno, mb.userid, mb.name, mb.gender, mb.photo
 		FROM carpool_info cp, member mb
 		<where>
-			cp.mno = mb.mno
+			cp.cptype = 2 AND cp.mno = mb.mno
 			<if test="searchStart != null and searchStart != ''">
 				AND start_point LIKE CONCAT('%', #{searchStart}, '%')
 			</if>
@@ -96,7 +102,31 @@
 		ORDER BY start_datetime DESC
 	</select>
 	
-	<select id="getCarpool" parameterType="int" resultMap="carpoolInfoMap">
+	<select id="getRequestList" resultMap="carpoolRequestMap">
+		SELECT 
+			cpno, cptype, start_point, start_long, start_lat,
+			end_point, end_long, end_lat, 
+			start_datetime, charge,
+			seat_num, seat_opt, drive_opt, trunk_use, smoke_use,
+			cp.reg_date, 
+			cp.mno, mb.userid, mb.name, mb.gender, mb.photo
+		FROM carpool_info cp, member mb
+		<where>
+			cp.cptype = 1 AND cp.mno = mb.mno 
+			<if test="searchStart != null and searchStart != ''">
+				AND start_point LIKE CONCAT('%', #{searchStart}, '%')
+			</if>
+			<if test="searchEnd != null and searchEnd != ''">
+				AND end_point LIKE CONCAT('%', #{searchEnd}, '%')
+			</if>
+			<if test="searchDate != null and searchDate != ''">
+				AND start_datetime >= #{startDateTime}
+			</if>
+		</where>
+		ORDER BY start_datetime DESC
+	</select>
+	
+	<select id="getCarpool" parameterType="int" resultMap="carpoolRequestMap">
 		SELECT 
 			cpno, cptype, start_point, start_long, start_lat,
 			end_point, end_long, end_lat, start_datetime, charge,

@@ -7,7 +7,8 @@ import com.carto.carpool.dao.CarpoolDAO;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
-import com.carto.carpool.domain.CarpoolInfoDTO;
+import com.carto.carpool.domain.CarpoolProvideDTO;
+import com.carto.carpool.domain.CarpoolRequestDTO;
 
 @Service
 public class CarpoolServiceImpl implements CarpoolService {
@@ -23,13 +24,19 @@ public class CarpoolServiceImpl implements CarpoolService {
 
 	// 카풀 목록 서비스
 	@Override
-	public List<CarpoolInfoDTO> list(CarpoolCriteria cri) throws Exception {
-		return carpoolDAO.getList(cri);
+	public List<CarpoolRequestDTO> requestList(CarpoolCriteria cri) throws Exception {
+		return carpoolDAO.getRequestList(cri);
+	}
+	
+	// 카풀 제공 목록 서비스
+	@Override
+	public List<CarpoolProvideDTO> provideList(CarpoolCriteria cri) throws Exception {
+		return  carpoolDAO.getProvideList(cri);
 	}
 
 	// 카풀 내용 서비스
 	@Override
-	public CarpoolInfoDTO detail(Integer cpno) throws Exception {
+	public CarpoolRequestDTO detail(Integer cpno) throws Exception {
 		return carpoolDAO.getCarpool(cpno);
 	}
 
@@ -38,4 +45,5 @@ public class CarpoolServiceImpl implements CarpoolService {
 	public List<CPMatchingDTO> matchingList(Integer cpno) throws Exception {
 		return carpoolDAO.getMatchingList(cpno);
 	}
+
 }

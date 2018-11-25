@@ -21,6 +21,7 @@ import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolInfoDTO;
 import com.carto.carpool.domain.CarpoolMatchDTO;
+import com.carto.carpool.domain.CarpoolRequestDTO;
 import com.carto.carpool.service.CarpoolService;
 
 import lombok.extern.log4j.Log4j;
@@ -49,7 +50,7 @@ public class CarpoolRequestController {
 		log.info("GET /request/list.............");
 		String view = "carpool/list_request";
 		
-		List<CarpoolInfoDTO> carpoolList = service.list(cri);
+		List<CarpoolRequestDTO> carpoolList = service.requestList(cri);
 		model.addAttribute("list", carpoolList);
 		//carpoolList.forEach(carpool -> log.info(carpool));
 		return view;
@@ -77,7 +78,7 @@ public class CarpoolRequestController {
 	public String detail(@RequestParam("cpno") Integer cpno, Model model) throws Exception {
 		log.info("GET /request/detail.............cpno:" + cpno);
 		String view = "carpool/detail_request";
-		CarpoolInfoDTO cpinfo = service.detail(cpno);
+		CarpoolRequestDTO cpinfo = service.detail(cpno);
 		model.addAttribute("cpinfo", cpinfo);
 		return view;
 	}

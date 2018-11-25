@@ -5,7 +5,8 @@ import java.util.List;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
-import com.carto.carpool.domain.CarpoolInfoDTO;
+import com.carto.carpool.domain.CarpoolProvideDTO;
+import com.carto.carpool.domain.CarpoolRequestDTO;
 
 public interface CarpoolDAO {
 	/**
@@ -21,7 +22,8 @@ public interface CarpoolDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CarpoolInfoDTO> getList(CarpoolCriteria cri) throws Exception;
+	public List<CarpoolRequestDTO> getRequestList(CarpoolCriteria cri) throws Exception;
+	public List<CarpoolProvideDTO> getProvideList(CarpoolCriteria cri) throws Exception;
 	
 	/**
 	 * 카풀 상세 정보
@@ -29,7 +31,7 @@ public interface CarpoolDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public CarpoolInfoDTO getCarpool(Integer cpno) throws Exception;
+	public CarpoolRequestDTO getCarpool(Integer cpno) throws Exception;
 	
 	/**
 	 * 동승 제의 목록

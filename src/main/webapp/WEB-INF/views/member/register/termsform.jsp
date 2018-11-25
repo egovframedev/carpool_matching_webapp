@@ -3,9 +3,10 @@
 <%@ include file="../../includes/header.jsp"%>
 <!-- 컨텐츠 시작  -->
 	<div class="content-wrapper">
+		<div class="container">
 		<!-- 컨텐츠 헤더 부분(Page header) -->
 		<section class="content-header">
-			<h1>
+			<h1><i class="fa fa-user-plus"></i>
 				회원 가입 <small>이용약관 및 개인정보수집 동의</small>
 			</h1>
 			<ol class="breadcrumb">
@@ -66,6 +67,7 @@
 				</div>
 			</div>
 		</section><!-- /.content -->
+		</div>
 	</div>
 <!-- 컨텐츠 끝  -->
 <%@ include file="../../includes/footer.jsp"%>

@@ -133,38 +133,32 @@ ALTER TABLE `GRADE`
 -- 게시판
 CREATE TABLE `BOARD` (	
 	`bno`      INT          NOT NULL COMMENT '게시판번호', -- 게시판번호
-	`title`    VARCHAR(200) NULL     COMMENT '제목', -- 제목
-	`content`  TEXT         NULL     COMMENT '내용', -- 내용
-	`writer`   VARCHAR(50)  NULL     COMMENT '작성자ID', -- 작성자ID
-	`pwd`      VARCHAR(20)  NULL     COMMENT '비밀번호', -- 비밀번호
+	`title`    VARCHAR(200) NULL     COMMENT '제목',       -- 제목
+	`content`  TEXT         NULL     COMMENT '내용',       -- 내용
+	`writer`   VARCHAR(50)  NULL     COMMENT '작성자ID',   -- 작성자ID
+	`pwd`      VARCHAR(20)  NULL     COMMENT '비밀번호',   -- 비밀번호
 	`reg_date` TIMESTAMP 	NULL DEFAULT CURRENT_TIMESTAMP COMMENT '작성일', -- 작성일
-	`hit`      INT          NULL     COMMENT '조회수', -- 조회수
-	`grpno`    INT          NULL     COMMENT '답변그룹', -- 답변그룹
-	`step`     INT          NULL     COMMENT '답변순서', -- 답변순서
-	`depth`    INT          NULL     COMMENT '답변깊이', -- 답변깊이
-	`btype`    INT          NULL     COMMENT '게시판구분' -- 게시판구분
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
-COMMENT '게시판';
--- 게시판
-ALTER TABLE `BOARD`
-	ADD CONSTRAINT `PK_BOARD` -- 게시판 기본키
-		PRIMARY KEY (`bno`);  -- 게시판번호
+	`hit`      INT          NULL     COMMENT '조회수',     -- 조회수
+	`grpno`    INT          NULL     COMMENT '답변그룹',   -- 답변그룹
+	`step`     INT          NULL     COMMENT '답변순서',   -- 답변순서
+	`depth`    INT          NULL     COMMENT '답변깊이',   -- 답변깊이
+	`btype`    INT          NULL     COMMENT '게시판구분', -- 게시판구분
+	PRIMARY KEY (`bno`)
+) COMMENT '게시판' 
+ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 -- 첨부파일
-CREATE TABLE IF NOT EXISTS `attachfile` (
-  `fno` int(11) NOT NULL AUTO_INCREMENT COMMENT '파일번호',
-  `bno` int(11) DEFAULT NULL COMMENT '게시판번호',
-  `filename` varchar(200) NOT NULL COMMENT '파일이름',
-  `original_name` varchar(200) NOT NULL COMMENT '원래파일명',
-  `uploadpath` varchar(200) DEFAULT NULL COMMENT '업로드경로',
-  `extension` varchar(10) DEFAULT NULL COMMENT '확장자명',
-  `download_cnt` int(11) DEFAULT '0' COMMENT '다운로드수',
-  PRIMARY KEY (`fno`),
-  KEY `FK_BOARD_TO_ATTACHFILE` (`bno`),
-  CONSTRAINT `FK_BOARD_TO_ATTACHMENT` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='첨부파일';
-
-
+CREATE TABLE `attachfile` (
+	`uuid`       VARCHAR(50)  NOT NULL          COMMENT '첨부코드',
+	`bno`        INT(11)      NOT NULL          COMMENT '게시글번호',
+	`fileName`   VARCHAR(100) NULL DEFAULT NULL COMMENT '파일이름',
+	`uploadPath` VARCHAR(50)  NULL DEFAULT NULL COMMENT '업로드경로',
+	`fileType`   TINYINT(1)   NULL DEFAULT '0'  COMMENT '이미지여부',
+	PRIMARY KEY (`uuid`),
+	INDEX `FK_BOARD_TO_ATTACHFILE` (`bno`),
+	CONSTRAINT `FK_BOARD_TO_ATTACHFILE` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`)
+) COMMENT '첨부파일'
+COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 -- 결제내역
 CREATE TABLE `PAYMENT` (

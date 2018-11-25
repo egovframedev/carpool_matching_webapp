@@ -1,7 +1,6 @@
 package com.carto.carpool.domain;
 
 import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -18,16 +17,13 @@ public class CarpoolDTO {
 	
 	private int mno;              // 작성자 회원번호
 	private Date regDate;         // 작성일자
-	
-	
+		
 	private int charge;           // 금액
 	private int seatNum;          // 카풀 인원
 	
 	private int seatOpt;          // 자리설정 (운전자와 함께 앞자리, 편안한 뒷자리)
-	private int driveOpt;         // 운행조건 (대화형 카풀, 조용한 카풀,  음악들으면 카풀, 정주행
+	private int driveOpt;         // 운행조건 (대화형 카풀, 조용한 카풀,  음악들으면 카풀, 정주행)
 	private boolean trunkUse;     // 트렁크사용여부 
-	private boolean smokeUse;     // 비흡연/ 흡연
-	
+	private boolean smokeUse;     // 비흡연/ 흡연	
 	private String reqMsg;        // 요구사항
-	
 } 

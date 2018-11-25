@@ -6,6 +6,8 @@ import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolInfoDTO;
+import com.carto.carpool.domain.CarpoolProvideDTO;
+import com.carto.carpool.domain.CarpoolRequestDTO;
 
 public interface CarpoolService {
 	/**
@@ -22,7 +24,8 @@ public interface CarpoolService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<CarpoolInfoDTO> list(CarpoolCriteria cri) throws Exception;
+	public List<CarpoolRequestDTO> requestList(CarpoolCriteria cri) throws Exception;
+	public List<CarpoolProvideDTO> provideList(CarpoolCriteria cri) throws Exception;
 	
 	/**
 	 * 카풀 내용 보기
@@ -30,7 +33,7 @@ public interface CarpoolService {
 	 * @return
 	 * @throws Exception
 	 */
-	public CarpoolInfoDTO detail(Integer cpno) throws Exception;
+	public CarpoolRequestDTO detail(Integer cpno) throws Exception;
 	
 	/**
 	 * 카풀 매칭 목록

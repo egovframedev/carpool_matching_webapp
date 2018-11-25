@@ -5,170 +5,171 @@
 <link rel="stylesheet" href="<c:url value='/resources'/>/plugins/timepicker/bootstrap-timepicker.min.css">
 <!-- 컨텐츠 시작  -->
 	<div class="content-wrapper">
-		<!-- 컨텐츠 헤더 부분(Page header) -->
-		<section class="content-header">
-			<h1>
-				카풀 요청 <small>카풀 등록 폼</small>
-			</h1>
-			<ol class="breadcrumb">
-				<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>			
-				<li><a href="<c:url value='/carpool/request/list'/>"><i class="fa fa-user-circle"></i>카풀 요청</a></li>
-				<li class="active">카풀 등록 폼</li>
-			</ol>
-		</section>	
-		<!-- 메인 컨텐츠 부분 -->
-		<section class="content container-fluid">
-			<div class="box box-danger">
-              	<form role="form" action="regist" method="post" class="form-horizontal">
-              		<input type="hidden" name="mno" value="${login.mno}" />
-              		<input type="hidden" name="cptype" value="1" />
-            	<div class="box-body">
-                	<div class="form-group">
-                		<label for="startPoint" class="col-sm-2 control-label">출발지</label>
-                		<div class="col-sm-10">
-                			<div class="input-group">
-	                			<input type="text" id="startPoint" name="startPoint" class="form-control" 
-	                				placeholder="출발지 입력.." readonly="readonly"/>
-	                			<input type="hidden" name="startLong" value="0"/>
-	                			<input type="hidden" name="startLat"  value="0"/>
-	                			<div class="input-group-btn">
-	                				<button type="button" class="btn btn-info" title="주소로 검색" onclick="searchAddress('start');">
-	                					<i class="fa fa-location-arrow" aria-hidden="true"></i></button>
-	                			</div>	                			
-                			</div>
-                		</div>
-                	</div>
-                	<div class="form-group">
-                		<label for="endPoint" class="col-sm-2 control-label">도착지</label>
-                		<div class="col-sm-10">
-                			<div class="input-group">
-	                			<input type="text" id="endPoint" name="endPoint" class="form-control" 
-	                				placeholder="도착지 입력.." readonly="readonly"/>
-	                			<input type="hidden" name="endLong"  value="0"/>
-	                			<input type="hidden" name="endLat"  value="0"/>
-	                			<div class="input-group-btn">
-	                				<button type="button" class="btn btn-info" title="주소로 검색" onclick="searchAddress('end');">
-	                					<i class="fa fa-location-arrow" aria-hidden="true"></i></button>
-	                				<!-- <button type="button" class="btn btn-success btnMap" title="지도로 검색">
-	                					<i class="fa fa-map" aria-hidden="true"></i></button> -->
-	                			</div>	                			
-                			</div>
-                		</div>
-                	</div>
-                	<div class="form-group">
-                		<label for="startDate" class="col-sm-2 control-label">출발시간</label>
-                		<div class="col-sm-6">
-                			<div class="input-group">   
-            					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
-            					<input type="text" class="form-control datepicker" id="startDate">
-            					<span class="input-group-addon"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></span>
-            					<span class="input-group-addon">
-	            					<select id="startHour">
-	            					<c:forEach var="hour" begin="0" end="23">
-	            					<c:if test="${hour ge 12 }"><option value="${hour}">오후 ${hour - 12}시</option></c:if>
-	            					<c:if test="${hour lt 12 }"><option value="${hour}">오전 ${hour}시</option></c:if>
-	            					</c:forEach>
-	            					</select>
-	            					<select id="startMin">
-	            					<c:forEach var="min" begin="0" end="55" step="5">
-	            					<c:if test="${min lt 10 }"><option value="0${min}">0${min}분</option></c:if>
-	            					<c:if test="${min ge 10 }"><option value="${min}">${min}분</option></c:if>
-	            					</c:forEach>
-	            					</select>
-            					</span>
-            					<input type="hidden" name="startDateTime" id="startDateTime" />
-            				</div>
-                		</div>
-                	</div>
-                	<div class="form-group">
-                  		<label for="charge" class="col-sm-2 control-label">금액</label>
-					    <div class="col-sm-3">
-					   		<div class="input-group">
-                    			<input type="text" class="form-control" name="charge" id="charge" placeholder="금액입력..">
-					    		<span class="input-group-addon">원</span>
-					    	</div>
-                  		</div>               
-                	</div>
-                	<div class="form-group">
-                  		<label for="seatNum" class="col-sm-2 control-label">카풀 인원</label>
-					    <div class="col-sm-3">
-					   		<select  name="seatNum" class="form-control">
-			                <c:forEach var="val" begin="1" end="10">
-			                	<option value="${val}">${val} 명</option>
-			                </c:forEach>
-			                </select>
-                  		</div>               
-                	</div>
-                	<div class="form-group">
-                		<label class="col-sm-2 control-label">탑승조건 조건</label>
-                		<div class="col-sm-10">
-                			<div>
-	                			<label class="radio-inline">
-									<input type="radio" name="seatOpt" id="inlineRadio1" value="1"> 
-									운전자와 함께 앞자리(조수석)
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="seatOpt" id="inlineRadio2" value="2" checked="checked">
-									편안한 뒷자리
-								</label>				
-							</div>
-                			<div>
-	                			<label class="radio-inline">
-									<input type="radio" name="driveOpt" id="driveOpt1" value="1"> 
-									대화형 카풀
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="driveOpt" id="driveOpt2" value="2">
-									조용한 카풀 
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="driveOpt" id="driveOpt3" value="3">
-									음악을 들으며 카풀
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="driveOpt" id="driveOpt4" value="4" checked="checked">
-									정주행
-								</label>
-							</div>
-							<div>
-	                			<label class="radio-inline">
-									<input type="radio" name="trunkUse" id="trunkUseTrue" value="true"> 
-									트렁크 사용
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="trunkUse" id="trunkUseFalse" value="false" checked="checked">
-									트렁크 비사용
-								</label>
-							</div>
-							<div>
-								<label class="radio-inline">
-									<input type="radio" name="smokeUse" id="smokeUseFalse" value="false" checked="checked">
-									비흡연
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="smokeUse" id="smokeUseTrue" value="true">
-									흡연
-								</label>
-							</div>
-                		</div>
-                	</div>
-            		<div id="map"  style="width:90%;height:400px; margin: 10px auto;">
-            		
-            		</div>
-            		<div class="form-group">
-            			<label for="reqMsg" class="col-sm-2 control-label">기타요구사항</label>
-            			<div class="col-sm-10">
-            				<textarea name="reqMsg" id="reqMsg" rows="3" class="form-control"></textarea>
-            			</div>
-            		</div>
-            	</div><!-- /.box-body -->
-            	<div class="box-footer">
-            		<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> 등록하기</button>
-            		<button class="btn btn-default">취소</button>
-            	</div>
-            	</form>
-          </div>
-		</section><!-- /.content -->
+		<div class="container">
+			<!-- 컨텐츠 헤더 부분(Page header) -->
+			<section class="content-header">
+				<h1><i class="fa fa-slideshare" aria-hidden="true"></i>
+						카풀 요청<small>카풀 등록 폼</small></h1>
+				<ol class="breadcrumb">
+					<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>			
+					<li><a href="<c:url value='/carpool/request/list'/>"><i class="fa fa-user-circle"></i>카풀 요청</a></li>
+					<li class="active">카풀 등록 폼</li>
+				</ol>
+			</section>	
+			<!-- 메인 컨텐츠 부분 -->
+			<section class="content container-fluid">
+				<div class="box box-danger">
+	              	<form role="form" action="regist" method="post" class="form-horizontal">
+	              		<input type="hidden" name="mno" value="${login.mno}" />
+	              		<input type="hidden" name="cptype" value="1" />
+	            	<div class="box-body">
+	                	<div class="form-group">
+	                		<label for="startPoint" class="col-sm-2 control-label">출발지</label>
+	                		<div class="col-sm-10">
+	                			<div class="input-group">
+		                			<input type="text" id="startPoint" name="startPoint" class="form-control" 
+		                				placeholder="출발지 입력.." readonly="readonly"/>
+		                			<input type="hidden" name="startLong" value="0"/>
+		                			<input type="hidden" name="startLat"  value="0"/>
+		                			<div class="input-group-btn">
+		                				<button type="button" class="btn btn-info" title="주소로 검색" onclick="searchAddress('start');">
+		                					<i class="fa fa-location-arrow" aria-hidden="true"></i></button>
+		                			</div>	                			
+	                			</div>
+	                		</div>
+	                	</div>
+	                	<div class="form-group">
+	                		<label for="endPoint" class="col-sm-2 control-label">도착지</label>
+	                		<div class="col-sm-10">
+	                			<div class="input-group">
+		                			<input type="text" id="endPoint" name="endPoint" class="form-control" 
+		                				placeholder="도착지 입력.." readonly="readonly"/>
+		                			<input type="hidden" name="endLong"  value="0"/>
+		                			<input type="hidden" name="endLat"  value="0"/>
+		                			<div class="input-group-btn">
+		                				<button type="button" class="btn btn-info" title="주소로 검색" onclick="searchAddress('end');">
+		                					<i class="fa fa-location-arrow" aria-hidden="true"></i></button>
+		                				<!-- <button type="button" class="btn btn-success btnMap" title="지도로 검색">
+		                					<i class="fa fa-map" aria-hidden="true"></i></button> -->
+		                			</div>	                			
+	                			</div>
+	                		</div>
+	                	</div>
+	                	<div class="form-group">
+	                		<label for="startDate" class="col-sm-2 control-label">출발시간</label>
+	                		<div class="col-sm-6">
+	                			<div class="input-group">   
+	            					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
+	            					<input type="text" class="form-control datepicker" id="startDate">
+	            					<span class="input-group-addon"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></span>
+	            					<span class="input-group-addon">
+		            					<select id="startHour">
+		            					<c:forEach var="hour" begin="0" end="23">
+		            					<c:if test="${hour ge 12 }"><option value="${hour}">오후 ${hour - 12}시</option></c:if>
+		            					<c:if test="${hour lt 12 }"><option value="${hour}">오전 ${hour}시</option></c:if>
+		            					</c:forEach>
+		            					</select>
+		            					<select id="startMin">
+		            					<c:forEach var="min" begin="0" end="55" step="5">
+		            					<c:if test="${min lt 10 }"><option value="0${min}">0${min}분</option></c:if>
+		            					<c:if test="${min ge 10 }"><option value="${min}">${min}분</option></c:if>
+		            					</c:forEach>
+		            					</select>
+	            					</span>
+	            					<input type="hidden" name="startDateTime" id="startDateTime" />
+	            				</div>
+	                		</div>
+	                	</div>
+	                	<div class="form-group">
+	                  		<label for="charge" class="col-sm-2 control-label">금액</label>
+						    <div class="col-sm-3">
+						   		<div class="input-group">
+	                    			<input type="text" class="form-control" name="charge" id="charge" placeholder="금액입력..">
+						    		<span class="input-group-addon">원</span>
+						    	</div>
+	                  		</div>               
+	                	</div>
+	                	<div class="form-group">
+	                  		<label for="seatNum" class="col-sm-2 control-label">카풀 인원</label>
+						    <div class="col-sm-3">
+						   		<select  name="seatNum" class="form-control">
+				                <c:forEach var="val" begin="1" end="10">
+				                	<option value="${val}">${val} 명</option>
+				                </c:forEach>
+				                </select>
+	                  		</div>               
+	                	</div>
+	                	<div class="form-group">
+	                		<label class="col-sm-2 control-label">탑승조건 조건</label>
+	                		<div class="col-sm-10">
+	                			<div>
+		                			<label class="radio-inline">
+										<input type="radio" name="seatOpt" id="inlineRadio1" value="1"> 
+										운전자와 함께 앞자리(조수석)
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="seatOpt" id="inlineRadio2" value="2" checked="checked">
+										편안한 뒷자리
+									</label>				
+								</div>
+	                			<div>
+		                			<label class="radio-inline">
+										<input type="radio" name="driveOpt" id="driveOpt1" value="1"> 
+										대화형 카풀
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="driveOpt" id="driveOpt2" value="2">
+										조용한 카풀 
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="driveOpt" id="driveOpt3" value="3">
+										음악을 들으며 카풀
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="driveOpt" id="driveOpt4" value="4" checked="checked">
+										정주행
+									</label>
+								</div>
+								<div>
+		                			<label class="radio-inline">
+										<input type="radio" name="trunkUse" id="trunkUseTrue" value="true"> 
+										트렁크 사용
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="trunkUse" id="trunkUseFalse" value="false" checked="checked">
+										트렁크 비사용
+									</label>
+								</div>
+								<div>
+									<label class="radio-inline">
+										<input type="radio" name="smokeUse" id="smokeUseFalse" value="false" checked="checked">
+										비흡연
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="smokeUse" id="smokeUseTrue" value="true">
+										흡연
+									</label>
+								</div>
+	                		</div>
+	                	</div>
+	            		<div id="map"  style="width:90%;height:400px; margin: 10px auto;">
+	            		
+	            		</div>
+	            		<div class="form-group">
+	            			<label for="reqMsg" class="col-sm-2 control-label">기타요구사항</label>
+	            			<div class="col-sm-10">
+	            				<textarea name="reqMsg" id="reqMsg" rows="3" class="form-control"></textarea>
+	            			</div>
+	            		</div>
+	            	</div><!-- /.box-body -->
+	            	<div class="box-footer">
+	            		<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> 등록하기</button>
+	            		<button class="btn btn-default">취소</button>
+	            	</div>
+	            	</form>
+	          </div>
+			</section><!-- /.content -->
+		</div>
 	</div>
 <!-- 컨텐츠 끝  -->
 <script src="<c:url value='/vendor'/>/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>

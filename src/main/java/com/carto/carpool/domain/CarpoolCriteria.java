@@ -10,6 +10,7 @@ import lombok.ToString;
 public class CarpoolCriteria {
 	private int page;
 	private int perPageNum;
+	private int carpoolType;
 	private String searchStart;
 	private String searchEnd;
 	private String searchDate;
@@ -47,7 +48,15 @@ public class CarpoolCriteria {
 		}
 		this.perPageNum = perPageNum;
 	}
-
+	
+	public int getCarpoolType() {
+		return carpoolType;
+	}
+	
+	public void setCarpoolType(int carpoolType) {
+		this.carpoolType = carpoolType;
+	}
+	
 	public String getSearchStart() {
 		return searchStart;
 	}
@@ -86,4 +95,5 @@ public class CarpoolCriteria {
 		String sDate = searchDate + " " + searchTime;  
 		return sdf.parse(sDate);
 	}
+
 }
