@@ -1,17 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<%@ include file="../../includes/header.jsp"%>
+<!-- 컨텐츠 시작  -->
+	<div class="content-wrapper">
+		<!-- 컨텐츠 헤더 부분(Page header) -->
+		<section class="content-header">
+			<h1>
+				회원 가입 <small>회원 가입 폼</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>
+				<li><a href="<c:url value='/member/join/step1'/>"> 회원가입</a></li>
+				<li class="active">회원 가입 폼</li>
+			</ol>
+		</section>
+		<section class="content container-fluid">
+			<div class="row">
+				<div class="col-xs-10 col-xs-offset-1">
+					<div class="box box-success">
+						<div class="box-header with-border">
+							<h2 class="box-title">이용 약관</h2>
+						</div>
+						<form:form role="form" commandName="registerRequest" 
+							id="joinForm" action="step3" method="post" cssClass="form-horizontal">
+						<div class="box-body">
+							<div class="form-group">
+								<label for="name" class="col-sm-2 control-label">이름</label>
+								<div class="col-sm-10">
+									<input type="text" name="name" class="form-control" id="name" 
+										placeholder="이름 입력.." required="required">
+									<p class="help-block">실명을 쓰지 않으면 이용에 제한이 있을 수 있습니다.</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="userid" class="col-sm-2 control-label">아이디</label>
+								<div class="col-sm-10">
+									<input type="text" name="userid" class="form-control" id="userid" 
+										placeholder="아이디 입력.." required="required">
+									
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="userpw" class="col-sm-2 control-label">비밀번호</label>
+								<div class="col-sm-10">
+									<input type="password" name="userpw" class="form-control" id="userpw" 
+										placeholder="비밀번호 입력.." required="required">									
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="pw2" class="col-sm-2 control-label">비밀번호 확인</label>
+								<div class="col-sm-10">
+									<input type="password" name="pw2" class="form-control" id="pw2" oninput="checkPwd()"
+										placeholder="비밀번호 확인 입력.." required="required">
+									<p class="help-block">8글자 이상 영문+숫자+툭수문자 조합</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="email" class="col-sm-2 control-label">이메일</label>
+								<div class="col-sm-10">
+									<input type="email" name="email" class="form-control" id="email" 
+										placeholder="입력 예) user01@example.com" required="required">
+									<p class="help-block">가입 후 메일인증이 필요하니 정확하게 입력하세요.</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="phone" class="col-sm-2 control-label">전화번호</label>
+								<div class="col-sm-10">
+									<input type="text" name="phone" class="form-control" id="phone" 
+										placeholder="입력 예) 010-1111-1111" required="required">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">성별</label>
+								<div class="col-sm-10">
+									<label class="radio-inline">
+									  <input type="radio" name="gender" id="genderM" value="MALE"> 남자
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="gender" id="genderF" value="FEMALE"> 여자
+									</label>
+								</div>
+							</div>
+						<div class="box-footer">
+							<button class="btn btn-default pull-left"  onclick="history.go(-1);">
+								<i class="fa fa-reply" aria-hidden="true"></i> 취소</button>
+							<button id="joinBtn" class="btn btn-primary pull-right">
+								<i class="fa fa-check-square-o" aria-hidden="true"></i> 회원 가입</button>
+						</div>
+						</form:form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 <script>
 	$(function() {
 		$("#joinForm").submit(
@@ -88,70 +170,6 @@
 			//$("#joinBtn").prop("disabled", true);
 			//$("#joinBtn").css("background-color", "#aaaaaa");
 			$("#pw2").css("background-color", "#FFCECE");
-
 		}
 	}
 </script>
-
-<title>CarTO</title>
-</head>
-<body>
-	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4">
-			<div class="w3-center w3-large w3-margin-top">
-				<h3>CarTO</h3>
-			</div>
-			<div>
-				<form:form role="form" commandName="registerRequest" id="joinForm" action="step3" method="post">
-					<p>
-						<input class="w3-input" id="name" name="name" type="text"
-							placeholder="이름" required>
-					</p>
-
-					<p>
-						<input class="w3-input" type="text" id="userid" name="userid"
-							placeholder="아이디" required> <span id="id_check"
-							class="w3-text-red"></span>
-					</p>
-
-					<p>
-						<input class="w3-input" id="userpw" name="userpw" type="password"
-							placeholder="비밀번호" required>
-					</p>
-
-					<p>
-						<input class="w3-input" id="pw2" name="pw2" type="password"
-							placeholder="비밀번호 확인" required oninput="checkPwd()">
-					</p>
-
-					<p>
-						<input type="email" id="email" name="email" class="w3-input"
-							required placeholder="이메일"> <span id="email_check"
-							class="w3-text-red"></span>
-					</p>
-
-					<p>
-						<input type="text" id="phone" name="phone" class="w3-input"
-							required placeholder="전화번호">
-					</p>
-
-					<div class="btn-group btn-group-toggle" data-toggle="buttons">
-						<label class="btn btn-primary"> <input type="radio"
-							name="gender" id="jb-radio-1" type="radio" value="MALE">남자
-						</label> <label class="btn btn-primary"> <input type="radio"
-							name="gender" id="jb-radio-1" type="radio" value="FEMALE">여자
-						</label>
-					</div>
-
-					<p class="w3-center">
-						<button type="submit" id="joinBtn"
-							class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">Join</button>
-						<button type="button" onclick="history.go(-1);"
-							class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
-					</p>
-					</form:form>
-			</div>
-		</div>
-	</div>
-</body>
-</html>

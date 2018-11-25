@@ -14,11 +14,11 @@
 <div class="content-wrapper">
 	<!-- 컨텐츠 헤더 부분(Page header) -->
 	<section class="content-header">
-		<h1>카풀 요청<small>태워주세요</small></h1>
+		<h1>카풀 제공<small>같이 타요</small></h1>
 		<ol class="breadcrumb">
 			<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>
-			<li><a href="<c:url value='/carpool/provide/list'/>"> 카풀 요청</a></li>
-			<li class="active">카풀 요청 조회</li>
+			<li><a href="<c:url value='/carpool/provide/list'/>"> 카풀 제공</a></li>
+			<li class="active">카풀 제공 조회</li>
 		</ol>
 	</section>
 	<!-- 메인 컨텐츠 부분 -->
@@ -26,7 +26,7 @@
 		<!-- 검색 부분 -->
 		<div class="box box-danger">
 			<div class="box-header with-border">
-				<h3 class="box-title">카풀 요청 조회</h3>
+				<h3 class="box-title">카풀 제공 조회</h3>
 			</div>
 			<div class="box-body">
 				<form action="${request.requestURI}" method="get">

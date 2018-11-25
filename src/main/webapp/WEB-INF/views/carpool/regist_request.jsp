@@ -27,16 +27,14 @@
                 		<label for="startPoint" class="col-sm-2 control-label">출발지</label>
                 		<div class="col-sm-10">
                 			<div class="input-group">
-	                			<input type="text" id="startPoint" name="startPoint" class="form-control" placeholder="출발지 입력.."/>
+	                			<input type="text" id="startPoint" name="startPoint" class="form-control" 
+	                				placeholder="출발지 입력.." readonly="readonly"/>
 	                			<input type="hidden" name="startLong" value="0"/>
 	                			<input type="hidden" name="startLat"  value="0"/>
 	                			<div class="input-group-btn">
 	                				<button type="button" class="btn btn-info" title="주소로 검색" onclick="searchAddress('start');">
 	                					<i class="fa fa-location-arrow" aria-hidden="true"></i></button>
-	                				<button type="button" class="btn btn-success btnMap" title="지도로 검색">
-	                					<i class="fa fa-map" aria-hidden="true"></i></button>
-	                			</div>
-	                			
+	                			</div>	                			
                 			</div>
                 		</div>
                 	</div>
@@ -44,16 +42,16 @@
                 		<label for="endPoint" class="col-sm-2 control-label">도착지</label>
                 		<div class="col-sm-10">
                 			<div class="input-group">
-	                			<input type="text" id="endPoint" name="endPoint" class="form-control" placeholder="도착지 입력.."/>
+	                			<input type="text" id="endPoint" name="endPoint" class="form-control" 
+	                				placeholder="도착지 입력.." readonly="readonly"/>
 	                			<input type="hidden" name="endLong"  value="0"/>
 	                			<input type="hidden" name="endLat"  value="0"/>
 	                			<div class="input-group-btn">
 	                				<button type="button" class="btn btn-info" title="주소로 검색" onclick="searchAddress('end');">
 	                					<i class="fa fa-location-arrow" aria-hidden="true"></i></button>
-	                				<button type="button" class="btn btn-success btnMap" title="지도로 검색">
-	                					<i class="fa fa-map" aria-hidden="true"></i></button>
-	                			</div>
-	                			
+	                				<!-- <button type="button" class="btn btn-success btnMap" title="지도로 검색">
+	                					<i class="fa fa-map" aria-hidden="true"></i></button> -->
+	                			</div>	                			
                 			</div>
                 		</div>
                 	</div>
