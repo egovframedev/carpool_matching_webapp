@@ -10,13 +10,14 @@
 		select *
 		from member mem, member_auth m_auth
 		where
-		mem.userid=m_auth.userid;
+		mem.userid=m_auth.userid
+		and mem.mstate != 0
 	</select>
 
 	<!-- 페이징 -->
 	<select id="listCount" resultType="java.lang.Integer">
 	<![CDATA[
-		SELECT COUNT(mno) FROM member, member_auth
+		SELECT COUNT(mno) FROM member
 	]]>
 		<include refid="search" />
 	</select>
@@ -51,16 +52,35 @@
 		and mem.mno = #{mno}
 	</select>
 
-	<update id="modifyMember" parameterType="hashmap">
-		update member mem , member_auth m_auth
-		   set mem.approval_status = #{approval_status}
-		     , m_auth.authority =#{authority}
-		where mem.mno = #{mno} and m_auth.userid = #{userid}
+	<!-- <update id="modifyMember" parameterType="memberDTO"> update member 
+		set approval_status = #{approval_status} where mno = #{mno} </update> -->
+
+	<update id="modifyMember_auth" parameterType="memberDTO">
+		<selectKey order="BEFORE" keyProperty="userid"
+			resultType="java.lang.String"> select userid from member
+			where mno = #{mno}
+		</selectKey>
+		update member_auth set authority =#{authority}
+		where userid= #{userid}
 	</update>
 
-	<update id="deleteMember" parameterType="memberDTO">
-		update member set
-		mstate = 1
+	<update id="modifyMember" parameterType="memberDTO">
+		<selectKey order="BEFORE" keyProperty="userid"
+			resultType="string"> select userid from member
+			where mno = #{mno}
+		</selectKey>
+		update member mem ,
+		member_auth m_auth
+		set mem.approval_status = #{approval_status} ,
+		m_auth.authority =#{authority}
+		where mem.mno = #{mno}
+		and m_auth.userid=#{userid}
+	</update>
+
+	<update id="deleteMember" parameterType="int">
+		update member
+		set mstate
+		= 0
 		where mno = #{mno}
 	</update>
 

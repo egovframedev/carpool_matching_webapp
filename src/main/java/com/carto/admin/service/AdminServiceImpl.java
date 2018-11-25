@@ -1,7 +1,5 @@
 package com.carto.admin.service;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,13 +36,8 @@ public class AdminServiceImpl implements AdminService {
 	// 회원 정보 수정
 	@Override
 	public void modifyMember(MemberDTO dto) throws Exception {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("approval_status", dto.isApproval_status());
-		map.put("authority", dto.getAuthority());
-		map.put("mno", dto.getMno());
-		map.put("userid", dto.getUserid());
-		adminDAO.modifyMember(map);
-
+		adminDAO.modifyMember(dto);
+		//adminDAO.modifyMember_auth(dto);
 	}
 
 	// 회원 삭제 처리

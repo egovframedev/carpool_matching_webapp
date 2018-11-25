@@ -84,12 +84,10 @@
 							</thead>
 							<tbody>
 								<form role="form" action="" method="post">
-									<input type="hidden" id="mno" name="mno" /> <input
-										type="hidden" id="userid" name="userid" />
 									<c:forEach var="member" items="${list}" varStatus="status">
 										<tr role="row">
-											<td>${member.mno}</td>
-											<td>${member.userid}</td>
+											<td><input type="hidden" value="${member.mno}" id="mno" name="mno"> ${member.mno}</td>
+											<td><input type="hidden" value="${member.userid}" id="userid" name="userid">${member.userid}</td>
 											<td>${member.name}</td>
 											<td>${member.gender}</td>
 											<td>${member.phone}</td>
@@ -102,19 +100,21 @@
 														<option value="ROLE_RIDER">ROLE_RIDER</option>
 														<option value="ROLE_DRIVER">ROLE_DRIVER</option>
 													</c:if>
-
-
-
 											</select></td>
 											<td>${member.email}</td>
 											<td><select name="approval_status">
-													<option value="${member.approval_status}">${member.approval_status}</option>
-													<option value="true">true</option>
-													<option value="false">false</option>
+													<c:if test="${member.approval_status eq 'true'}">
+														<option value="true">true</option>
+														<option value="false">false</option>
+													</c:if>
+													<c:if test="${member.approval_status eq 'false'}">
+														<option value="false">false</option>
+														<option value="true">true</option>
+													</c:if>
 											</select></td>
 											<td><fmt:formatDate value="${member.regdate}"
 													pattern="yyyy-MM-dd HH:mm" /></td>
-											<td><a onclick="modifyGo(${member.mno })"><i
+											<td><a onclick="modifyGo(${member.mno });"><i
 													class="fa fa-pencil-square-o"></i></a></td>
 											<td><a onclick="removeGo(${member.mno })"><i
 													class="fa fa-trash"></i></a></td>
@@ -180,12 +180,24 @@
 		
 		//삭제
 		function removeGo(mno){
-			var formObj = $("form[role='form']");
-			
-			formObj.attr("action", "delete");
-			formObj.attr("method", "post");
-			$("#mno").val(mno);
-			formObj.submit();
+			var arr = [];
+			var delConfirm = confirm('해당 게시글을 삭제합니까?');
+			var formObj = $("form[role='form']")
+			if (delConfirm) {
+				$(".uploadedList li").each(function(index) {
+					arr.push($(this).attr("data-src"));
+				});
+				if (arr.length > 0) {
+					$.post("/deleteAllFiles", {
+						files : arr
+					}, function() {
+						// 첨부 파일 삭제 처리.
+					});
+				}
+				formObj.attr("action", "delete");
+				$("#mno").val(mno);
+				formObj.submit();
+			}
 		}
 </script>
 

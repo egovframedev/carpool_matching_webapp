@@ -1,7 +1,5 @@
 package com.carto.admin.dao;
 
-import java.util.HashMap;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,11 +34,17 @@ public class AdminDAOImpl implements AdminDAO {
 		return session.selectOne(namespace + ".selectMember", mno);
 	}
 
-	// 회원 정보 수정
+	// 회원 정보 수정(member table)
 	@Override
-	public void modifyMember(HashMap<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		session.update(namespace + ".modifyMember", map);
+	public void modifyMember(MemberDTO dto) throws Exception {
+		session.update(namespace + ".modifyMember", dto);
+	}
+
+	// 회원 정보 수정(member_auth table)
+	@Override
+	public void modifyMember_auth(MemberDTO dto) throws Exception {
+		System.out.println("============================="+dto);
+		session.update(namespace + ".modifyMember_auth", dto);
 	}
 
 	// 회원 삭제처리

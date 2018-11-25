@@ -1,6 +1,9 @@
 package com.carto.admin.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,7 +28,7 @@ public class AdminController {
 
 	// 회원관리 목록
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String memberlist(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+	public String memberlist(@ModelAttribute("cri") Criteria cri,MemberDTO dto, Model model) throws Exception {
 		log.info("member/list--------------------------");
 
 		Object obj = adminservice.memberList();
@@ -51,22 +54,20 @@ public class AdminController {
 //		return "admin/memberModify";
 //	}
 
+	// 회원 정보 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String membermodifyPOST(MemberDTO dto, Model model) throws Exception {
 		log.info("member/modify-----------------------");
-		log.info("member :" + dto.toString());
-		int mno = (int) dto.getMno();
-		dto = adminservice.selectMember(mno);
 		adminservice.modifyMember(dto);
 
 		return "redirect:/admin/member/list";
 	}
 
+	// 회원 정보 삭제 처리 (mstate DISABLE 상태로 바꿔줌)
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String memberdelete(MemberDTO dto, Model model) throws Exception {
+	public String memberdelete( MemberDTO dto, Model model) throws Exception {
 		log.info("member/delete-----------------------");
 		int mno = (int) dto.getMno();
-		log.info("mno ============================ " + mno);
 		adminservice.deleteMember(mno);
 
 		return "redirect:/admin/member/list";
