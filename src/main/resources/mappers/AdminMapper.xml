@@ -15,7 +15,6 @@
 		
 		and mem.userid=m_auth.userid
 		
-		
 	</select>
 
 	<!-- 페이징 -->
