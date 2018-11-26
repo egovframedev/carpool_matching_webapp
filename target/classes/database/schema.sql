@@ -1,7 +1,7 @@
 -- 회원
 CREATE TABLE `member` (
 	`mno`          INT(11)       NOT NULL AUTO_INCREMENT COMMENT '회원번호',
-	`mstate`       TINYINT(4)    NOT NULL DEFAULT '0'    COMMENT '회원상태',
+	`mstate`       TINYINT(4)    NOT NULL DEFAULT '1'    COMMENT '회원상태',
 	`userid`       VARCHAR(50)   NOT NULL                COMMENT '아이디',
 	`userpw`       VARCHAR(128)  NOT NULL                COMMENT '비밀번호',
 	`name`         VARCHAR(50)   NOT NULL                COMMENT '이름',

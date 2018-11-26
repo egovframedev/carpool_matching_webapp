@@ -79,49 +79,54 @@
 									<th style="width: 10%;">이메일</th>
 									<th style="width: 10%;">이메일 인증</th>
 									<th style="width: 10%;">가입일자</th>
-									<th style="width: 10%;" colspan="3"></th>
+									<th style="width: 10%;">사용여부</th>
+									<th style="width: 3%;" colspan="3"></th>
 								</tr>
 							</thead>
 							<tbody>
-								<form role="form" action="" method="post">
-									<c:forEach var="member" items="${list}" varStatus="status">
-										<tr role="row">
-											<td><input type="hidden" value="${member.mno}" id="mno" name="mno"> ${member.mno}</td>
-											<td><input type="hidden" value="${member.userid}" id="userid" name="userid">${member.userid}</td>
-											<td>${member.name}</td>
-											<td>${member.gender}</td>
-											<td>${member.phone}</td>
-											<td><select name="authority">
-													<c:if test="${member.authority eq 'ROLE_DRIVER'}">
-														<option value="ROLE_DRIVER">ROLE_DRIVER</option>
-														<option value="ROLE_RIDER">ROLE_RIDER</option>
-													</c:if>
-													<c:if test="${member.authority eq 'ROLE_RIDER'}">
-														<option value="ROLE_RIDER">ROLE_RIDER</option>
-														<option value="ROLE_DRIVER">ROLE_DRIVER</option>
-													</c:if>
-											</select></td>
-											<td>${member.email}</td>
-											<td><select name="approval_status">
-													<c:if test="${member.approval_status eq 'true'}">
-														<option value="true">true</option>
-														<option value="false">false</option>
-													</c:if>
-													<c:if test="${member.approval_status eq 'false'}">
-														<option value="false">false</option>
-														<option value="true">true</option>
-													</c:if>
-											</select></td>
-											<td><fmt:formatDate value="${member.regdate}"
-													pattern="yyyy-MM-dd HH:mm" /></td>
-											<td><a onclick="modifyGo(${member.mno });"><i
-													class="fa fa-pencil-square-o"></i></a></td>
-											<td><a onclick="removeGo(${member.mno })"><i
-													class="fa fa-trash"></i></a></td>
-											<td><a onclick=""><i class="fa fa-file-image-o"></i></a></td>
-										</tr>
-									</c:forEach>
-								</form>
+								<c:forEach var="member" items="${list}" varStatus="status">
+									<form name="form${status.index }" action="" method="post">
+										<input type="hidden" id="mno" name="mno" value="${member.mno}">
+										<input type="hidden" id="userid" name="userid"
+											value="${member.userid}">
+									<tr role="row">
+										<td>${member.mno}</td>
+										<td>${member.userid}</td>
+										<td>${member.name}</td>
+										<td>${member.gender}</td>
+										<td>${member.phone}</td>
+										<td><select name="authority">
+												<c:if test="${member.authority eq 'ROLE_DRIVER'}">
+													<option value="ROLE_DRIVER">ROLE_DRIVER</option>
+													<option value="ROLE_RIDER">ROLE_RIDER</option>
+												</c:if>
+												<c:if test="${member.authority eq 'ROLE_RIDER'}">
+													<option value="ROLE_RIDER">ROLE_RIDER</option>
+													<option value="ROLE_DRIVER">ROLE_DRIVER</option>
+												</c:if>
+										</select></td>
+										<td>${member.email}</td>
+										<td><select name="approval_status">
+												<c:if test="${member.approval_status eq 'true'}">
+													<option value="true">true</option>
+													<option value="false">false</option>
+												</c:if>
+												<c:if test="${member.approval_status eq 'false'}">
+													<option value="false">false</option>
+													<option value="true">true</option>
+												</c:if>
+										</select></td>
+										<td><fmt:formatDate value="${member.regdate}"
+												pattern="yyyy-MM-dd HH:mm" /></td>
+												<td>${member.mstate }</td>
+										<td><a onclick="modifyGo(form${status.index })" title="수정"> <i
+												class="fa fa-pencil-square-o"></i></a></td>
+										<td><a onclick="removeGo(form${status.index })" title="삭제"> <i
+												class="fa fa-trash"></i></a></td>
+										<td><a onclick=""><i class="fa fa-file-image-o" title="운전자서류인증"></i></a></td>
+									</tr>
+									</form>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -169,20 +174,10 @@
 	});
 	
 		//수정
-		function modifyGo(mno){
-			var formObj = $("form[role='form']");
-			
-			formObj.attr("action", "modify");
-			formObj.attr("method", "post");
-			$("#mno").val(mno);
-			formObj.submit();
-		}
-		
-		//삭제
-		function removeGo(mno){
+		function modifyGo( formObj){
 			var arr = [];
-			var delConfirm = confirm('해당 게시글을 삭제합니까?');
-			var formObj = $("form[role='form']")
+			var delConfirm = confirm('수정 하시겠습니까?');
+			
 			if (delConfirm) {
 				$(".uploadedList li").each(function(index) {
 					arr.push($(this).attr("data-src"));
@@ -194,8 +189,29 @@
 						// 첨부 파일 삭제 처리.
 					});
 				}
-				formObj.attr("action", "delete");
-				$("#mno").val(mno);
+				formObj.action= "modify";
+				formObj.submit();
+			}
+			
+		}
+		
+		//삭제
+		function removeGo( formObj){
+			var arr = [];
+			var delConfirm = confirm('해당 게시글을 삭제합니까?');
+			
+			if (delConfirm) {
+				$(".uploadedList li").each(function(index) {
+					arr.push($(this).attr("data-src"));
+				});
+				if (arr.length > 0) {
+					$.post("/deleteAllFiles", {
+						files : arr
+					}, function() {
+						// 첨부 파일 삭제 처리.
+					});
+				}
+				formObj.action= "delete";
 				formObj.submit();
 			}
 		}

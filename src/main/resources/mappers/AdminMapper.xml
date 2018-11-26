@@ -11,7 +11,6 @@
 		from member mem, member_auth m_auth
 		where
 		mem.userid=m_auth.userid
-		and mem.mstate != 0
 	</select>
 
 	<!-- 페이징 -->
@@ -52,23 +51,7 @@
 		and mem.mno = #{mno}
 	</select>
 
-	<!-- <update id="modifyMember" parameterType="memberDTO"> update member 
-		set approval_status = #{approval_status} where mno = #{mno} </update> -->
-
-	<update id="modifyMember_auth" parameterType="memberDTO">
-		<selectKey order="BEFORE" keyProperty="userid"
-			resultType="java.lang.String"> select userid from member
-			where mno = #{mno}
-		</selectKey>
-		update member_auth set authority =#{authority}
-		where userid= #{userid}
-	</update>
-
 	<update id="modifyMember" parameterType="memberDTO">
-		<selectKey order="BEFORE" keyProperty="userid"
-			resultType="string"> select userid from member
-			where mno = #{mno}
-		</selectKey>
 		update member mem ,
 		member_auth m_auth
 		set mem.approval_status = #{approval_status} ,

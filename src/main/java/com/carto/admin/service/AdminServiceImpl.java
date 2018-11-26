@@ -37,7 +37,6 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void modifyMember(MemberDTO dto) throws Exception {
 		adminDAO.modifyMember(dto);
-		//adminDAO.modifyMember_auth(dto);
 	}
 
 	// 회원 삭제 처리

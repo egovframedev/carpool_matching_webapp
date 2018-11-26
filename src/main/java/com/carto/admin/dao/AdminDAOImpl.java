@@ -40,13 +40,6 @@ public class AdminDAOImpl implements AdminDAO {
 		session.update(namespace + ".modifyMember", dto);
 	}
 
-	// 회원 정보 수정(member_auth table)
-	@Override
-	public void modifyMember_auth(MemberDTO dto) throws Exception {
-		System.out.println("============================="+dto);
-		session.update(namespace + ".modifyMember_auth", dto);
-	}
-
 	// 회원 삭제처리
 	@Override
 	public void deleteMember(Integer mno) throws Exception {

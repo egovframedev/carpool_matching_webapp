@@ -17,8 +17,6 @@ public interface AdminDAO {
 
 	public void modifyMember(MemberDTO dto) throws Exception; // 회원 정보 수정
 
-	public void modifyMember_auth(MemberDTO dto) throws Exception; // 회원 정보 수정
-
 	public void deleteMember(Integer mno) throws Exception; // 회원 삭제처리
 
 }
