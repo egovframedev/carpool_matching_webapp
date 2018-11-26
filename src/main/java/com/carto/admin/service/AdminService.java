@@ -5,7 +5,7 @@ import com.carto.member.domain.MemberDTO;
 
 public interface AdminService {
 
-	public Object memberList() throws Exception; // 회원목록 불러오기
+	public Object memberList(Criteria cri) throws Exception; // 회원목록 불러오기
 
 	public int listCount(Criteria cri) throws Exception; // 페이징
 

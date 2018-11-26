@@ -16,8 +16,8 @@ public class AdminDAOImpl implements AdminDAO {
 
 	// 회원관리 목록
 	@Override
-	public Object memberList() throws Exception {
-		return session.selectList(namespace + ".memberList");
+	public Object memberList(Criteria cri) throws Exception {
+		return session.selectList(namespace + ".memberList",cri);
 	}
 
 	// 페이징

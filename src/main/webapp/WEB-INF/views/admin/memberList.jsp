@@ -55,7 +55,7 @@
 										class="form-control" value="${cri.keyword}"
 										placeholder="Search" style="width: 240px;">
 								</div>
-								<button type="submit" class="btn btn-warning" id="btnSearch">
+								<button type="submit" class="btn btn-warning" id="btnSearch" title="검색">
 									<i class="fa fa-search"></i>
 								</button>
 								&nbsp;&nbsp;

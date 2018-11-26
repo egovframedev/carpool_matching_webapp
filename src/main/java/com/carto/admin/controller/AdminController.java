@@ -1,15 +1,11 @@
 package com.carto.admin.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.carto.admin.service.AdminService;
 import com.carto.board.domain.Criteria;
@@ -31,7 +27,8 @@ public class AdminController {
 	public String memberlist(@ModelAttribute("cri") Criteria cri,MemberDTO dto, Model model) throws Exception {
 		log.info("member/list--------------------------");
 
-		Object obj = adminservice.memberList();
+		Object obj = adminservice.memberList(cri);
+		System.out.println(obj);
 		model.addAttribute("list", obj);
 
 		// 페이징 처리 부분
@@ -43,16 +40,6 @@ public class AdminController {
 
 		return "admin/memberList";
 	}
-
-//	//수정 페이지로 넘기기
-//	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-//	public String membermodifyGET(@RequestParam("mno") int mno, Model model) throws Exception {
-//		log.info("membermodifyGET-----------------------");
-//
-//		model.addAttribute("member", adminservice.selectMember(mno));
-//
-//		return "admin/memberModify";
-//	}
 
 	// 회원 정보 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)

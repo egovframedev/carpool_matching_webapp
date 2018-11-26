@@ -15,8 +15,8 @@ public class AdminServiceImpl implements AdminService {
 
 	// 회원관리 목록
 	@Override
-	public Object memberList() throws Exception {
-		return adminDAO.memberList();
+	public Object memberList(Criteria cri) throws Exception {
+		return adminDAO.memberList(cri);
 	}
 
 	// 페이징

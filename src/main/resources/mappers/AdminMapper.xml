@@ -10,7 +10,12 @@
 		select *
 		from member mem, member_auth m_auth
 		where
-		mem.userid=m_auth.userid
+		
+		<include refid="search" />
+		
+		and mem.userid=m_auth.userid
+		
+		
 	</select>
 
 	<!-- 페이징 -->
@@ -18,28 +23,30 @@
 	<![CDATA[
 		SELECT COUNT(mno) FROM member
 	]]>
-		<include refid="search" />
 	</select>
 
 	<!-- 검색 쿼리 아이디 이름 전화번호 회원타입 이메일 -->
 	<sql id="search">
+	
+	   1=1
 		<if test="searchType != null">
 			<if test="searchType == 'id'.toString()">
-				AND userid LIKE CONCAT('%', #{keyword}, '%')
+				AND mem.userid LIKE CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="searchType == 'nm'.toString()">
-				AND name LIKE CONCAT('%', #{keyword}, '%')
+				AND mem.name LIKE CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="searchType == 'tel'.toString()">
-				AND phone LIKE CONCAT('%', #{keyword}, '%')
+				AND mem.phone LIKE CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="searchType == 'type'.toString()">
-				AND (authority LIKE CONCAT('%', #{keyword}, '%')
+				AND m_auth.authority LIKE CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="searchType == 'email'.toString()">
-				AND (email LIKE CONCAT('%', #{keyword}, '%')
+				AND mem.email LIKE CONCAT('%', #{keyword},'%')
 			</if>
 		</if>
+		
 	</sql>
 
 	<select id="selectMember" resultType="memberDTO">

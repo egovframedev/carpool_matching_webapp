@@ -9,7 +9,7 @@ import com.carto.member.domain.MemberDTO;
 public interface AdminDAO {
 
 	// 회원관리 목록
-	public Object memberList() throws Exception; // 회원관리 목록
+	public Object memberList(Criteria cri) throws Exception; // 회원관리 목록
 
 	public int listCount(Criteria cri) throws Exception; // 페이징
 
