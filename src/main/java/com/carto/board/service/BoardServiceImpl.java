@@ -61,7 +61,6 @@ public class BoardServiceImpl implements BoardService {
 				attachDAO.insert(attach);
 			}
 		}
-
 	}
 
 	@Transactional

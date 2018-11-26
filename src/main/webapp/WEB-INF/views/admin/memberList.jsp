@@ -190,8 +190,8 @@
 				}
 				formObj.action= "modify";
 				formObj.submit();
+				alert("수정되었습니다.");
 			}
-			
 		}
 		
 		//삭제
@@ -212,6 +212,7 @@
 				}
 				formObj.action= "delete";
 				formObj.submit();
+				alert("삭제되었습니다.")
 			}
 		}
 </script>

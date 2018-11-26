@@ -60,7 +60,7 @@
 						</div>
 						<div class="box-footer">
 							<div class="pull-right">
-								<button type="button" class="btn btn-default" id="btnList">
+								<button type="button" class="btn btn-default" id="btnList" >
 									<i class="fa fa-list"></i> 목록
 								</button>
 							</div>
@@ -96,9 +96,10 @@
 </div><!-- /.content-wrapper -->
 <script type="text/javascript">
 	$(document).ready(function(){
-		var boardPath = '<c:url value="/board/${cri.btype}/"/>'; 
-		var bno = ${board.bno};
+		var bno = ${boardDTO.bno};
 		var formObj = $("form[role='form']");
+		var rootPath = '<c:url value="/"/>';
+		var boardPath = rootPath + 'board/${cri.btype.small}';
 		
 		/* var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
@@ -160,18 +161,14 @@
 		});
 		
 		
+		/* 페이지 버튼 부분  */
+	
 		
-		
-		
-		
-		
-		//var bno=${boardDTO.bno};
-		var formObj = $("form[role='form']");
-		var rootPath = '<c:url value="/"/>';
-		var boardPath = rootPath + 'board/${cri.btype.small}';
 		//게시물 목록으로 이동
 		$("#btnList").on("click", function() {
+			//function listGo(){
 			self.location = boardPath + "/list?page=${cri.page}";
+			//}
 		});
 		// 수정 페이지로 이동
 		$("#btnModify").on("click", function() {

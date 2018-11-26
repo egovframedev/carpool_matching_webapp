@@ -92,4 +92,11 @@ public class BoardDAOImpl implements BoardDAO {
 		session.insert(namespace + ".addreply", dto);
 	}
 
+	//main page에 board 불러오는 거
+	@Override
+	public List<BoardDTO> mainCenterList(Criteria cri) throws Exception {
+		return session.selectList(namespace + ".mainCenterList", cri);
+	}
+	
+
 }
