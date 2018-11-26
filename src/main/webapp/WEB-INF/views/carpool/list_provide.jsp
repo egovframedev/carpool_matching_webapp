@@ -19,7 +19,6 @@
     .carpool-info .start-time {display: block; margin-top: 1em; font-size: 16px; color:#2c3e50;}
     .carpool-info .seat-num, .carpool-info .charge {font-size:20px; font-weight: bold; color:#2c3e50; line-height:80px;}
     .carpool-info .seat-num>small { font-size: 14px; font-weight:normal; color:#7f8c8d; padding-left:4px;}
-    
 </style>
 <!-- 컨텐츠 시작  -->
 <div class="content-wrapper">
@@ -61,10 +60,8 @@
 							<div class="row mt10">
 								<div class="col-md-6">
 									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i> 출발일자</span>
-										<input type="date" class="form-control" name="searchDate" placeholder="출발일자" />
-										<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발시간</span>
-										<input type="text" class="form-control" name="searchTime" placeholder="출발시간 예 9:00" />
+										<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발일시</span>
+										<input type="text" class="form-control form_datetime"  name="searchDate" placeholder="출발일시" />
 									</div>
 								</div>
 							</div>
@@ -164,5 +161,16 @@
 		<!-- /.content -->
 	</div>
 </div>
+<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+    	language: 'ko',
+    	format: 'yyyy-mm-dd - P HH:ii',
+    	showMeridian: true,
+        autoclose: true,
+        todayBtn: true
+    });
+</script>            
 <!-- 컨텐츠 끝  -->
 <%@ include file="../includes/footer.jsp"%>

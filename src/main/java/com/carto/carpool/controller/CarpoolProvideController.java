@@ -34,14 +34,15 @@ public class CarpoolProvideController {
 	
 	@InitBinder
 	public void initDateTime(WebDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm a");
 		binder.registerCustomEditor(Date.class, "startDateTime", new CustomDateEditor(sdf, true));
 	}
 	
 	@GetMapping("/provide/list")
 	public String list(@ModelAttribute("cri") CarpoolCriteria cri, Model model) throws Exception {
 		log.info("GET /provide/list.............");
-		String view = "carpool/list_provide";		
+		log.info(cri);
+		String view = "carpool/list_provide";
 		List<CarpoolProvideDTO> carpoolList = service.provideList(cri);
 		model.addAttribute("list", carpoolList);
 		//carpoolList.forEach(carpool -> log.info(carpool));

@@ -46,6 +46,8 @@ CREATE TABLE `DRIVER` (
 	`insurance_chk`   TINYINT      NULL     COMMENT '보험증서 확인', -- 보험증서 확인
 	`car_photo`       VARCHAR(100) NULL     COMMENT '차량정면사진', -- 차량정면사진
 	`car_photo_chk`   TINYINT      NULL     COMMENT '차량사진 확인', -- 차량사진 확인
+	`carReg_photo`    VARCHAR(100) NULL     COMMENT '차량등록증 사진', -- 차량등록증 사진
+	`carReg_photo_chk`TINYINT      NULL     COMMENT '차량등록증 확인', -- 차량등록증 확인
 	`post_date`       VARCHAR(100) NULL     COMMENT '승인날짜', -- 승인날짜
 	`post_state`      TINYINT      NULL     COMMENT '승인상태' -- 승인상태
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 

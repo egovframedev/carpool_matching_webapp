@@ -4,6 +4,7 @@
 <%@ include file="./includes/header.jsp"%>
 <!-- 컨텐츠 시작  -->
 	<div class="content-wrapper">
+		<div class="container">
 		<!-- 컨텐츠 헤더 부분(Page header) -->
 		<section class="content-header">
 			<h1>
@@ -203,7 +204,7 @@
 		    </div>
 		</section>
 		<!-- /.content -->
-		<p>${login}</p>
+		</div>
 	</div>
 <!-- 컨텐츠 끝  -->
 <%@ include file="./includes/footer.jsp"%>

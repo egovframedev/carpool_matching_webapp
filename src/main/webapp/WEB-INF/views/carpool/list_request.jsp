@@ -61,10 +61,8 @@
 							<div class="row mt10">
 								<div class="col-md-6">
 									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i> 출발일자</span>
-										<input type="date" class="form-control" name="searchDate" placeholder="출발일자" />
-										<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발시간</span>
-										<input type="text" class="form-control" name="searchTime" placeholder="출발시간 예 9:00" />
+										<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발일시</span>
+										<input type="text" class="form-control form_datetime"  name="searchDate" placeholder="출발일시" />
 									</div>
 								</div>
 							</div>
@@ -163,6 +161,17 @@
 		</section>
 		<!-- /.content -->
 	</div>
+	<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	    $(".form_datetime").datetimepicker({
+	    	language: 'ko',
+	    	format: 'yyyy-mm-dd - P HH:ii',
+	    	showMeridian: true,
+	        autoclose: true,
+	        todayBtn: true
+	    });
+	</script> 
 </div>
 <!-- 컨텐츠 끝  -->
 <%@ include file="../includes/footer.jsp"%>

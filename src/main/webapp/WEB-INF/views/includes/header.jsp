@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="<c:url value="/"/>vendor/Ionicons/css/ionicons.min.css">
 	<link rel="stylesheet" href="<c:url value="/"/>css/AdminLTE.min.css">
 	<link rel="stylesheet" href="<c:url value="/"/>css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="<c:url value="/"/>vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&amp;subset=korean">
 <!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
