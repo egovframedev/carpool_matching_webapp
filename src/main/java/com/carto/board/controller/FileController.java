@@ -172,7 +172,7 @@ public class FileController {
 	public ResponseEntity<Resource> downloadFile(
 			@RequestHeader("User-Agent") String  userAgent,@RequestParam("filename") String FileName) {
 		log.info("download file: " + FileName);
-		Resource resource = new FileSystemResource("d:\\upload\\" + FileName);
+		Resource resource = new FileSystemResource("D:\\upload\\" + FileName);
 		log.info("resource: " + resource);
 		
 		if(resource.exists() == false) {
@@ -214,7 +214,7 @@ public class FileController {
 		log.info("deleteFile: " + FileName);
 		File file = null;
 		try {
-			file = new File("d:\\upload\\" + URLDecoder.decode(FileName, "UTF-8"));
+			file = new File("D:\\upload\\" + URLDecoder.decode(FileName, "UTF-8"));
 			file.delete();
 			if(type.equals("image")) {
 				String largeFileName = file.getAbsolutePath().replace("s_", "");

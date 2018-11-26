@@ -35,7 +35,6 @@ public class BoardServiceImpl implements BoardService {
 			attach.setBno(dto.getBno());
 			attachDAO.insert(attach);
 		}
-
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -49,9 +48,6 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public void modify(BoardDTO dto) throws Exception {
-		boardDAO.modify(dto);
-
-		attachDAO.deleteAll(dto.getBno());
 
 		boardDAO.modify(dto); // 게시글 업데이트
 

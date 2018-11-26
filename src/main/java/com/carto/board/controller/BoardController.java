@@ -171,9 +171,9 @@ public class BoardController {
 		return "redirect:/board/" + btype + "/detail?bno=" + board.getBno();
 	}
 
-	@RequestMapping("/getAttach/{bno}")
+	@RequestMapping("/getAttachList")
 	@ResponseBody
-	public List<AttachfileDTO> getAttach(@PathVariable("bno") Integer bno) throws Exception {
+	public List<AttachfileDTO> getAttach(@RequestParam("bno") Integer bno) throws Exception {
 		return boardservice.getAttach(bno);
 	}
 

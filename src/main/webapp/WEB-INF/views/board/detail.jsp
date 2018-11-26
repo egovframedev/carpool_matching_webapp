@@ -110,14 +110,14 @@
 		})  */
 		
 		(function(){
-			$.getJSON( boardPath + "getAttachList", {bno: bno} , function(arr){
-				// console.log(arr);
-				alert(arr);
+			$.getJSON( boardPath + "/getAttachList", {bno: bno} , function(arr){
+				//console.log(arr);
+				//alert(arr);
 				var str = "";
 				$(arr).each(function(i, attach){
 					// image type
 					if(attach.fileType) {
-						var fileCallPath = encodeURIComponent(attach.uploadPath + "/s_" + attach.uuid + "_" + attach.filename);
+						var fileCallPath = encodeURIComponent(attach.uploadpath + "/s_" + attach.uuid + "_" + attach.filename);
 						str += '<li data-path="'+attach.uploadpath + '" data-uuid="' + attach.uuid 
 							+ '" data-filename="'+ attach.filename +'" data-type="'+ attach.fileType +'"><div>';						
 						str += '<img src="<c:url value="/"/>display?filename=' + fileCallPath + '" class="img-thumbnail" />';
@@ -160,9 +160,6 @@
 			}, 1000)
 		});
 		
-		
-		/* 페이지 버튼 부분  */
-	
 		
 		//게시물 목록으로 이동
 		$("#btnList").on("click", function() {
