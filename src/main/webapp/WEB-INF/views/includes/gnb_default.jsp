@@ -86,33 +86,14 @@
 								<img src="<c:url value="/"/>img/user2-160x160.jpg" class="user-image" alt="User Image">
 								<span class="hidden-xs">${login.name}[${login.userid}]</span>
 							</a>
-							<ul class="dropdown-menu">
-								<li class="user-header">
-									<img src="<c:url value="/"/>img/user2-160x160.jpg" class="img-circle" alt="User Image">
-									<p>${login.name} <small>2018년11월</small></p>
-								</li>
-								<li class="user-body">
-									<div class="row">
-										<div class="col-xs-4 text-center">
-											<a href="#">팔로우</a>
-										</div>
-										<div class="col-xs-4 text-center">
-											<a href="#">구매</a>
-										</div>
-										<div class="col-xs-4 text-center">
-											<a href="#">친구</a>
-										</div>
-									</div> <!-- /.row -->
-								</li>
-								<li class="user-footer">
-									<div class="pull-left">
-										<a href="#" class="btn btn-default btn-flat">내프로필</a>
-									</div>
-									<div class="pull-right">
-										<a href="<c:url value='/logout'/>" class="btn btn-default btn-flat">로그아웃</a>
-									</div>
-								</li>
-							</ul>
+							<ul class="dropdown-menu" role="menu">				             
+				                <li><a href="<c:url value='/member/myprofile'/>">
+				                	<i class="fa fa-id-card-o" aria-hidden="true"></i> 내프로필</a></li>
+				                <li><a href="<c:url value='/logout'/>">
+				                	<i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a></li>
+				                <li><a href="<c:url value='/member/certify'/>">
+				                	<i class="fa fa-id-card" aria-hidden="true"></i> 운전자인증</a></li>
+		              		</ul>
 						</li>
 						<!-- 관리자 링크 -->
 						<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li>

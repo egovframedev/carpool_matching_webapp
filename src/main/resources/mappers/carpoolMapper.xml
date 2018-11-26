@@ -38,6 +38,7 @@
 		<result property="driverChk" column="isdriver" />
 		<collection property="carpool" resultMap="carpoolMap" />
 	</resultMap>
+	
 	<!-- 카풀 요청 맵 -->
 	<resultMap id="carpoolRequestMap" type="CarpoolRequestDTO" extends="carpoolMap">
 		<association property="user" column="mno" javaType="MemberDTO">
