@@ -5,6 +5,8 @@ import lombok.Data;
 
 @Data
 public class CarpoolDTO {
+	public static final int REQUEST = 1;
+	public static final int PROVIDE = 2;
 	private Integer cpno;         // 카풀번호
 	private int cptype;           // 카풀구분 요청 1, 제공 2
 	private String startPoint;    // 출발지 주소

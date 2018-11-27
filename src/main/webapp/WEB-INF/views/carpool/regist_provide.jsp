@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../includes/header.jsp"%>
- <link rel="stylesheet" href="<c:url value='/vendor'/>/bootstrap-daterangepicker/daterangepicker.css">
-<link rel="stylesheet" href="<c:url value='/resources'/>/plugins/timepicker/bootstrap-timepicker.min.css">
 <!-- 컨텐츠 시작  -->
 	<div class="content-wrapper">
 		<div class="container">
@@ -58,26 +56,10 @@
 	                	</div>
 	                	<div class="form-group">
 	                		<label for="startDate" class="col-sm-2 control-label">출발시간</label>
-	                		<div class="col-sm-6">
+	                		<div class="col-sm-4">
 	                			<div class="input-group">   
-	            					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
-	            					<input type="text" class="form-control datepicker" id="startDate">
 	            					<span class="input-group-addon"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></span>
-	            					<span class="input-group-addon">
-		            					<select id="startHour">
-		            					<c:forEach var="hour" begin="0" end="23">
-		            					<c:if test="${hour ge 12 }"><option value="${hour}">오후 ${hour - 12}시</option></c:if>
-		            					<c:if test="${hour lt 12 }"><option value="${hour}">오전 ${hour}시</option></c:if>
-		            					</c:forEach>
-		            					</select>
-		            					<select id="startMin">
-		            					<c:forEach var="min" begin="0" end="55" step="5">
-		            					<c:if test="${min lt 10 }"><option value="0${min}">0${min}분</option></c:if>
-		            					<c:if test="${min ge 10 }"><option value="${min}">${min}분</option></c:if>
-		            					</c:forEach>
-		            					</select>
-	            					</span>
-	            					<input type="hidden" name="startDateTime" id="startDateTime" />
+	            					<input type="text" name="startDateTime" class="form-control form_datetime">	            					
 	            				</div>
 	                		</div>
 	                	</div>
@@ -86,7 +68,7 @@
 						    <div class="col-sm-3">
 						   		<div class="input-group">
 	                    			<input type="text" class="form-control" name="charge" id="charge" placeholder="금액입력..">
-						    		<span class="input-group-addon">원</span>
+						    		<span class="input-group-addon">원/인</span>
 						    	</div>
 	                  		</div>               
 	                	</div>
@@ -173,22 +155,11 @@
 		</div>
 	</div>
 <!-- 컨텐츠 끝  -->
-<script src="<c:url value='/vendor'/>/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="<c:url value='/resources'/>/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=696a80bf76359ec5e09adde78a569f4f"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-	//Date picker
-	$('.datepicker').datepicker({
-	  autoclose: true,
-	  format: "yyyy-mm-dd",
-	  locale: 'kr'
-	});
-	 //Timepicker
-    $('.timepicker').timepicker({
-    	format: 'LT',
-      	showInputs: false
-    })
 	//  지도 표시 부분 -----------------------------------------------------------------------------------------
 	var mapContainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	
@@ -331,12 +302,17 @@
 	}
 	
 	$(function(){
+		$(".form_datetime").datetimepicker({
+			language: 'ko',
+			format: 'yyyy-mm-dd - P HH:ii',
+			showMeridian: true,
+		    autoclose: true,
+		    todayBtn: true
+		});
+		
 		$("form[role=form]").submit(function(e) {
 			e.preventDefault();
-			var startDate = $("#startDate").val();
-			var startHour = $("#startHour").val();
-			var startMin  = $("#startMin").val() > 10 ? $("#startMin").val() : '0' + $("#startMin").val();
-			$("#startDateTime").val(startDate + ' ' + startHour + ':' + startMin);
+			
 			this.submit();
 		});
 	});

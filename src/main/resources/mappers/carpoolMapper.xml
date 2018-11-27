@@ -25,6 +25,7 @@
 		<result property="smokeUse" column="smoke_use" />
 		<result property="reqMsg" column="req_msg" />
 	</resultMap>
+	
 	<!-- 카풀 매칭 맵 -->
 	<resultMap id="carpoolMatchMap" type="CarpoolMatchDTO">
 		<id property="matchno" column="matchno" />
@@ -59,6 +60,16 @@
 			<result property="gender" column="gender"/>
 			<result property="photo" column="photo"/>
 		</association>
+		<association property="driver" column="mno" javaType="DriverDTO">
+			<id property="mno" column="mno"/>
+			<result property="car_no" column="car_no"/>
+			<result property="car_prod" column="car_prod"/>
+			<result property="car_model" column="car_model"/>
+			<result property="car_color" column="car_color"/>
+			<result property="car_year" column="car_year"/>
+			<result property="car_photo" column="car_photo"/>
+			<result property="post_state" column="post_state"/>
+		</association>
 	</resultMap>
 	
 	<!-- 카풀 요청/제공 관련 -->
@@ -81,52 +92,58 @@
 		sysdate()
 		)
 	</insert>
-
+	
+	<sql id="searchWhere">
+		<if test="carpoolType gt 0">
+			AND cptype = #{carpoolType}
+		</if>
+		<if test="searchStart != null and searchStart != ''">
+			AND start_point LIKE CONCAT('%', #{searchStart}, '%')
+		</if>
+		<if test="searchEnd != null and searchEnd != ''">
+			AND end_point LIKE CONCAT('%', #{searchEnd}, '%')
+		</if>
+		<if test="searchDate != null and searchDate != ''">
+			AND start_datetime >= #{startDateTime}
+		</if>
+	</sql>
+	
 	<select id="getProvideList" resultMap="carpoolProvideMap">
 		SELECT cpno, cptype, start_point, start_long, start_lat,
 			end_point, end_long, end_lat, start_datetime, charge,
 			seat_num, seat_opt, drive_opt, trunk_use, smoke_use,
 			cp.reg_date, cp.mno, mb.userid, mb.name, mb.gender, mb.photo
 		FROM carpool_info cp, member mb
-		<where>
-			cp.cptype = 2 AND cp.mno = mb.mno
-			<if test="searchStart != null and searchStart != ''">
-				AND start_point LIKE CONCAT('%', #{searchStart}, '%')
-			</if>
-			<if test="searchEnd != null and searchEnd != ''">
-				AND end_point LIKE CONCAT('%', #{searchEnd}, '%')
-			</if>
-			<if test="searchDate != null and searchDate != ''">
-				AND start_datetime >= #{startDateTime}
-			</if>
-		</where>
+		WHERE cp.mno = mb.mno
+		<include refid="searchWhere"/>
 		ORDER BY start_datetime DESC
+		LIMIT #{pageStart}, #{perPageNum}
 	</select>
 	
 	<select id="getRequestList" resultMap="carpoolRequestMap">
-		SELECT 
-			cpno, cptype, start_point, start_long, start_lat,
+		SELECT cpno, cptype, start_point, start_long, start_lat,
 			end_point, end_long, end_lat, 
 			start_datetime, charge,
 			seat_num, seat_opt, drive_opt, trunk_use, smoke_use,
 			cp.reg_date, 
 			cp.mno, mb.userid, mb.name, mb.gender, mb.photo
 		FROM carpool_info cp, member mb
-		<where>
-			cp.cptype = 1 AND cp.mno = mb.mno 
-			<if test="searchStart != null and searchStart != ''">
-				AND start_point LIKE CONCAT('%', #{searchStart}, '%')
-			</if>
-			<if test="searchEnd != null and searchEnd != ''">
-				AND end_point LIKE CONCAT('%', #{searchEnd}, '%')
-			</if>
-			<if test="searchDate != null and searchDate != ''">
-				AND start_datetime >= #{startDateTime}
-			</if>
-		</where>
+		WHERE cp.mno = mb.mno
+		<include refid="searchWhere"/>
 		ORDER BY start_datetime DESC
+		LIMIT #{pageStart}, #{perPageNum}
 	</select>
 	
+	<select id="countList" resultType="_int">
+	<![CDATA[
+		SELECT COUNT(*)
+		FROM carpool_info
+		WHERE cpno > 0
+	]]>	
+		<include refid="searchWhere"/>
+	</select>
+	
+	<!-- 카풀 요청 정보 -->
 	<select id="getCarpool" parameterType="int" resultMap="carpoolRequestMap">
 		SELECT 
 			cpno, cptype, start_point, start_long, start_lat,
@@ -139,14 +156,41 @@
 			AND cp.cpno = #{cpno}
 	</select>
 	
+	<!-- 카풀 제공 정보 -->
+	<select id="getCarpoolPrivide" resultMap="carpoolProvideMap">
+		SELECT 
+			cpno, cptype, start_point, start_long, start_lat, end_point, end_long, end_lat, start_datetime, charge,
+			seat_num, seat_opt, drive_opt, trunk_use, smoke_use, req_msg, cp.reg_date, 
+			cp.mno, mb.userid, mb.name, mb.gender, mb.photo,
+			dr.car_no, dr.car_prod, dr.car_model, dr.car_color, dr.car_year, dr.car_photo, dr.post_state
+		FROM carpool_info cp, member mb, driver dr
+		WHERE cp.mno = mb.mno AND cp.mno = dr.mno
+			AND cp.cpno = #{cpno}	
+	</select>
+
+	<!-- 동승제의 리스트 -->
 	<select id="getMatchingList" resultType="CPMatchingDTO">
 		SELECT 
-			matchno, match_date As matchDate, progress, 
-			mat.mno, mem.userid, mem.name
+			matchno, cpno,
+			match_date AS matchDate, 
+			progress,
+			isdriver AS driverChk, 
+			cpnum, paysum,
+			mat.mno, 
+			mem.userid, 
+			mem.name AS username
 		FROM carpool_match mat, member mem
-		WHERE mat.mno = mem.mno 
-			AND mat.cpno = #{cpno}
+		WHERE mat.mno = mem.mno	AND mat.cpno = #{cpno}
 	</select>
+	
+	<!-- 동승제의 등록 -->
+	<insert id="insertMatching" parameterType="CPMatchingDTO">
+		INSERT INTO carpool_match (
+			mno, cpno, match_date, progress, isdriver, cpnum, paysum
+		) VALUES (
+			#{mno}, #{cpno}, sysdate(), 0, #{driverChk}, #{cpnum}, #{paysum}
+		)		
+	</insert>
 
 	<!-- 결제 관련 쿼리 -->
 	<select id="selectMatInfo" parameterType="int" resultMap="carpoolMatchMap">
@@ -164,6 +208,7 @@
 		WHERE mat.mno = #{mno}
 		AND mat.progress = 1
 	</select>
+	
 	<!-- 세션의 결제리스트출력용 -->
 	<select id="selectMatInfoByPayno" parameterType="hashmap"
 		resultMap="carpoolMatchMap">

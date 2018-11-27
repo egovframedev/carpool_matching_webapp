@@ -104,23 +104,25 @@
 				
 		<!-- 동승 제의 목록 -->
 		<div class="box box-danger">
-			<div class="box-header with-border">
+			<div class="box-header with-border" style="padding-bottom: 20px;">
 				<h3 class="box-title">동승 제의</h3>
+				
 				<div class="box-tools">
-					<ul class="list-inline">
+					<ul class="list-inline" style="margin-top: 4px;">
 						<li>
 							<select id="seatNum" class="form-control">
 							<c:forEach var="num" begin="1" end="${cpinfo.seatNum}">
 								<option value="${num}">${num} 명</option>
 							</c:forEach>
 							</select>
-							<input type="hidden" id="mno" value="${login.mno}" />
 						</li>
 						<li>
-							<button type="button" id="btnMatch" class="btn btn-success">동승제의</button>
+							<button type="button" id="btnMatch" class="btn btn-success" style="margin-top: -8px;">
+								<i class="fa fa-user-plus"></i> 동승 제의</button>
 						</li>
 					</ul>
 				</div>
+				
 			</div>			
 			<div id="resultList" class="box-body">
 				<div class="overlay">
@@ -134,6 +136,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=696a80bf76359ec5e09adde78a569f4f"></script>
 <script>
 	!(function($){
+		var ctxPath = '<c:url value="/carpool/request/"/>';
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 	       		center: new daum.maps.LatLng(${cpinfo.startLat}, ${cpinfo.startLong}),
@@ -180,12 +183,38 @@
 			$.get( 
 				"<c:url value='/carpool/request'/>/getMatching?cpno=" + cpno,
 				function(data) {
-					console.log(data);
+					//console.log(data);
 					$("#resultList").html(data);
 			});
 		}
 		getCarpoolMatching(cpno);
-	
+		
+		$("#btnMatch").on("click", function(e){
+			var cpno = ${cpinfo.cpno},
+				charge = ${cpinfo.charge},
+				cpnum = $("#seatNum").val();
+			console.log(cpno + ", " +  charge + ", " + cpnum);
+			$.ajax({
+				type: 'post',
+				url: 'requestMatching',
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType: 'text',
+				data: JSON.stringify({cpno: cpno, cpnum: cpnum, charge: charge }),
+				success: function(result) {
+					if(result.trim() == "SUCCESS") {
+						alert("해당 카풀에 동승을 요청하였습니다.");
+						getCarpoolMatching(cpno);
+					}
+				},
+				error: function(jqXHR, textStatus) {
+					// alert( "Request failed: " + textStatus );
+					alert("로그인인 필요한 기능입니다.");
+				}
+			});
+		});
 	})(window.jQuery);
 </script>
 <!-- 컨텐츠 끝  -->

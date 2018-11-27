@@ -31,7 +31,8 @@ public interface CarpoolDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public CarpoolRequestDTO getCarpool(Integer cpno) throws Exception;
+	public CarpoolRequestDTO getCarpool(Integer cpno) throws Exception; // 카풀 요청
+	public CarpoolProvideDTO getCarpoolPrivide(Integer cpno) throws Exception; // 카풀 제공
 	
 	/**
 	 * 동승 제의 목록
@@ -40,4 +41,21 @@ public interface CarpoolDAO {
 	 * @throws Exception
 	 */
 	public List<CPMatchingDTO> getMatchingList(Integer cpno) throws Exception;
+	
+	/**
+	 * 리스트 카운트
+	 * @param cri
+	 * @return
+	 * @throws Exception
+	 */
+	public int countList(CarpoolCriteria cri) throws Exception;
+	
+	/**
+	 * 동승 제의 등록
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertMatching(CPMatchingDTO dto) throws Exception;
+	
 }

@@ -10,7 +10,7 @@
 		<section class="content-header">
 			<!-- 컨텐츠 헤더 부분(Page header) -->
 			<section class="content-header">
-				<h1><i class="fa fa-slideshare" aria-hidden="true"></i>
+				<h1><i class="fa fa-car" aria-hidden="true"></i>
 					카풀 요청<small>상세 보기</small></h1>
 				<ol class="breadcrumb">
 					<li><a href="<c:url value='/carpool/request/list'/>"><i class="fa fa-dashboard"></i> 카풀 요청</a></li>
@@ -93,7 +93,13 @@
 				<h3 class="box-title">추가 내용</h3>
 			</div>
 			<div class="box-body">
-				<p><c:out value="${cpinfo.reqMsg}"></c:out> </p>
+				<p><c:out value="${cpinfo.reqMsg}"></c:out></p>
+				<ul>
+					<li>차량 번호: ${cpinfo.driver.car_no}</li>
+					<li>차량 색상: ${cpinfo.driver.car_color}</li>
+					<li>차량 모델: ${cpinfo.driver.car_model}</li>
+					<li>차량 년식: ${cpinfo.driver.car_year}년</li>
+				</ul>
 			</div>
 			<div class="box-footer text-center">
 				<button type="button" class="btn btn-default" onclick="location.href='list';">
@@ -101,26 +107,27 @@
 				</button>
 			</div>
 		</div>
-				
 		<!-- 동승 제의 목록 -->
 		<div class="box box-danger">
-			<div class="box-header with-border">
+			<div class="box-header with-border" style="padding-bottom: 20px;">
 				<h3 class="box-title">동승 제의</h3>
+				
 				<div class="box-tools">
-					<ul class="list-inline">
+					<ul class="list-inline" style="margin-top: 4px;">
 						<li>
 							<select id="seatNum" class="form-control">
 							<c:forEach var="num" begin="1" end="${cpinfo.seatNum}">
 								<option value="${num}">${num} 명</option>
 							</c:forEach>
 							</select>
-							<input type="hidden" id="mno" value="${login.mno}" />
 						</li>
 						<li>
-							<button type="button" id="btnMatch" class="btn btn-success">동승제의</button>
+							<button type="button" id="btnMatch" class="btn btn-success" style="margin-top: -8px;">
+								<i class="fa fa-user-plus"></i> 동승 제의</button>
 						</li>
 					</ul>
 				</div>
+				
 			</div>			
 			<div id="resultList" class="box-body">
 				<div class="overlay">
@@ -134,6 +141,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=696a80bf76359ec5e09adde78a569f4f"></script>
 <script>
 	!(function($){
+		var ctxPath = '<c:url value="/carpool/provide/"/>';
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
 	       		center: new daum.maps.LatLng(${cpinfo.startLat}, ${cpinfo.startLong}),
@@ -178,13 +186,40 @@
 		// 동승제의 목록 가져오기.
 		function getCarpoolMatching(cpno) {
 			$.get( 
-				"<c:url value='/carpool/request'/>/getMatching?cpno=" + cpno,
+				"getMatching?cpno=" + cpno,
 				function(data) {
-					console.log(data);
+					//console.log(data);
 					$("#resultList").html(data);
 			});
 		}
 		getCarpoolMatching(cpno);
+		
+		$("#btnMatch").on("click", function(e){
+			var cpno = ${cpinfo.cpno},
+				charge = ${cpinfo.charge},
+				cpnum = $("#seatNum").val();
+			console.log(cpno + ", " +  charge + ", " + cpnum);
+			$.ajax({
+				type: 'post',
+				url: 'requestMatching',
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType: 'text',
+				data: JSON.stringify({cpno: cpno, cpnum: cpnum, charge: charge }),
+				success: function(result) {
+					if(result.trim() == "SUCCESS") {
+						alert("해당 카풀에 동승을 요청하였습니다.");
+						getCarpoolMatching(cpno);
+					}
+				},
+				error: function(jqXHR, textStatus) {
+					// alert( "Request failed: " + textStatus );
+					alert("로그인인 필요한 기능입니다.");
+				}
+			});
+		});
 	
 	})(window.jQuery);
 </script>

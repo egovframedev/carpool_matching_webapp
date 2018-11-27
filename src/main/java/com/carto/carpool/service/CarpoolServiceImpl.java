@@ -36,8 +36,12 @@ public class CarpoolServiceImpl implements CarpoolService {
 
 	// 카풀 내용 서비스
 	@Override
-	public CarpoolRequestDTO detail(Integer cpno) throws Exception {
-		return carpoolDAO.getCarpool(cpno);
+	public CarpoolDTO detail(Integer cpno, String cpType) throws Exception {
+		if(cpType.equals("provide")) {
+			return carpoolDAO.getCarpoolPrivide(cpno);
+		} else {
+			return carpoolDAO.getCarpool(cpno);			
+		}
 	}
 
 	// 카풀 매칭 목록 서비스
@@ -45,5 +49,15 @@ public class CarpoolServiceImpl implements CarpoolService {
 	public List<CPMatchingDTO> matchingList(Integer cpno) throws Exception {
 		return carpoolDAO.getMatchingList(cpno);
 	}
+	
+	// 카풀 목록 갯수
+	@Override
+	public int countList(CarpoolCriteria cri) throws Exception {
+		return carpoolDAO.countList(cri);
+	}
 
+	@Override
+	public int registCpMatch(CPMatchingDTO dto) throws Exception {
+		return carpoolDAO.insertMatching(dto);
+	}
 }

@@ -1,14 +1,9 @@
 package com.carto.carpool.domain;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.carto.board.domain.Criteria;
 
 public class Paging {
 	private int totalCount; // 전체 데이터 수
@@ -98,14 +93,19 @@ public class Paging {
 	}
 	
 	public String makeQuery(int page) {
+		System.out.println("makeQuery...." + page);
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("page", Integer.toString(page));
-		if(!cri.getSearchStart().isEmpty()) 
-			params.add("searchStart", cri.getSearchStart());
-		if(!cri.getSearchEnd().isEmpty()) 
-			params.add("searchEnd", cri.getSearchEnd());
-		if(!cri.getSearchDate().isEmpty())
-			params.add("searchDate", cri.getSearchDate());	
+		System.out.println(cri);
+		if(cri != null) {
+			if(cri.getSearchStart() != null && !cri.getSearchStart().isEmpty()) 
+				params.add("searchStart", cri.getSearchStart());
+			if(cri.getSearchEnd() != null && !cri.getSearchEnd().isEmpty()) 
+				params.add("searchEnd", cri.getSearchEnd());
+			if(cri.getSearchDate() != null && !cri.getSearchDate().isEmpty())
+				params.add("searchDate", cri.getSearchDate());
+		}
+		
 		UriComponents uriComponents = UriComponentsBuilder.newInstance()
 									.queryParams(params).build();
 		return uriComponents.toString();

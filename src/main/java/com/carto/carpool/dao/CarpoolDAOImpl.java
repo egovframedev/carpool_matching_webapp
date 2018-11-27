@@ -33,15 +33,35 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 		return session.selectList(NAMESPACE + ".getProvideList", cri);
 	}
 	
+	// 카풀 정보
 	@Override
 	public CarpoolRequestDTO getCarpool(Integer cpno) throws Exception {
 		return session.selectOne(NAMESPACE + ".getCarpool", cpno);
 	}
-
+	
+	// 카풀 제공 정보
+	@Override
+	public CarpoolProvideDTO getCarpoolPrivide(Integer cpno) throws Exception {
+		return session.selectOne(NAMESPACE + ".getCarpoolPrivide", cpno);
+	}
+	
 	@Override
 	public List<CPMatchingDTO> getMatchingList(Integer cpno) throws Exception {
 		return session.selectList(NAMESPACE + ".getMatchingList", cpno);
 	}
+	
+	// 카풀 갯수
+	@Override
+	public int countList(CarpoolCriteria cri) throws Exception {
+		return session.selectOne(NAMESPACE + ".countList", cri);
+	}
+
+	// 카풀 동승 제의 저장
+	@Override
+	public int insertMatching(CPMatchingDTO dto) throws Exception {
+		return session.insert(NAMESPACE + ".insertMatching", dto);
+	}
+
 
 
 }

@@ -79,32 +79,24 @@ CREATE TABLE `carpool_info` (
 ) COMMENT='카풀정보'
 COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
+-- 카풀매칭
 CREATE TABLE `carpool_match` (
+	`matchno`    INT          NULL COMMENT '매칭번호', -- 매칭번호
 	`mno`        INT(11)      NOT NULL          COMMENT '회원번호',
 	`cpno`       INT(11)      NOT NULL          COMMENT '카풀번호',
 	`match_date` TIMESTAMP    NULL DEFAULT NULL COMMENT '매칭날짜',
 	`progress`   TINYINT(4)   NULL DEFAULT NULL COMMENT '진행상황(대기 0, 승인 1, 완료 2, 취소 3)',
 	`payno`      VARCHAR(100) NULL DEFAULT NULL COMMENT '결제번호',
 	`isdriver`   TINYINT(1)   NULL DEFAULT NULL COMMENT '드라이버 체크(드라이버1, 동승자0)',
-	PRIMARY KEY (`mno`, `cpno`),
+	`paysum`     INT(11)      NULL DEFAULT 0    COMMENT '결제금액',
+	
+	PRIMARY KEY (`matchno`),
 	INDEX `FK_CARPOOL_INFO_TO_CARPOOL_MATCH` (`cpno`),
 	INDEX `FK_PAYMENT_TO_CARPOOL_MATCH` (`payno`),
 	CONSTRAINT `FK_CARPOOL_INFO_TO_CARPOOL_MATCH` FOREIGN KEY (`cpno`) REFERENCES `carpool_info` (`cpno`),
 	CONSTRAINT `FK_MEMBER_TO_CARPOOL_MATCH` FOREIGN KEY (`mno`) REFERENCES `member` (`mno`),
 	CONSTRAINT `FK_PAYMENT_TO_CARPOOL_MATCH` FOREIGN KEY (`payno`) REFERENCES `payment` (`payno`)
-) COMMENT='카풀매칭' COLLATE='utf8_general_ci' ENGINE=InnoDB
-;
-
--- 카풀매칭
-CREATE TABLE `CARPOOL_MATCH` (
-	`matchno`    INT          NULL COMMENT '매칭번호', -- 매칭번호
-	`mno`        INT          NULL COMMENT '회원번호', -- 회원번호
-	`cpno`       INT          NULL COMMENT '카풀번호', -- 카풀번호
-	`match_date` TIMESTAMP    NULL COMMENT '매칭날짜', -- 매칭날짜
-	`progress`   TINYINT      NULL COMMENT '진행상황', -- 진행상황 (대기 0 ,승인 1 , 완료 2 취소 3)
-	`payno`      VARCHAR(100) NULL COMMENT '결제번호', -- 결제번호
-	`isdriver`   TINYINT	  NULL COMMENT '드라이버 체크' -- 드라이버 (1 드라이버,0 동승자)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '카풀매칭';
+) COMMENT='카풀매칭' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 -- 주소록
 CREATE TABLE `ADDRESS` (
