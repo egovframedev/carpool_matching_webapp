@@ -51,10 +51,10 @@
 		        		</thead>
 		        		<tbody>
 		        			<tr>
-		        				<td>${cpjoin.payno}</td>
+		        				<td>${cpjoin.carpool.payno}</td>
 		        				<td>카드</td>
-		        				<td>${cpjoin.charge}</td>
-		        				<td>${cpjoin.matchDateFmt}</td>
+		        				<td>${cpjoin.carpool.charge}</td>
+		        				<td>${cpjoin.carpool.matchDateFmt}</td>
 		        			</tr>
 		        		</tbody>	
 		        	</table>

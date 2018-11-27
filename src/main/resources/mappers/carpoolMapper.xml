@@ -192,8 +192,7 @@
 		WHERE mno=#{mno}) a)
 	</update>
 
-	<select id="selectDriver" resultType="memberDTO"
-		parameterType="Integer">
+	<select id="selectDriver" resultType="memberDTO">
 		SELECT *
 		FROM member
 		WHERE MNO =
