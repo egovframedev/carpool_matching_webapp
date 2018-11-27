@@ -49,7 +49,7 @@ CREATE TABLE `DRIVER` (
 	`carReg_photo`    VARCHAR(100) NULL     DEFAULT NULL COMMENT '차량등록증 사진', -- 차량등록증 사진
 	`carReg_photo_chk`TINYINT      NULL     DEFAULT NULL COMMENT '차량등록증 확인', -- 차량등록증 확인
 	`post_date`       TIMESTAMP    NULL 	DEFAULT CURRENT_TIMESTAMP COMMENT '승인날짜', -- 승인날짜
-	`post_state`      TINYINT      NULL     DEFAULT NULL COMMENT '승인상태' -- 승인상태
+	`post_state`      TINYINT      NULL     DEFAULT NULL COMMENT '승인상태' -- 승인상태( 승인취소 0 , 승인요청 1 , 승인완료 2 )
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '운전자';
 
