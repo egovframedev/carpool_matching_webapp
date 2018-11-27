@@ -43,10 +43,10 @@ public class MainController {
 		return res;
 	}
 
-	@RequestMapping("/main")
+	@RequestMapping({"/", "/main"})
 	public String main() throws Exception {
 		log.info("MainPage------------------------");
 		
-		return "/carpool/main";
+		return "main";
 	}
 }

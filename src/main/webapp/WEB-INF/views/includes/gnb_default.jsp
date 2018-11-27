@@ -96,7 +96,15 @@
 		              		</ul>
 						</li>
 						<!-- 관리자 링크 -->
-						<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-gears"></i></a>
+							<ul class="dropdown-menu" role="menu">
+				                <li><a href="<c:url value='/admin/member/list'/>">회원관리</a></li>
+				                <li><a href="<c:url value='/admin/carpool/lst'/>">카풀정보관리</a></li>
+				                <li><a href="<c:url value='/admin/pay/list'/>">결제정산관리</a></li>
+		              		</ul>	
+						</li>
 						</c:if>
 					</ul>
 				</div>
