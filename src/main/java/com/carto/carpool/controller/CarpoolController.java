@@ -166,4 +166,11 @@ public class CarpoolController {
 		}
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
+	
+	// 카풀 동승
+	@GetMapping("/riding")
+	public String ridingView(HttpServletRequest request) {
+		log.info("GET /carpool/ridingView ...... ");
+		return "carpool/riding_view";
+	}
 }

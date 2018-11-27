@@ -8,6 +8,5 @@ import lombok.Data;
 @Data
 public class CarpoolProvideDTO extends CarpoolRequestDTO {
 	private static final long serialVersionUID = 1L;
-	private MemberDTO user;
 	private DriverDTO driver;
 }
