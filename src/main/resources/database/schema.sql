@@ -32,24 +32,24 @@ CREATE TABLE `member_auth` (
 
 -- 운전자
 CREATE TABLE `DRIVER` (
-	`mno`             INT          NOT NULL COMMENT '회원번호', -- 회원번호
-	`license_no`      VARCHAR(20)  NULL     COMMENT '운전면허번호', -- 운전면허번호
-	`car_no`          VARCHAR(20)  NULL     COMMENT '차량번호', -- 차량번호
-	`car_prod`        VARCHAR(20)  NULL     COMMENT '차량제조사', -- 차량제조사
-	`car_model`       VARCHAR(50)  NULL     COMMENT '차량모델명', -- 차량모델명
-	`car_color`       VARCHAR(50)  NULL     COMMENT '차량색상', -- 차량색상
-	`car_year`        VARCHAR(10)  NULL     COMMENT '차량연식', -- 차량연식
-	`insurance`       VARCHAR(20)  NULL     COMMENT '보험정보', -- 보험정보
-	`license_photo`   VARCHAR(100) NULL     COMMENT '운전면허증사진', -- 운전면허증사진
-	`license_chk`     TINYINT      NULL     COMMENT '운전면허증확인', -- 운전면허증확인
-	`insurance_photo` VARCHAR(100) NULL     COMMENT '보험증서 사진', -- 보험증서 사진
-	`insurance_chk`   TINYINT      NULL     COMMENT '보험증서 확인', -- 보험증서 확인
-	`car_photo`       VARCHAR(100) NULL     COMMENT '차량정면사진', -- 차량정면사진
-	`car_photo_chk`   TINYINT      NULL     COMMENT '차량사진 확인', -- 차량사진 확인
-	`carReg_photo`    VARCHAR(100) NULL     COMMENT '차량등록증 사진', -- 차량등록증 사진
-	`carReg_photo_chk`TINYINT      NULL     COMMENT '차량등록증 확인', -- 차량등록증 확인
-	`post_date`       VARCHAR(100) NULL     COMMENT '승인날짜', -- 승인날짜
-	`post_state`      TINYINT      NULL     COMMENT '승인상태' -- 승인상태
+	`mno`             INT          NOT NULL DEFAULT NULL COMMENT '회원번호', -- 회원번호
+	`license_no`      VARCHAR(20)  NULL     DEFAULT NULL COMMENT '운전면허번호', -- 운전면허번호
+	`car_no`          VARCHAR(20)  NULL     DEFAULT NULL COMMENT '차량번호', -- 차량번호
+	`car_prod`        VARCHAR(20)  NULL     DEFAULT NULL COMMENT '차량제조사', -- 차량제조사
+	`car_model`       VARCHAR(50)  NULL     DEFAULT NULL COMMENT '차량모델명', -- 차량모델명
+	`car_color`       VARCHAR(50)  NULL     DEFAULT NULL COMMENT '차량색상', -- 차량색상
+	`car_year`        VARCHAR(10)  NULL     DEFAULT NULL COMMENT '차량연식', -- 차량연식
+	`insurance`       VARCHAR(20)  NULL     DEFAULT NULL COMMENT '보험정보', -- 보험정보
+	`license_photo`   VARCHAR(100) NULL     DEFAULT NULL COMMENT '운전면허증사진', -- 운전면허증사진
+	`license_chk`     TINYINT      NULL     DEFAULT NULL COMMENT '운전면허증확인', -- 운전면허증확인
+	`insurance_photo` VARCHAR(100) NULL     DEFAULT NULL COMMENT '보험증서 사진', -- 보험증서 사진
+	`insurance_chk`   TINYINT      NULL     DEFAULT NULL COMMENT '보험증서 확인', -- 보험증서 확인
+	`car_photo`       VARCHAR(100) NULL     DEFAULT NULL COMMENT '차량정면사진', -- 차량정면사진
+	`car_photo_chk`   TINYINT      NULL     DEFAULT NULL COMMENT '차량사진 확인', -- 차량사진 확인
+	`carReg_photo`    VARCHAR(100) NULL     DEFAULT NULL COMMENT '차량등록증 사진', -- 차량등록증 사진
+	`carReg_photo_chk`TINYINT      NULL     DEFAULT NULL COMMENT '차량등록증 확인', -- 차량등록증 확인
+	`post_date`       TIMESTAMP    NULL 	DEFAULT CURRENT_TIMESTAMP COMMENT '승인날짜', -- 승인날짜
+	`post_state`      TINYINT      NULL     DEFAULT NULL COMMENT '승인상태' -- 승인상태
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '운전자';
 
