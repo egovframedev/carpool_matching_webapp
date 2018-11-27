@@ -62,7 +62,8 @@ public class PaymentController {
 	@GetMapping("pay/complete") 
 	public String complete(HttpServletRequest res,Model model,HttpSession session) {
 		String no= res.getParameter("id");
-		int mno= (int)session.getAttribute("login");
+		MemberDTO member = (MemberDTO)session.getAttribute("login");
+		int mno= (int)member.getMno();
 		CarpoolMatchDTO cpjoin =(CarpoolMatchDTO)cmService.selectMatInfoByPayno(no,mno);
 		System.out.println(cpjoin.toString());
 		model.addAttribute(cpjoin);

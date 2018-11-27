@@ -16,7 +16,7 @@ import com.carto.carpool.domain.CarpoolMatchDTO;
 public class CarpoolMatchDAOImpl implements  CarpoolMatchDAO{
 	@Autowired
 	SqlSession sqlsession;
-	final String namespace="com.carto.mappers.carpoolMapper.";
+	final String namespace="com.carto.mappers.CarpoolMapper.";
 	
 	@Override
 	public Integer insertOne(CarpoolMatchDTO cmDTO) {
