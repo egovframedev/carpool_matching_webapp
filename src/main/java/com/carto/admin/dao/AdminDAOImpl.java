@@ -17,7 +17,7 @@ public class AdminDAOImpl implements AdminDAO {
 	// 회원관리 목록
 	@Override
 	public Object memberList(Criteria cri) throws Exception {
-		return session.selectList(namespace + ".memberList",cri);
+		return session.selectList(namespace + ".memberList", cri);
 	}
 
 	// 페이징
@@ -25,6 +25,12 @@ public class AdminDAOImpl implements AdminDAO {
 	public int listCount(Criteria cri) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".listCount", cri);
+	}
+	
+	@Override
+	public int paylistCount(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".paylistCount", cri);
 	}
 
 	// 회원 한명 불러오기
@@ -45,6 +51,13 @@ public class AdminDAOImpl implements AdminDAO {
 	public void deleteMember(Integer mno) throws Exception {
 		// TODO Auto-generated method stub
 		session.update(namespace + ".deleteMember", mno);
+	}
+
+	// 전체 결제 내역
+	@Override
+	public Object payAllList(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace + ".payAllList", cri);
 	}
 
 }

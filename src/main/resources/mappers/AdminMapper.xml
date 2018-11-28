@@ -4,30 +4,21 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.carto.mappers.AdminMapper">
 
+	<!-- /admin/member 부분 -->
 	<!-- 회원관리 목록 -->
-	<select id="memberList" resultType="memberDTO"
-		parameterType="memberDTO">
+	<select id="memberList" resultType="MemberDTO"
+		parameterType="MemberDTO">
 		select *
 		from member mem, member_auth m_auth
 		where
-		
-		<include refid="search" />
-		
+		<include refid="memberSearch" />
 		and mem.userid=m_auth.userid
-		
+
 	</select>
 
-	<!-- 페이징 -->
-	<select id="listCount" resultType="java.lang.Integer">
-	<![CDATA[
-		SELECT COUNT(mno) FROM member
-	]]>
-	</select>
-
-	<!-- 검색 쿼리 아이디 이름 전화번호 회원타입 이메일 -->
-	<sql id="search">
-	
-	   1=1
+	<!-- 검색 쿼리 회원관리 목록 -->
+	<sql id="memberSearch">
+		1=1
 		<if test="searchType != null">
 			<if test="searchType == 'id'.toString()">
 				AND mem.userid LIKE CONCAT('%', #{keyword},'%')
@@ -45,10 +36,17 @@
 				AND mem.email LIKE CONCAT('%', #{keyword},'%')
 			</if>
 		</if>
-		
 	</sql>
 
-	<select id="selectMember" resultType="memberDTO">
+	<!-- 페이징 -->
+	<select id="listCount" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(mno) FROM member
+	]]>
+	</select>
+
+	<!-- 회원 한 명 불러오기 -->
+	<select id="selectMember" resultType="MemberDTO">
 		select *
 		from member mem,
 		member_auth m_auth
@@ -57,20 +55,80 @@
 		and mem.mno = #{mno}
 	</select>
 
-	<update id="modifyMember" parameterType="memberDTO">
+	<!-- 회원 정보 수정 -->
+	<update id="modifyMember" parameterType="MemberDTO">
 		update member mem ,
 		member_auth m_auth
 		set mem.approval_status = #{approval_status} ,
 		m_auth.authority =#{authority}
 		where mem.mno = #{mno}
-		and m_auth.userid=#{userid}
+		and
+		m_auth.userid=#{userid}
 	</update>
 
+	<!-- 회원 삭제 처리 -->
 	<update id="deleteMember" parameterType="int">
 		update member
 		set mstate
 		= 0
 		where mno = #{mno}
 	</update>
+
+	<!-- /admin/pay 부분 -->
+	<!-- 전체 결제내역 목록 -->
+	<select id="payAllList" resultType="payHistory"
+		parameterType="criteria">
+		select distinct car_m.matchno, mem_d.name as dname,
+		mem_r.name as
+		rname, car_m.progress, car_i.start_point,
+		car_i.end_point,
+		car_i.start_datetime, car_i.seat_num, pay.amount,
+		pay.pay_date
+		from
+		carpool_match car_m, carpool_info car_i, payment pay, member mem_d,
+		member mem_r
+		where mem_d.mno = pay.driver
+		and mem_r.mno = pay.payer
+		and
+		car_i.cpno = car_m.cpno
+		and car_m.payno = pay.payno
+		<include refid="paySearch" />
+		and car_m.matchno = pay.matchno;
+	</select>
+
+
+	<!-- 검색 쿼리 결제내역 -->
+	<sql id="paySearch">
+		<if test="searchType != null">
+			<if test="searchType == 'start'.toString()">
+				AND car_i.start_point LIKE CONCAT('%', #{keyword},'%')
+			</if>
+			<if test="searchType == 'end'.toString()">
+				AND car_i.end_point LIKE CONCAT('%', #{keyword},'%')
+			</if>
+			<if test="searchType == 'stime'.toString()">
+				AND car_i.start_datetime LIKE CONCAT('%', #{keyword},'%')
+			</if>
+			<if test="searchType == 'dirver'.toString()">
+				AND mem_d.name LIKE CONCAT('%', #{keyword},'%')
+			</if>
+			<if test="searchType == 'rider'.toString()">
+				AND mem_r.name LIKE CONCAT('%', #{keyword},'%')
+			</if>
+		</if>
+		<if test="year != null">
+				AND car_i.start_datetime LIKE CONCAT('%', #{year},'%')
+		</if>
+		<if test="month != null">
+				AND car_i.start_datetime LIKE CONCAT('%', #{month},'%')
+		</if>
+	</sql>
+
+	<!-- 페이징 -->
+	<select id="paylistCount" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(cpno) FROM carpool_info
+	]]>
+	</select>
 
 </mapper>
