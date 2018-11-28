@@ -10,6 +10,7 @@
 		<package name="com.carto.board.domain"/>
 		<package name="com.carto.member.domain"/>
 		<package name="com.carto.carpool.domain"/>
+		<package name="com.carto.admin.domain"/>
 	</typeAliases>
 	
 	<typeHandlers>

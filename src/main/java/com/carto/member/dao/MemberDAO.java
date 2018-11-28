@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 
@@ -70,6 +72,17 @@ public class MemberDAO {
 	// 회원 로그인 정보
 	public MemberDTO viewMember(MemberDTO memberdto) {
 		return sqlsession.selectOne(NAMESPACE + ".viewMember", memberdto);
+	}
+	
+	public int insertDriver(DriverDTO dto) {
+		return sqlsession.insert(NAMESPACE + ".insertDriver",dto);
+	}
+	// 드라이버 등록 서류 확인
+	public int UpdateDriverVerti(DriverDTO dto) {
+		return sqlsession.update(NAMESPACE + ".updateDriverVertify",dto);
+	}
+	public DriverDTO getDriver(int mno) {
+		return sqlsession.selectOne(NAMESPACE + ".getDriver",mno);
 	}
 
 }

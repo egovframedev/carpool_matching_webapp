@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.carto.member.dao.MemberDAO;
+import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 import com.carto.member.domain.NotAuthorizedUserException;
@@ -184,6 +185,24 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO viewMember(MemberDTO memberdto) throws Exception {
 		return manager.viewMember(memberdto);
+	}
+	
+	@Override
+	public int insertDriver(DriverDTO dto,int mno) {
+		mno=1;
+		dto.setMno(mno);
+		return manager.insertDriver(dto);
+		
+	}
+
+	@Override
+	public int UpdateDriverVerti(DriverDTO dto) {
+		return manager.UpdateDriverVerti(dto);
+	}
+
+	@Override
+	public DriverDTO getDriver(int mno) {
+		return manager.getDriver(mno);
 	}
 	
 	
