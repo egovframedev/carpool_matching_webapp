@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@page session="false"%>
 <%@ include file="../includes/header.jsp"%>
 <!-- Content Wrapper. Containes page content -->
 <div class="content-wrapper">
@@ -54,7 +53,8 @@
 										class="form-control" value="${cri.keyword}"
 										placeholder="Search" style="width: 240px;">
 								</div>
-								<button type="submit" class="btn btn-warning" id="btnSearch" title="검색">
+								<button type="submit" class="btn btn-warning" id="btnSearch"
+									title="검색">
 									<i class="fa fa-search"></i>
 								</button>
 								&nbsp;&nbsp;
@@ -85,45 +85,58 @@
 							<tbody>
 								<c:forEach var="member" items="${list}" varStatus="status">
 									<form name="form${status.index }" action="" method="post">
-										<input type="hidden" id="mno" name="mno" value="${member.mno}">
+										<input type="hidden" id="mno" name="mno" value="${member.mno}" />
 										<input type="hidden" id="userid" name="userid"
-											value="${member.userid}">
-									<tr role="row">
-										<td>${member.mno}</td>
-										<td>${member.userid}</td>
-										<td>${member.name}</td>
-										<td>${member.gender}</td>
-										<td>${member.phone}</td>
-										<td><select name="authority">
-												<c:if test="${member.authority eq 'ROLE_DRIVER'}">
-													<option value="ROLE_DRIVER">ROLE_DRIVER</option>
-													<option value="ROLE_RIDER">ROLE_RIDER</option>
-												</c:if>
-												<c:if test="${member.authority eq 'ROLE_RIDER'}">
-													<option value="ROLE_RIDER">ROLE_RIDER</option>
-													<option value="ROLE_DRIVER">ROLE_DRIVER</option>
-												</c:if>
-										</select></td>
-										<td>${member.email}</td>
-										<td><select name="approval_status">
-												<c:if test="${member.approval_status eq 'true'}">
-													<option value="true">true</option>
-													<option value="false">false</option>
-												</c:if>
-												<c:if test="${member.approval_status eq 'false'}">
-													<option value="false">false</option>
-													<option value="true">true</option>
-												</c:if>
-										</select></td>
-										<td><fmt:formatDate value="${member.regdate}"
-												pattern="yyyy-MM-dd HH:mm" /></td>
-												<td>${member.mstate }</td>
-										<td><a onclick="modifyGo(form${status.index })" title="수정"> <i
-												class="fa fa-pencil-square-o"></i></a></td>
-										<td><a onclick="removeGo(form${status.index })" title="삭제"> <i
-												class="fa fa-trash"></i></a></td>
-										<td><a onclick=""><i class="fa fa-file-image-o" title="운전자서류인증"></i></a></td>
-									</tr>
+											value="${member.userid}" />
+										<tr role="row">
+											<td>${member.mno}</td>
+											<td>${member.userid}</td>
+											<td>${member.name}</td>
+											<td>${member.gender}</td>
+											<td>${member.phone}</td>
+											<td><c:if test="${member.authority ne 'ROLE_ADMIN'}">
+													<select name="authority">
+														<c:if test="${member.authority eq 'ROLE_DRIVER'}">
+															<option value="ROLE_DRIVER">ROLE_DRIVER</option>
+															<option value="ROLE_RIDER">ROLE_RIDER</option>
+														</c:if>
+														<c:if test="${member.authority eq 'ROLE_RIDER'}">
+															<option value="ROLE_RIDER">ROLE_RIDER</option>
+															<option value="ROLE_DRIVER">ROLE_DRIVER</option>
+														</c:if>
+														<c:if test="${member.authority eq 'ROLE_ADMIN'}">
+															<option value="ROLE_RIDER">ROLE_RIDER</option>
+															<option value="ROLE_DRIVER">ROLE_DRIVER</option>
+														</c:if>
+													</select>
+												</c:if> <c:if test="${member.authority eq 'ROLE_ADMIN'}">
+												${member.authority}
+												</c:if></td>
+											<td>${member.email}</td>
+											<td><c:if test="${member.authority ne 'ROLE_ADMIN'}">
+													<select name="approval_status">
+														<c:if test="${member.approval_status eq 'true'}">
+															<option value="true">true</option>
+															<option value="false">false</option>
+														</c:if>
+														<c:if test="${member.approval_status eq 'false'}">
+															<option value="false">false</option>
+															<option value="true">true</option>
+														</c:if>
+													</select>
+												</c:if> <c:if test="${member.authority eq 'ROLE_ADMIN'}">
+												${member.approval_status}
+												</c:if></td>
+											<td><fmt:formatDate value="${member.regdate}"
+													pattern="yyyy-MM-dd HH:mm" /></td>
+											<td>${member.mstate }</td>
+											<td><a onclick="modifyGo(form${status.index })"
+												title="수정"> <i class="fa fa-pencil-square-o"></i></a></td>
+											<td><a onclick="removeGo(form${status.index })"
+												title="삭제"> <i class="fa fa-trash"></i></a></td>
+											<td><a onclick=""><i class="fa fa-file-image-o"
+													title="운전자서류인증"></i></a></td>
+										</tr>
 									</form>
 								</c:forEach>
 							</tbody>

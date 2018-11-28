@@ -16,7 +16,11 @@ public class Criteria {
 
 //	private String btype; // 게시판 타입
 	private BoardType btype;
+	
+	private String year; // patlist 부분 연도 
+	private String month; // paylist 부분 달
 
+	
 	public Criteria() {
 		// TODO Auto-generated constructor stub
 		this.page = 1;
@@ -83,6 +87,22 @@ public class Criteria {
 
 		System.out.println("strToBtype(" + btype + ")");
 		this.btype = BoardType.valueOf(btype.toUpperCase());
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
 	}
 
 
