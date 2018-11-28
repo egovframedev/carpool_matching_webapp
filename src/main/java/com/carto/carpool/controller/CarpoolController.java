@@ -31,6 +31,7 @@ import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
+import com.carto.carpool.domain.MyCarpoolDTO;
 import com.carto.carpool.domain.Paging;
 import com.carto.carpool.service.CarpoolService;
 import com.carto.member.domain.MemberDTO;
@@ -158,7 +159,7 @@ public class CarpoolController {
 		if(session.getAttribute("login") != null) {
 			MemberDTO member = (MemberDTO) session.getAttribute("login");
 			dto.setMno((int) member.getMno());
-			dto.setDriverChk(member.getAuthority() == "ROLE_DRIVER");
+			dto.setDriverChk(cpType.equals("request"));
 			dto.calcPaysum(); // 결제금액 계산
 			log.info(dto);
 			if( service.registCpMatch(dto) > 0 )
@@ -169,8 +170,11 @@ public class CarpoolController {
 	
 	// 카풀 동승
 	@GetMapping("/riding")
-	public String ridingView(HttpServletRequest request) {
+	public String ridingView(HttpServletRequest request, Model model) throws Exception {
 		log.info("GET /carpool/ridingView ...... ");
+		List<MyCarpoolDTO> list = service.getMyCarpoolList(102);
+		// list.forEach(carpool -> log.info(carpool));
+		model.addAttribute("list", list);
 		return "carpool/riding_view";
 	}
 }

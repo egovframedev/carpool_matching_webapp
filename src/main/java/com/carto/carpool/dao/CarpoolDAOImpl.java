@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
+import com.carto.member.domain.DriverDTO;
 
 @Repository
 public class CarpoolDAOImpl implements CarpoolDAO {
@@ -50,6 +52,17 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 		return session.selectList(NAMESPACE + ".getMatchingList", cpno);
 	}
 	
+	@Override
+	public List<CarpoolMatchDTO> getMatchToCarpoolListByMno(Integer mno) throws Exception {
+		return session.selectList(NAMESPACE + ".getMatchToCarpoolListByMno", mno);
+	}
+	
+	@Override
+	public List<CarpoolMatchDTO> getCarpoolToMatchListByMno(Integer mno) throws Exception {
+		return session.selectList(NAMESPACE + ".getCarpoolToMatchListByMno", mno);
+	}
+	
+	
 	// 카풀 갯수
 	@Override
 	public int countList(CarpoolCriteria cri) throws Exception {
@@ -61,6 +74,12 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 	public int insertMatching(CPMatchingDTO dto) throws Exception {
 		return session.insert(NAMESPACE + ".insertMatching", dto);
 	}
+
+	@Override
+	public DriverDTO getDriver(Integer mno) throws Exception {
+		return session.selectOne(NAMESPACE + ".getDriver", mno);
+	}
+
 
 
 

@@ -1,11 +1,14 @@
 package com.carto.carpool.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
+import com.carto.carpool.domain.MyCarpoolDTO;
 
 public interface CarpoolService {
 	/**
@@ -50,10 +53,13 @@ public interface CarpoolService {
 	public int countList(CarpoolCriteria cri) throws Exception;
 	
 	/**
-	 * 카풀 동승 제의 등록
+	 * 동승 제의 등록
 	 * @param dto
 	 * @return
 	 * @throws Exception
 	 */
 	public int registCpMatch(CPMatchingDTO dto) throws Exception;
+	
+	
+	public List<MyCarpoolDTO> getMyCarpoolList(Integer mno) throws Exception;
 }

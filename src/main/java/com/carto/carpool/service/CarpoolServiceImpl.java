@@ -1,15 +1,26 @@
 package com.carto.carpool.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.carto.carpool.dao.CarpoolDAO;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
+import com.carto.carpool.domain.MyCarpoolDTO;
+import com.carto.member.domain.DriverDTO;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Service
 public class CarpoolServiceImpl implements CarpoolService {
 
@@ -60,4 +71,43 @@ public class CarpoolServiceImpl implements CarpoolService {
 	public int registCpMatch(CPMatchingDTO dto) throws Exception {
 		return carpoolDAO.insertMatching(dto);
 	}
+
+	@Transactional
+	@Override
+	public List<MyCarpoolDTO> getMyCarpoolList(Integer mno) throws Exception {
+		List<MyCarpoolDTO> resList = new ArrayList<>();
+		List<CarpoolMatchDTO> list1 = carpoolDAO.getMatchToCarpoolListByMno(mno);
+		for(CarpoolMatchDTO dto: list1) {
+			log.info(dto);
+			MyCarpoolDTO myCarpool = new MyCarpoolDTO();
+			// 운전자 정보 가져오기
+			DriverDTO driver = null;
+			if(dto.getCarpool().getCptype() == 2) { // 카풀 타입이 카풀 제공(2)이면 카풀의 mno가 드라이버임
+ 				driver = carpoolDAO.getDriver(dto.getCarpool().getMno());
+			} else if(dto.isDriverChk()) { // 카풀 매칭에 isDriver 가 true 이면 매칭의 mno가 드라이버임
+				driver = carpoolDAO.getDriver(dto.getMno());
+			}
+			myCarpool.setCpMatch(dto);
+			myCarpool.setDriver(driver);
+			resList.add(myCarpool);
+		}
+		
+		List<CarpoolMatchDTO> list2 = carpoolDAO.getCarpoolToMatchListByMno(mno);
+		for(CarpoolMatchDTO dto: list2) {
+			MyCarpoolDTO myCarpool = new MyCarpoolDTO();
+			// 운전자 정보 가져오기
+			DriverDTO driver = null;
+			if(dto.getCarpool().getCptype() == 2) { // 카풀 타입이 카풀 제공(2)이면 카풀의 mno가 드라이버임
+ 				driver = carpoolDAO.getDriver(dto.getCarpool().getMno());
+			} else if(dto.isDriverChk()) { // 카풀 매칭에 isDriver 가 true 이면 매칭의 mno가 드라이버임
+				driver = carpoolDAO.getDriver(dto.getMno());
+			}
+			myCarpool.setCpMatch(dto);
+			myCarpool.setDriver(driver);
+			resList.add(myCarpool);
+		}
+		
+		return resList;
+	}
+
 }

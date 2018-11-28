@@ -4,7 +4,7 @@
 <%@ include file="../includes/header.jsp"%>
 <style type="text/css">
   .carpool-info {list-style: none; margin: 0; padding: 0;}
-  .carpool-info li { height:40px; border-bottom: 1px solid #ddd; line-height:38px; font-size: 16px; color: #333; margin-top: 8px;}
+  .carpool-info li { height:38px; border-bottom: 1px solid #ddd; line-height:36px; font-size: 16px; color: #333; margin-top: 6px;}
   .carpool-info .fa {margin-right: 10px; width: 28px; text-align: center; color:#95a5a6; }
   .carpool-info .tlt {display: inline-block; width: 20%; padding-left: 10px;}
   .carpool-info .desc {display: inline-block;}
@@ -12,6 +12,15 @@
   .carpool-info .end-loc span {font-size: 1.2em;}
   .carpool-info .start-loc .fa {color:#e74c3c;}
   .carpool-info .end-loc .fa {color:#2980b9;}
+  .driver-box { margin-top: 10px;}
+  .driver-img {text-align: center;}
+  .driver-img span{display: block; font-size: 1.4em;padding: 10px;}
+  .driver-car img {height: 100%; width: 100%;}
+  .driver-info ul {list-style-type: none; margin: 0; padding:0 10px;}
+  .driver-info li {height: 30px;}
+  .driver-info h4 {text-align: center; margin-top: 0; border-bottom: 1px solid #ddd; padding-bottom: 10px;}
+  .driver-info span {display: inline-block; width: 80px; text-align: right; padding-right: 10px;}
+  .driver-info p { width: 100%; background-color: #e1e1e1; min-height:60px; padding: 10px; border-radius: 5px; margin-top: 8px; font-size: 14px;}
   
 </style>
 <!-- 컨텐츠 시작  -->
@@ -29,6 +38,7 @@
 		</section>
 		<!-- 메인 컨텐츠 부분 -->
 		<section class="content">
+		<c:forEach var="cp" items="${list}">
 			<div class="box">
 				<div class="box-header with-border">
 			    	<h3 class="box-title">오늘의 카풀</h3>
@@ -44,23 +54,26 @@
 			    			<ul class="carpool-info">
 			    				<li class="start-loc">
 			    					<span class="tlt"><i class="fa fa-map-marker" aria-hidden="true"></i> 출발지</span>
-			    					<span class="desc">	경기도 고양시 후남읍 후남리...</span>
+			    					<span class="desc">${cp.cpMatch.carpool.startPoint}</span>
 			    				</li>
 			    				<li class="end-loc">
 			    					<span class="tlt"><i class="fa fa-map-marker" aria-hidden="true"></i> 목적지</span>
-			    					<span class="desc">	경기도 고양시 후남읍 후남리...</span>
+			    					<span class="desc">${cp.cpMatch.carpool.endPoint}</span>
 			    				</li>
 			    				<li class="start-date">
 			    					<span class="tlt"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발시간</span>
-			    					<span class="desc">	2018년 12월 12일 오전 07시 30분</span>
+			    					<span class="desc">
+			    						<fmt:formatDate value="${cp.cpMatch.carpool.startDateTime}" pattern="yyyy년 MM월 dd일 a KK시 mm분"/>
+			    					</span>
 			    				</li>
 			    				<li class="seat-num">
 			    					<span class="tlt"><i class="fa fa-users" aria-hidden="true"></i> 좌석수</span>
-			    					<span class="desc">2 / 4</span>
+			    					<span class="desc">${cp.cpMatch.cpnum}</span>
 			    				</li>
 			    				<li class="charge">
 			    					<span class="tlt"><i class="fa fa-money" aria-hidden="true"></i> 비용</span>
-			    					<span class="desc">5,0000 원</span>
+			    					<span class="desc">
+			    						<fmt:formatNumber value="${cp.cpMatch.paysum}" pattern="#,###"/>원</span>
 			    				</li>
 			    				<li class="cp-option">
 			    					<span class="tlt"><i class="fa fa-car" aria-hidden="true"></i> 동승조건</span>
@@ -70,6 +83,26 @@
 			    					<span class="label label-warning">음악을 들으며 동승</span>
 			    				</li>
 			    			</ul>
+			    			<div class="driver-box">
+			    				<div class="driver-img col-md-3">
+			    					<img src="<c:url value='/img/'/>user8-128x128.jpg" alt="운전자 사진" class="img-circle" />
+			    					<span>여상문</span>
+			    					<a href="#" class="btn btn-default send-msg">
+			    						<i class="fa fa-envelope-o"></i> Androper88</a>
+			    				</div>
+			    				<div class="driver-info col-md-5">
+			    					<h4>운전자 정보</h4>
+			    					<ul>
+			    						<li><span>차종:</span>${cp.driver.car_prod} ${cp.driver.car_model}</li>
+			    						<li><span>차량번호:</span>${cp.driver.car_no}</li>
+			    						<li><span>연락처:</span>010-3345-5678</li>			    						
+			    						<li><span>기타내용: </span><p>${cp.cpMatch.carpool.reqMsg}</p></li>			    						
+			    					</ul>
+			    				</div>
+			    				<div class="driver-car col-md-4">
+			    					<img src="https://source.unsplash.com/1R63taCoSnM/300x380" alt="자동차사진"  class="img-rounded"/>
+			    				</div>
+			    			</div>
 			    		</div>
 			    		<div class="col-md-5">
 			    			<div class="carpool-map" id="map" style="height:500px">
@@ -79,9 +112,12 @@
 			    	</div>
 				</div><!-- /.box-body -->
 			  	<div class="box-footer">
-			    The footer of the box
+			    	<button class="btn btn-default pull-left">취소하기</button>
+			    	<button class="btn btn-primary pull-right"><i class="fa fa-credit-card"></i>&nbsp; 결제하기</button>
+			    	<button class="btn btn-success pull-right" style="margin-right: 10px;"><i class="fa fa-check"></i>&nbsp; 탑승완료</button>
 				</div><!-- box-footer -->
 			</div><!-- /.box -->
+		</c:forEach>
 		</section><!-- /.content -->
 	</div>
 </div>

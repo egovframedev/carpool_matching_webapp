@@ -5,8 +5,10 @@ import java.util.List;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
+import com.carto.member.domain.DriverDTO;
 
 public interface CarpoolDAO {
 	/**
@@ -41,6 +43,10 @@ public interface CarpoolDAO {
 	 * @throws Exception
 	 */
 	public List<CPMatchingDTO> getMatchingList(Integer cpno) throws Exception;
+	// 사용자에 따른 매칭 정보 -> 카풀 정보
+	public List<CarpoolMatchDTO> getMatchToCarpoolListByMno(Integer mno) throws Exception;
+	// 사용자에 따른 카풀 정보 -> 매칭 정보
+	public List<CarpoolMatchDTO> getCarpoolToMatchListByMno(Integer mno) throws Exception;
 	
 	/**
 	 * 리스트 카운트
@@ -50,12 +56,14 @@ public interface CarpoolDAO {
 	 */
 	public int countList(CarpoolCriteria cri) throws Exception;
 	
+	public int insertMatching(CPMatchingDTO dto) throws Exception;
+	
 	/**
-	 * 동승 제의 등록
-	 * @param dto
+	 * 드라이버 정보 가져오기
+	 * @param mno
 	 * @return
 	 * @throws Exception
 	 */
-	public int insertMatching(CPMatchingDTO dto) throws Exception;
-	
+	public DriverDTO getDriver(Integer mno) throws Exception;
+		
 }

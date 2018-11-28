@@ -30,9 +30,9 @@ CREATE TABLE `member_auth` (
 	CONSTRAINT `FK_MEMBER_AUTH` FOREIGN KEY (`userid`) REFERENCES `member` (`userid`)
 ) COMMENT='회원 권한' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
--- 운전자
+-- 운전자 2018-11-28 
 CREATE TABLE `DRIVER` (
-	`mno`             INT          NOT NULL DEFAULT NULL COMMENT '회원번호', -- 회원번호
+	`mno`             INT          NOT NULL 	     COMMENT '회원번호', -- 회원번호
 	`license_no`      VARCHAR(20)  NULL     DEFAULT NULL COMMENT '운전면허번호', -- 운전면허번호
 	`car_no`          VARCHAR(20)  NULL     DEFAULT NULL COMMENT '차량번호', -- 차량번호
 	`car_prod`        VARCHAR(20)  NULL     DEFAULT NULL COMMENT '차량제조사', -- 차량제조사
@@ -49,7 +49,9 @@ CREATE TABLE `DRIVER` (
 	`carReg_photo`    VARCHAR(100) NULL     DEFAULT NULL COMMENT '차량등록증 사진', -- 차량등록증 사진
 	`carReg_photo_chk`TINYINT      NULL     DEFAULT NULL COMMENT '차량등록증 확인', -- 차량등록증 확인
 	`post_date`       TIMESTAMP    NULL 	DEFAULT CURRENT_TIMESTAMP COMMENT '승인날짜', -- 승인날짜
-	`post_state`      TINYINT      NULL     DEFAULT NULL COMMENT '승인상태' -- 승인상태( 승인취소 0 , 승인요청 1 , 승인완료 2 )
+	`post_state`      TINYINT      NULL     DEFAULT NULL COMMENT '승인상태', -- 승인상태( 승인취소 0 , 승인요청 1 , 승인완료 2 )
+	PRIMARY KEY (`mno`),
+	CONSTRAINT `FK_MEMBER_TO_DRIVER` FOREIGN KEY (`mno`) REFERENCES `member` (`mno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
 COMMENT '운전자';
 
@@ -154,21 +156,22 @@ CREATE TABLE `attachfile` (
 ) COMMENT '첨부파일'
 COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
--- 결제내역
-CREATE TABLE `PAYMENT` (
-	`payno`    VARCHAR(100) NOT NULL COMMENT '결제번호', -- 결제번호
-	`pay_date` TIMESTAMP    NULL     COMMENT '결제일자', -- 결제일자
-	`amount`   INT          NULL     COMMENT '결제금액', -- 결제금액
-    `apply_num` VARCHAR(100) NULL	 COMMENT '승인번호'  -- 승인번호 
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
-COMMENT '결제내역';
+-- 결제내역 수정: 2018-11-28
+CREATE TABLE `payment` (
+	`payno` VARCHAR(100) NOT NULL COMMENT '결제번호',
+	`matchno` INT(11) NULL DEFAULT NULL COMMENT '카풀매칭번호',
+	`payer` INT(11) NULL DEFAULT NULL COMMENT '결제자',
+	`driver` INT(11) NULL DEFAULT NULL COMMENT '운전자',
+	`pay_date` TIMESTAMP NULL DEFAULT NULL COMMENT '결제일자',
+	`amount` INT(11) NULL DEFAULT NULL COMMENT '결제금액',
+	`apply_num` VARCHAR(100) NULL	 COMMENT '승인번호',  
+	PRIMARY KEY (`payno`),
+	INDEX `FK_DRIVER_TO_MEMBER` (`driver`),
+	INDEX `FK_PAYER_TO_MEMBER` (`payer`),
+	CONSTRAINT `FK_DRIVER_TO_MEMBER` FOREIGN KEY (`driver`) REFERENCES `member` (`mno`),
+	CONSTRAINT `FK_PAYER_TO_MEMBER` FOREIGN KEY (`payer`) REFERENCES `member` (`mno`)
+) COMMENT='결제내역' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
--- 결제내역
-ALTER TABLE `PAYMENT`
-	ADD CONSTRAINT `PK_PAYMENT` -- 결제내역 기본키
-		PRIMARY KEY (
-			`payno` -- 결제번호
-		);
 
 -- 운전자
 ALTER TABLE `DRIVER`

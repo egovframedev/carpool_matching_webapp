@@ -21,5 +21,5 @@ public class DriverDTO {
 	private String carReg_photo;      // 차량 등록증 
 	private boolean carReg_photo_chk; // 차량 등록증 체크
 	private String post_date;         // 승인날짜 
-	private int post_state;           // 승인상태
+	private int post_state;           // 승인상태 0 취소, 1 요청대기, 2 승인
 }
