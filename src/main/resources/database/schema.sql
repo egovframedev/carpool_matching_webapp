@@ -158,6 +158,7 @@ COLLATE='utf8_general_ci' ENGINE=InnoDB;
 CREATE TABLE `payment` (
 	`payno` VARCHAR(100) NOT NULL COMMENT '결제번호',
 	`matchno` INT(11) NULL DEFAULT NULL COMMENT '카풀매칭번호',
+	`apply_num` VARCHAR(100) NULL DEFAULT NULL COMMENT '카드승인번호',
 	`payer` INT(11) NULL DEFAULT NULL COMMENT '결제자',
 	`driver` INT(11) NULL DEFAULT NULL COMMENT '운전자',
 	`pay_date` TIMESTAMP NULL DEFAULT NULL COMMENT '결제일자',
