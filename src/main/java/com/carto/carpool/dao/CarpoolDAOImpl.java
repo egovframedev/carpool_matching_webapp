@@ -80,7 +80,14 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 		return session.selectOne(NAMESPACE + ".getDriver", mno);
 	}
 
+	@Override
+	public void confirmMatching(Integer matchno) throws Exception {
+		session.update(NAMESPACE + ".confirmMatching", matchno);
+	}
 
-
+	@Override
+	public void deleteMatching(Integer matchno) throws Exception {
+		session.update(NAMESPACE + ".deleteMatching", matchno);
+	}
 
 }

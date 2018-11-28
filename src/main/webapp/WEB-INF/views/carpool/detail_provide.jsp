@@ -220,6 +220,27 @@
 				}
 			});
 		});
+		
+		$("div#resultList").on("click", ".btnConfirm", function(){
+			var matchno = $(this).data("matchno");
+			
+			$.ajax({
+				type: "POST",
+				url: "<c:url value='/carpool'/>/confirmMatching",
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType: 'text',
+				data: JSON.stringify({cpno: cpno, matchno: matchno }),
+				success: function(result) {
+					if(result.trim() == "SUCCESS") {
+						alert("동승 제의를 수락하였습니다.");
+						getCarpoolMatching(cpno);
+					}
+				}
+			});
+		});
 	
 	})(window.jQuery);
 </script>

@@ -65,5 +65,18 @@ public interface CarpoolDAO {
 	 * @throws Exception
 	 */
 	public DriverDTO getDriver(Integer mno) throws Exception;
-		
+	
+	/**
+	 * 카풀 매칭 수락 처리
+	 * @param matchno
+	 * @throws Exception
+	 */
+	public void confirmMatching(Integer matchno) throws Exception;
+	
+	/**
+	 * 카풀 매칭 삭제 처리
+	 * @param matchno
+	 * @throws Exception
+	 */
+	public void deleteMatching(Integer matchno) throws Exception;
 }

@@ -142,8 +142,10 @@ public class CarpoolController {
 			Model model, HttpServletRequest request) throws Exception {
 		String cpType = carpoolType(request.getRequestURI());
 		log.info("GET /request/getMatching.............cpno:" + cpno);
+		CarpoolDTO carpool = service.detail(cpno, "request");
 		List<CPMatchingDTO> matchList = service.matchingList(cpno);
 		matchList.forEach(match -> log.info(match));
+		model.addAttribute("carpool", carpool);
 		model.addAttribute("matchList", matchList);
 		return "carpool/matching_request";
 	}
@@ -176,5 +178,18 @@ public class CarpoolController {
 		// list.forEach(carpool -> log.info(carpool));
 		model.addAttribute("list", list);
 		return "carpool/riding_view";
+	}
+	
+	@PostMapping("/confirmMatching")
+	@ResponseBody
+	public ResponseEntity<String> confirmMatching(@RequestBody CPMatchingDTO dto, 
+			HttpSession session) throws Exception {
+		log.info("AJAX /confirmMatching......");
+
+		if(session.getAttribute("login") != null) {
+			service.confirmMatching(dto.getMatchno());			
+			return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
 }

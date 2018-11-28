@@ -36,13 +36,22 @@
 			</c:choose></td>
 			<td><c:choose>
 				<c:when test="${match.progress eq 'WAIT' }">
-					<button class="btn btn-primary btn-xs">수락하기</button>
+					<c:if test="${login.mno == carpool.mno }">
+						<button class="btn btn-primary btn-xs btnConfirm" data-matchno="${match.matchno}">수락하기</button>
+					</c:if>
 				</c:when>
 				<c:when test="${match.progress eq 'CONFIRM' }">
-					<button class="btn btn-danger btn-xs">취소하기</button>
+					<c:if test="${login.mno == match.mno }">
+					<button class="btn btn-danger btn-xs btnRemove" data-matchno="${match.matchno}">취소하기</button>
+					</c:if>
+					<c:if test="${login.mno == carpool.mno }">
+					<button class="btn btn-danger btn-xs btnCancelConfirm" data-matchno="${match.matchno}">수락 취소</button>
+					</c:if>
 				</c:when>
 				<c:when test="${match.progress eq 'COMPLETE' }">
+					<c:if test="${login.mno == match.mno }">
 					<button class="btn btn-success btn-xs">내역보기</button>
+					</c:if>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>			

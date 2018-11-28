@@ -223,6 +223,13 @@
 		SELECT * FROM driver WHERE mno = #{mno}
 	</select>
 	
+	<!-- 카풀 매칭 수락 -->
+	<update id="confirmMatching" parameterType="int">
+		UPDATE carpool_match 
+		SET progress = 1
+		WHERE matchno = #{matchno}
+	</update>
+	
 	<!-- 결제 관련 쿼리 /////////////////////////////////////////////////////// -->
 	<select id="selectMatInfo" parameterType="int" resultMap="carpoolMatchMap">
 		SELECT
