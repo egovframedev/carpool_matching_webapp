@@ -11,6 +11,7 @@ public interface CarpoolMatchDAO {
 	public List<CarpoolMatchDTO> selectList();
 	public Integer removeOne(int num);
 	public Object selectMatInfoByMno(Integer num);
+	public Object selectMatInfoByMatchNo(Integer matchno);
 	public Object selectMatInfoByPayno(HashMap<String, Object> map);
 	public Object updateCom(HashMap<String, Object> map);
 }

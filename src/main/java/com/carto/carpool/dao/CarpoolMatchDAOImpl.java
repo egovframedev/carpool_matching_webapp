@@ -3,6 +3,7 @@ package com.carto.carpool.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,16 @@ public class CarpoolMatchDAOImpl implements  CarpoolMatchDAO{
 		// TODO Auto-generated method stub
 		return sqlsession.selectOne(namespace+"selectMatInfo",num);
 	}
+	
+	// 수정 2018-11-28
+	@Override
+	public Object selectMatInfoByMatchNo( Integer matchno) {
+//		Map<String, Object> paramMap = new HashMap<>();
+//		paramMap.put("mno", mno);
+//		paramMap.put("matchno", matchno);
+		return sqlsession.selectOne(namespace + "selectMatInfoByMatchNo", matchno);
+	}
+		
 	@Override
 	public Object selectMatInfoByPayno(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -59,5 +70,6 @@ public class CarpoolMatchDAOImpl implements  CarpoolMatchDAO{
 	public Object updateCom(HashMap<String, Object> map) {
 		return sqlsession.update(namespace+"updateCom",map);
 	}
+
 
 }

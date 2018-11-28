@@ -46,14 +46,17 @@ public class CarpoolMatchServiceImpl implements CarpoolMatchService {
 
 	@Override
 	public Object SelectDriver(int num) {
-		// TODO Auto-generated method stub
 		return cmDAO.selectDriver(num);
 	}
 
 	@Override
 	public Object selectMatInfo(Integer num) {
-		// TODO Auto-generated method stub
 		return cmDAO.selectMatInfoByMno(num);
+	}
+	
+	@Override
+	public Object selectMatInfo(Integer mno, Integer matchno) {
+		return cmDAO.selectMatInfoByMatchNo(matchno);
 	}
 
 	@Override

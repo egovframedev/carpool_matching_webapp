@@ -38,6 +38,10 @@
 		</section>
 		<!-- 메인 컨텐츠 부분 -->
 		<section class="content">
+		<form action="<c:url value='/pay/payment'/>" id="cpForm" method="POST">
+			<input type="hidden" name="driver" id="driverNo"/>
+			<input type="hidden" name="matchno" id="matchNo"/>
+		</form>
 		<c:forEach var="cp" items="${list}">
 			<div class="box">
 				<div class="box-header with-border">
@@ -113,7 +117,8 @@
 				</div><!-- /.box-body -->
 			  	<div class="box-footer">
 			    	<button class="btn btn-default pull-left">취소하기</button>
-			    	<button class="btn btn-primary pull-right"><i class="fa fa-credit-card"></i>&nbsp; 결제하기</button>
+			    	<button class="btn btn-primary pull-right btnPayment"
+			    		data-driver="${cp.driver.mno}" data-matchno="${cp.cpMatch.matchno}"><i class="fa fa-credit-card"></i>&nbsp; 결제하기</button>
 			    	<button class="btn btn-success pull-right" style="margin-right: 10px;"><i class="fa fa-check"></i>&nbsp; 탑승완료</button>
 				</div><!-- box-footer -->
 			</div><!-- /.box -->
@@ -124,33 +129,44 @@
 <!-- 컨텐츠 끝  -->
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=696a80bf76359ec5e09adde78a569f4f"></script>
 <script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new daum.maps.LatLng(37.56693, 126.97881), // 지도의 중심좌표
-	        level: 3, // 지도의 확대 레벨
-	        mapTypeId : daum.maps.MapTypeId.ROADMAP // 지도종류
-	    }; 
-
-	// 지도를 생성한다 
-	var map = new daum.maps.Map(mapContainer, mapOption); 
-
-	// 지도 타입 변경 컨트롤을 생성한다
-	var mapTypeControl = new daum.maps.MapTypeControl();
-
-	// 지도의 상단 우측에 지도 타입 변경 컨트롤을 추가한다
-	map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);	
-
-	// 지도에 확대 축소 컨트롤을 생성한다
-	var zoomControl = new daum.maps.ZoomControl();
-
-	// 지도의 우측에 확대 축소 컨트롤을 추가한다
-	map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
-
-	// 지도에 마커를 생성하고 표시한다
-	var marker = new daum.maps.Marker({
-	    position: new daum.maps.LatLng(37.56693, 126.97881), // 마커의 좌표
-	    map: map // 마커를 표시할 지도 객체
-	});
-
+	!(function($){
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new daum.maps.LatLng(37.56693, 126.97881), // 지도의 중심좌표
+		        level: 3, // 지도의 확대 레벨
+		        mapTypeId : daum.maps.MapTypeId.ROADMAP // 지도종류
+		    }; 
+	
+		// 지도를 생성한다 
+		var map = new daum.maps.Map(mapContainer, mapOption); 
+	
+		// 지도 타입 변경 컨트롤을 생성한다
+		var mapTypeControl = new daum.maps.MapTypeControl();
+	
+		// 지도의 상단 우측에 지도 타입 변경 컨트롤을 추가한다
+		map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);	
+	
+		// 지도에 확대 축소 컨트롤을 생성한다
+		var zoomControl = new daum.maps.ZoomControl();
+	
+		// 지도의 우측에 확대 축소 컨트롤을 추가한다
+		map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+	
+		// 지도에 마커를 생성하고 표시한다
+		var marker = new daum.maps.Marker({
+		    position: new daum.maps.LatLng(37.56693, 126.97881), // 마커의 좌표
+		    map: map // 마커를 표시할 지도 객체
+		});
+		
+		var formObj = $("#cpForm");
+		$(".btnPayment").on("click", function(e){
+			var driverNo = $(this).data("driver");
+			var matchNo  = $(this).data("matchno");
+			$("#driverNo").val(driverNo);
+			$("#matchNo").val(matchNo);
+			formObj.attr("action", "<c:url value='/pay/payment'/>");
+			formObj.submit();
+		});
+	})(window.jQuery);
 </script>
 <%@ include file="../includes/footer.jsp"%>

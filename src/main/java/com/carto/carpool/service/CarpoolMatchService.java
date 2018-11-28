@@ -11,6 +11,7 @@ public interface CarpoolMatchService {
 	public Integer RemoveOne(int num);
 	public List<CarpoolMatchDTO> selectList();
 	public Object selectMatInfo(Integer num);
+	public Object selectMatInfo(Integer mno, Integer matchno);
 	public Object selectMatInfoByPayno(String num,int mno);
 	public Object updateCom(String num,HttpSession session);
 }

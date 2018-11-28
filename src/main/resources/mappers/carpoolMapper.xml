@@ -240,6 +240,14 @@
 			AND mat.progress = 1 
 			AND cp.start_datetime >= sysdate()
 	</select>
+	<select id="selectMatInfoByMatchNo" resultMap="carpoolMatchMap">
+		SELECT
+			matchno, mat.mno AS mat_mno, mat.match_date, payno, paysum, cpnum, isdriver, 
+			start_point, end_point, charge, cp.reg_date
+		FROM carpool_info cp
+		RIGHT JOIN carpool_match mat ON cp.cpno = mat.cpno
+		WHERE mat.matchno = #{matchno}	AND mat.progress = 1
+	</select>
 	
 	<!-- 세션의 결제리스트출력용 -->
 	<select id="selectMatInfoByPayno" parameterType="hashmap"
