@@ -154,21 +154,21 @@ CREATE TABLE `attachfile` (
 ) COMMENT '첨부파일'
 COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
--- 결제내역
-CREATE TABLE `PAYMENT` (
-	`payno`    VARCHAR(100) NOT NULL COMMENT '결제번호', -- 결제번호
-	`pay_date` TIMESTAMP    NULL     COMMENT '결제일자', -- 결제일자
-	`amount`   INT          NULL     COMMENT '결제금액', -- 결제금액
-    `apply_num` VARCHAR(100) NULL	 COMMENT '승인번호'  -- 승인번호 
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8 
-COMMENT '결제내역';
+-- 결제내역 수정: 2018-11-28
+CREATE TABLE `payment` (
+	`payno` VARCHAR(100) NOT NULL COMMENT '결제번호',
+	`matchno` INT(11) NULL DEFAULT NULL COMMENT '카풀매칭번호',
+	`payer` INT(11) NULL DEFAULT NULL COMMENT '결제자',
+	`driver` INT(11) NULL DEFAULT NULL COMMENT '운전자',
+	`pay_date` TIMESTAMP NULL DEFAULT NULL COMMENT '결제일자',
+	`amount` INT(11) NULL DEFAULT NULL COMMENT '결제금액',
+	PRIMARY KEY (`payno`),
+	INDEX `FK_DRIVER_TO_MEMBER` (`driver`),
+	INDEX `FK_PAYER_TO_MEMBER` (`payer`),
+	CONSTRAINT `FK_DRIVER_TO_MEMBER` FOREIGN KEY (`driver`) REFERENCES `member` (`mno`),
+	CONSTRAINT `FK_PAYER_TO_MEMBER` FOREIGN KEY (`payer`) REFERENCES `member` (`mno`)
+) COMMENT='결제내역' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
--- 결제내역
-ALTER TABLE `PAYMENT`
-	ADD CONSTRAINT `PK_PAYMENT` -- 결제내역 기본키
-		PRIMARY KEY (
-			`payno` -- 결제번호
-		);
 
 -- 운전자
 ALTER TABLE `DRIVER`
