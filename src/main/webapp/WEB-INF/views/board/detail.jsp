@@ -64,16 +64,33 @@
 									<i class="fa fa-list"></i> 목록
 								</button>
 							</div>
-							<c:if test="${login.authority eq 'ROLE_ADMIN' }">
-							<button type="button" class="btn btn-default" id="btnRemove">
-								<i class="fa fa-trash-o"></i> 삭제
-							</button>
-							<button type="button" class="btn btn-default" id="btnModify">
-								<i class="fa fa-edit"></i> 수정
-							</button>
-							<button type="button" class="btn btn-default" id="btnReply">
-								<i class="fa fa-pencil"></i> 답글 작성
-							</button>
+							<c:if test="${cri.btype eq 'QNA' }">
+								<c:if test="${login.authority eq 'ROLE_ADMIN' || login.userid eq boardDTO.writer }">
+									<button type="button" class="btn btn-default" id="btnRemove">
+										<i class="fa fa-trash-o"></i> 삭제
+									</button>
+									<button type="button" class="btn btn-default" id="btnModify">
+										<i class="fa fa-edit"></i> 수정
+									</button>
+									
+									</c:if>
+							</c:if>
+							<c:if test="${cri.btype ne 'QNA' }">
+								<c:if test="${login.authority eq 'ROLE_ADMIN'}">
+									<button type="button" class="btn btn-default" id="btnRemove">
+										<i class="fa fa-trash-o"></i> 삭제
+									</button>
+									<button type="button" class="btn btn-default" id="btnModify">
+										<i class="fa fa-edit"></i> 수정
+									</button>
+								</c:if>
+							</c:if>
+							
+							
+							<c:if test="${login.authority eq 'ROLE_ADMIN'}">
+									<button type="button" class="btn btn-default" id="btnReply">
+										<i class="fa fa-pencil"></i> 답글 작성
+									</button>
 							</c:if>
 						</div>
 						<!-- /.box-footer -->
