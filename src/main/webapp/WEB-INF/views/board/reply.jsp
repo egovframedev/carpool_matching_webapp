@@ -46,8 +46,13 @@
 										<label>제목</label><input class="form-control" name="title"  placeholder="제목을 입력해주세요"/>
 									</div>
 									<div class="form-group">
-										<label>작성자</label><input class="form-control" name="writer"
-											type="text" placeholder="작성자를 입력해주세요" />
+										<label>작성자</label>
+										<c:if test="${member.authority eq 'ROLE_ADMIN'}">
+											<input class="form-control" name="writer" type="text" value="관리자" readonly />
+										</c:if>
+										<c:if test="${member.authority ne 'ROLE_ADMIN'}">
+											<input class="form-control" name="writer" type="text" value="${member.userid }" readonly />
+										</c:if>
 									</div>
 									<div class="form-group">
 										<label>내용</label>
