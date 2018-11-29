@@ -172,9 +172,12 @@ public class CarpoolController {
 	@GetMapping("/riding")
 	public String ridingView(HttpServletRequest request, Model model) throws Exception {
 		log.info("GET /carpool/ridingView ...... ");
-		List<MyCarpoolDTO> list = service.getMyCarpoolList(102);
-		// list.forEach(carpool -> log.info(carpool));
-		model.addAttribute("list", list);
+		if(session.getAttribute("login") != null) {
+			MemberDTO member = (MemberDTO) session.getAttribute("login");
+			List<MyCarpoolDTO> list = service.getMyCarpoolList((int)member.getMno());
+			// list.forEach(carpool -> log.info(carpool));
+			model.addAttribute("list", list);
+		}
 		return "carpool/riding_view";
 	}
 }
