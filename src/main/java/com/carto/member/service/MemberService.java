@@ -2,6 +2,8 @@ package com.carto.member.service;
 
 import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
+
+import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 
@@ -30,5 +32,12 @@ public interface MemberService {
 	
 	//회원 로그인 정보
 	public MemberDTO viewMember(MemberDTO memberdto) throws Exception;
+	
+	//드라이버 만들기
+	public int insertDriver(DriverDTO dto,int mno);
+	
+	public int UpdateDriverVerti(DriverDTO dto);
+	
+	public DriverDTO getDriver(int mno);
 
 }

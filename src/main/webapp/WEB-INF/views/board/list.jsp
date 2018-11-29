@@ -1,7 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@page session="false"%>
 <%@ include file="../includes/header.jsp"%>
 <!-- Content Wrapper. Containes page content -->
 <div class="content-wrapper">
@@ -59,9 +58,18 @@
 									<i class="fa fa-search"></i> 검색
 								</button>
 								&nbsp;&nbsp;
-								<button type="button" class="btn btn-primary" id="btnNew">
-									<i class="fa fa-pencil"></i> 글쓰기
-								</button>
+								<c:if test="${cri.btype eq 'NOTICE' }">
+									<c:if test="${login.authority eq 'ROLE_ADMIN' }">
+										<button type="button" class="btn btn-primary" id="btnNew">
+											<i class="fa fa-pencil"></i> 글쓰기
+										</button>
+									</c:if>
+								</c:if>
+								<c:if test="${cri.btype eq 'QNA' }">
+									<button type="button" class="btn btn-primary" id="btnNew">
+										<i class="fa fa-pencil"></i> 글쓰기
+									</button>
+								</c:if>
 							</form>
 						</div>
 					</div>

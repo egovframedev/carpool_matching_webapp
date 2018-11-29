@@ -2,6 +2,9 @@ package com.carto.board.controller;
 
 import java.beans.PropertyEditorSupport;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,8 @@ import com.carto.board.domain.BoardType;
 import com.carto.board.domain.Criteria;
 import com.carto.board.domain.PageMaker;
 import com.carto.board.service.BoardService;
+import com.carto.member.domain.MemberDTO;
+
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -65,21 +70,30 @@ public class BoardController {
 
 	// 상세 보기
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model)
+	public String read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model, HttpSession session)
 			throws Exception {
 		log.info("detail---------------------------------------");
 		model.addAttribute(boardservice.detail(bno));
+		
+		MemberDTO member=(MemberDTO)session.getAttribute("login");
+		model.addAttribute("member",member);
+		
+		
 
 		return "board/detail";
 	}
 
 	// 새 게시글 작성
 	@RequestMapping(value = "/regist", method = RequestMethod.GET)
-	public String registGET(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri, Model model)
+	public String registGET(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri, Model model, HttpSession session)
 			throws Exception {
 		log.info("registGET---------------------------------------");
 		cri.strToBtype(btype);
 		model.addAttribute("cri", cri);
+
+		MemberDTO member=(MemberDTO)session.getAttribute("login");
+		model.addAttribute("member",member);
+		
 		return "board/regist";
 	}
 

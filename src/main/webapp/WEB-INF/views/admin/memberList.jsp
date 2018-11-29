@@ -134,7 +134,7 @@
 												title="수정"> <i class="fa fa-pencil-square-o"></i></a></td>
 											<td><a onclick="removeGo(form${status.index })"
 												title="삭제"> <i class="fa fa-trash"></i></a></td>
-											<td><a onclick=""><i class="fa fa-file-image-o"
+											<td><a onclick="driverRegGO(${member.mno}"><i class="fa fa-file-image-o"
 													title="운전자서류인증"></i></a></td>
 										</tr>
 									</form>
@@ -227,6 +227,15 @@
 				formObj.submit();
 				alert("삭제되었습니다.")
 			}
+		}
+		//드라이버 인증서류 확인
+		function driverRegGO(mno){
+			var formObj = $("form[role='form']");
+			
+			formObj.attr("action","${contextPath}/member/driver/vertify");
+			formObj.attr("method", "post");
+			$("#mno").val(mno);
+			formObj.submit();
 		}
 </script>
 

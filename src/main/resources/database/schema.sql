@@ -1,3 +1,8 @@
+-- 
+-- CarTO DB 스키마 
+-- 수정 : 2018-11-29
+--
+
 -- 회원
 CREATE TABLE `member` (
 	`mno`          INT(11)       NOT NULL AUTO_INCREMENT COMMENT '회원번호',

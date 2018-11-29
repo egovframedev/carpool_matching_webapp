@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@page session="false"%>
 <%@ include file="../includes/header.jsp"%>
 <!-- Content Wrapper. Containes page content -->
 <div class="content-wrapper">
@@ -26,9 +25,11 @@
 						<label>FAQ</label>
 					</h3>
 					<div class="pull-right">
-						<button type="button" class="btn btn-primary" id="btnNew">
-							<i class="fa fa-pencil"></i> 글쓰기
-						</button>
+						<c:if test="${login.authority eq 'ROLE_ADMIN' }">
+							<button type="button" class="btn btn-primary" id="btnNew">
+								<i class="fa fa-pencil"></i> 글쓰기
+							</button>
+						</c:if>
 					</div>
 				</div>
 				<form role="form" action="" method="post">
@@ -44,10 +45,12 @@
 											aria-controls="collapseOne" class=""> Q. ${board.title }
 										</a> <a class="anchorjs-link" href="#-collapsible-group-item-#1-"><span
 											class="anchorjs-icon"></span></a>
-										<button type="button" class="btn btn-default btn-sm"
-											onclick="modifyGo(${board.bno })">수정</button>
-										<button type="button" class="btn btn-default btn-sm"
-											onclick="removeGo(${board.bno })">삭제</button>
+										<c:if test="${login.authority eq 'ROLE_ADMIN' }">
+											<button type="button" class="btn btn-default btn-sm"
+												onclick="modifyGo(${board.bno })">수정</button>
+											<button type="button" class="btn btn-default btn-sm"
+												onclick="removeGo(${board.bno })">삭제</button>
+										</c:if>
 									</h4>
 								</div>
 								<div id="collapseOne${board.bno}"

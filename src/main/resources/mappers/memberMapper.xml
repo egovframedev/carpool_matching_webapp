@@ -115,7 +115,47 @@
 		userpw=#{userpw} 
 	</select>
 <!-- parameterType="memberDto" -->
+		<select id="getDriver"
+		resultType="driverDTO" >
+		SELECT 
+		mno ,
+		license_no ,
+		car_no ,
+		car_prod , 
+		car_model ,
+		car_color ,
+		car_year ,
+		insurance ,
+		license_photo ,
+		license_chk ,
+		insurance_photo ,
+		insurance_chk ,
+		car_photo ,
+		car_photo_chk ,
+		carreg_photo ,
+		carreg_photo_chk ,
+		post_date ,
+		post_state
+		FROM 
+		driver 
+		where 
+		mno=#{mno}
+	</select>
+<!-- parameterType="memberDto" -->
 
+	<insert id="insertDriver" parameterType="DriverDTO">
+		insert into driver( mno ,  license_no ,  car_no ,  car_prod ,  car_model ,  car_color ,  car_year ,  insurance ,  license_photo ,  license_chk ,  insurance_photo ,  insurance_chk ,  car_photo ,  car_photo_chk ,  carreg_photo ,  carreg_photo_chk ,  post_date ,  post_state )
+		values(#{mno},#{license_no},#{car_no},#{car_prod},#{car_model},#{car_color},#{car_year},#{insurance},#{license_photo},#{ license_chk },#{ insurance_photo },#{ insurance_chk },#{ car_photo },#{car_photo_chk},#{carreg_photo},#{carreg_photo_chk},#{post_date},1)
+	</insert>
+	<update id="updateDriverVertify" parameterType="DriverDTO">
+		update driver
+		   set license_chk= #{license_chk}
+			 , insurance_chk = #{insurance_chk}
+			 , car_photo_chk = #{car_photo_chk}
+			 , carreg_photo_chk = #{carreg_photo_chk}
+			 , post_state = 1
+		where mno = #{mno}
+	</update>
 
 
 </mapper>

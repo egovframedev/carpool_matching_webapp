@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ include file="../includes/header.jsp"%>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -72,18 +71,21 @@
 						<!-- /. box -->
 					</form>
 					<!-- /. form -->
-					<div class="box box-solid">
-						<div class="box-header with-border">
-							<div class="form-group uploadDiv" style="margin-bottom: 0;">
-								<input type="file" name="uploadFile" multiple="multiple" />
+					<!-- faq 일때는 첨부파일 안보여줌 -->
+					<c:if test="${cri.btype ne 'FAQ' }">
+						<div class="box box-solid">
+							<div class="box-header with-border">
+								<div class="form-group uploadDiv" style="margin-bottom: 0;">
+									<input type="file" name="uploadFile" multiple="multiple" />
+								</div>
+							</div>
+							<div class="box-body clearfix" style="min-height: 120px;">
+								<div class="uploadResult">
+									<ul></ul>
+								</div>
 							</div>
 						</div>
-						<div class="box-body clearfix" style="min-height: 120px;">
-							<div class="uploadResult">
-								<ul></ul>
-							</div>
-						</div>
-					</div>
+					</c:if>
 				</div>
 				<!-- /.col -->
 			</div>
@@ -117,7 +119,6 @@
 				console.log("submit clicked");
 				var str ="";
 				$(".uploadResult ul li").each(function(i, obj){
-					alert("obj :  "+obj);
 					var jobj = $(obj);
 					console.dir(jobj);				
 					str += '<input type="hidden" name="attachList[' + i + '].filename" value="'+ jobj.data("filename") +'"/>';
