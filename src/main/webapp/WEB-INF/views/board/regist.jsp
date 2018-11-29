@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ include file="../includes/header.jsp"%>
 <style>
 	.uploadResult { width: 100%; background-color: #eee;}
@@ -37,7 +36,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<!-- form -->
-						<form method="post" role="form" action="regist" name="writeForm" id="writeForm">
+						<form method="post" role="form" action="regist" name="writeForm"
+							id="writeForm">
 							<div class="box box-primary">
 								<div class="box-header with-border">
 									<h3 class="box-title">글 작성</h3>
@@ -52,18 +52,13 @@
 									</div>
 									<div class="form-group">
 										<label>작성자</label><input class="form-control" name="writer"
-											type="text" placeholder="작성자를 입력해주세요" />
+											type="text" value="${member.userid }" readonly />
 									</div>
 									<div class="form-group">
 										<label>내용</label>
-										<textarea id="content-editor" class="form-control" name="content"
-											style="height: 400px"></textarea>
+										<textarea id="content-editor" class="form-control"
+											name="content" style="height: 400px"></textarea>
 									</div>
-									<!-- 	<div class="form-group">
-										<label>첨부 파일</label><i class="fa fa-fw fa-paperclip"></i>
-										<ul class="mailbox-attachments clearfix uploaded List"></ul>
-										<input multiple="multiple" type="file" name="files[]" />
-									</div> -->
 								</div>
 								<!-- /.box-body -->
 								<div class="box-footer">
@@ -82,25 +77,29 @@
 							</div>
 						</form>
 						<!-- /. form -->
-						<div class="box box-solid">
-							<div class="box-header with-border">
-								<div class="form-group uploadDiv" style="margin-bottom: 0;">
-									<input type="file" name="uploadFile" multiple="multiple" />
+						<c:if test="${cri.btype ne 'FAQ' }">
+							<div class="box box-solid">
+								<div class="box-header with-border">
+									<div class="form-group uploadDiv" style="margin-bottom: 0;">
+										<input type="file" name="uploadFile" multiple="multiple" />
+									</div>
+								</div>
+								<div class="box-body clearfix" style="min-height: 120px;">
+									<div class="uploadResult">
+										<ul>
+										</ul>
+									</div>
 								</div>
 							</div>
-							<div class="box-body clearfix" style="min-height: 120px;">
-								<div class="uploadResult">
-									<ul>									
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div><!-- /.col -->
+						</c:if>
+					</div>
+					<!-- /.col -->
 				</div>
 			</section>
-		</section><!-- /.content -->
+		</section>
+		<!-- /.content -->
 	</div>
-</div><!-- /.content-wrapper -->
+</div>
 <script src="<c:url value='/vendor'/>/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {

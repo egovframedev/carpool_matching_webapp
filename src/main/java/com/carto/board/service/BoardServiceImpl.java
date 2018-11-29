@@ -48,10 +48,10 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public void modify(BoardDTO dto) throws Exception {
-
+		attachDAO.deleteAll(dto.getBno());  // 첨부파일 삭제
 		boardDAO.modify(dto); // 게시글 업데이트
 
-		if (dto.getAttachList().size() > 0) {
+		if (dto.getAttachList() != null && dto.getAttachList().size() > 0) {
 			for (AttachfileDTO attach : dto.getAttachList()) {
 				attach.setBno(dto.getBno());
 				attachDAO.insert(attach);

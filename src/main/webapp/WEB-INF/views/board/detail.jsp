@@ -64,6 +64,7 @@
 									<i class="fa fa-list"></i> 목록
 								</button>
 							</div>
+							<c:if test="${login.authority eq 'ROLE_ADMIN' }">
 							<button type="button" class="btn btn-default" id="btnRemove">
 								<i class="fa fa-trash-o"></i> 삭제
 							</button>
@@ -73,6 +74,7 @@
 							<button type="button" class="btn btn-default" id="btnReply">
 								<i class="fa fa-pencil"></i> 답글 작성
 							</button>
+							</c:if>
 						</div>
 						<!-- /.box-footer -->
 						<div class="box box-solid">
