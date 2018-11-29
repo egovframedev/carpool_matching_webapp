@@ -60,11 +60,11 @@
             )
         ]]>
 	</insert>
-	
+	<!-- 회원 권한 부여 -->
 	<insert id="insertRole">
 		INSERT INTO member_auth
 		(userid, authority)
-		VALUES 
+		VALUES
 		( #{userid}, #{authority})
 	</insert>
 
@@ -82,46 +82,54 @@
 
 	<!-- 로그인 -->
 	<select id="login" resultType="MemberDTO">
-		SELECT mno, mstate, mem.userid, userpw, name,phone,email, pwdate, approval_status, enabled, auth.authority
-		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.userid = auth.userid
-		WHERE mem.userid = #{userid} AND mem.userpw = #{userpw}
+		SELECT mno, mstate, mem.userid,
+		userpw, name,phone,email, pwdate, approval_status, enabled,
+		auth.authority
+		FROM member mem LEFT OUTER JOIN member_auth auth ON
+		mem.userid = auth.userid
+		WHERE mem.userid = #{userid} AND mem.userpw =
+		#{userpw}
 	</select>
 	<!-- 로그인 유지 -->
 	<select id="keepLogin">
-		UPDATE member_auth 
+		UPDATE member_auth
 		SET sessionKey = #{sessionId}, sessionLimit=#{next}
-		WHERE userid = #{userid} 
+		WHERE userid =
+		#{userid}
 	</select>
 	<!-- 세션키로 로그인 체크 -->
 	<select id="checkUserWithSessionKey" resultType="MemberDTO">
-		SELECT mno, mstate, mem.userid, userpw, name, email, pwdate, approval_status, enabled, auth.authority
-		FROM member mem LEFT OUTER JOIN member_auth auth ON mem.userid = auth.userid
-		WHERE mem.userid = #{userid} AND auth.sessionKey=#{value} AND sessionLimit > sysdate()
+		SELECT mno,
+		mstate, mem.userid, userpw, name, email, pwdate, approval_status,
+		enabled, auth.authority
+		FROM member mem LEFT OUTER JOIN member_auth
+		auth ON mem.userid = auth.userid
+		WHERE mem.userid = #{userid} AND
+		auth.sessionKey=#{value} AND sessionLimit > sysdate()
 	</select>
-<!-- parameterType="memberDto" --> 
+	<!-- parameterType="memberDto" -->
 
-	<select id="viewMember"
-		resultType="MemberDTO" >
-		SELECT 
-		name, 
-		userid, 
-		userpw, 
-		regdate 
-		FROM 
-		member 
-		where 
-		userid=#{userid} 
-		and 
-		userpw=#{userpw} 
+	<select id="viewMember" resultType="MemberDTO">
+		SELECT
+		name,
+		userid,
+		userpw,
+		regdate
+		FROM
+		member
+		where
+		userid=#{userid}
+		and
+		userpw=#{userpw}
 	</select>
-<!-- parameterType="memberDto" -->
-		<select id="getDriver"
-		resultType="driverDTO" >
-		SELECT 
+
+	<!-- 드라이버 정보 -->
+	<select id="getDriver" resultType="driverDTO">
+		SELECT
 		mno ,
 		license_no ,
 		car_no ,
-		car_prod , 
+		car_prod ,
 		car_model ,
 		car_color ,
 		car_year ,
@@ -136,26 +144,55 @@
 		carreg_photo_chk ,
 		post_date ,
 		post_state
-		FROM 
-		driver 
-		where 
+		FROM
+		driver
+		where
 		mno=#{mno}
 	</select>
-<!-- parameterType="memberDto" -->
+	
+	<!-- 드라이버 추가 -->
 
 	<insert id="insertDriver" parameterType="DriverDTO">
-		insert into driver( mno ,  license_no ,  car_no ,  car_prod ,  car_model ,  car_color ,  car_year ,  insurance ,  license_photo ,  license_chk ,  insurance_photo ,  insurance_chk ,  car_photo ,  car_photo_chk ,  carreg_photo ,  carreg_photo_chk ,  post_date ,  post_state )
-		values(#{mno},#{license_no},#{car_no},#{car_prod},#{car_model},#{car_color},#{car_year},#{insurance},#{license_photo},#{ license_chk },#{ insurance_photo },#{ insurance_chk },#{ car_photo },#{car_photo_chk},#{carreg_photo},#{carreg_photo_chk},#{post_date},1)
+		insert into driver( mno
+		, license_no , car_no , car_prod , car_model , car_color , car_year ,
+		insurance , license_photo , license_chk , insurance_photo ,
+		insurance_chk , car_photo , car_photo_chk , carreg_photo ,
+		carreg_photo_chk , post_date , post_state )
+		values(#{mno},#{license_no},#{car_no},#{car_prod},#{car_model},#{car_color},#{car_year},#{insurance},#{license_photo},#{
+		license_chk },#{ insurance_photo },#{ insurance_chk },#{ car_photo
+		},#{car_photo_chk},#{carreg_photo},#{carreg_photo_chk},#{post_date},1)
 	</insert>
+	
+	<!-- 업데이트 드라이버 -->
 	<update id="updateDriverVertify" parameterType="DriverDTO">
 		update driver
-		   set license_chk= #{license_chk}
-			 , insurance_chk = #{insurance_chk}
-			 , car_photo_chk = #{car_photo_chk}
-			 , carreg_photo_chk = #{carreg_photo_chk}
-			 , post_state = 1
+		set license_chk= #{license_chk}
+		, insurance_chk = #{insurance_chk}
+		, car_photo_chk = #{car_photo_chk}
+		, carreg_photo_chk = #{carreg_photo_chk}
+		, post_state = 1
 		where mno = #{mno}
 	</update>
+	
+	<!-- 멤버 출력 수정중-->
+	<select id="selectMember" parameterType="java.lang.String"
+		resultType="MemberDTO">
+		SELECT
+		mno,
+		userid,
+		userpw,
+		name,
+		birth,
+		email,
+		phone,
+		gender,
+		pwdate
+		FROM
+		member
+		WHERE
+		userid=#{userid}
+
+	</select>
 
 
 </mapper>

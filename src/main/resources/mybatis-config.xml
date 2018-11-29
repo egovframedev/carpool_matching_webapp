@@ -12,6 +12,7 @@
 		<package name="com.carto.member.domain"/>
 		<package name="com.carto.carpool.domain"/>
 		<package name="com.carto.admin.domain"/>
+		<package name="com.carto.address.domain"/>
 	</typeAliases>
 	
 	<typeHandlers>
@@ -19,5 +20,6 @@
 		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.carto.board.domain.BoardType"/>
   		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.carto.member.domain.MemberStatus"/>
   		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.carto.member.domain.Gender"/>
+  		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.carto.address.domain.AddressType"/>
 	</typeHandlers>
 </configuration>

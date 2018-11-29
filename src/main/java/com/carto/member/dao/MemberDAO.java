@@ -13,8 +13,8 @@ import com.carto.member.domain.MemberDTO;
 
 @Repository
 public class MemberDAO {
-	private final String NAMESPACE ="com.carto.mappers.MemberMapper";
-	
+	private final String NAMESPACE = "com.carto.mappers.MemberMapper";
+
 	@Autowired
 	SqlSession sqlsession = null;
 
@@ -32,7 +32,7 @@ public class MemberDAO {
 	public int join_member(MemberDTO member) throws Exception {
 		return sqlsession.insert(NAMESPACE + ".join_member", member);
 	}
-	
+
 	public void insertRole(String userid, String authority) throws Exception {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("userid", userid);
@@ -54,7 +54,7 @@ public class MemberDAO {
 	public MemberDTO login(LoginDTO loginDTO) throws Exception {
 		return sqlsession.selectOne(NAMESPACE + ".login", loginDTO);
 	}
-	
+
 	// 로그인 유지
 	public void keepLogin(String userid, String sessionId, Date next) {
 		Map<String, Object> paramMap = new HashMap<>();
@@ -63,26 +63,33 @@ public class MemberDAO {
 		paramMap.put("next", next);
 		sqlsession.update(NAMESPACE + ".keepLogin", paramMap);
 	}
-	
+
 	// 로그인 세션키 체크
 	public MemberDTO checkUserWithSessionKey(String value) {
 		return sqlsession.selectOne(NAMESPACE + ".checkUserWithSessionKey", value);
 	}
-	
+
 	// 회원 로그인 정보
 	public MemberDTO viewMember(MemberDTO memberdto) {
 		return sqlsession.selectOne(NAMESPACE + ".viewMember", memberdto);
 	}
-	
+
 	public int insertDriver(DriverDTO dto) {
-		return sqlsession.insert(NAMESPACE + ".insertDriver",dto);
+		return sqlsession.insert(NAMESPACE + ".insertDriver", dto);
 	}
+
 	// 드라이버 등록 서류 확인
 	public int UpdateDriverVerti(DriverDTO dto) {
-		return sqlsession.update(NAMESPACE + ".updateDriverVertify",dto);
+		return sqlsession.update(NAMESPACE + ".updateDriverVertify", dto);
 	}
+
 	public DriverDTO getDriver(int mno) {
-		return sqlsession.selectOne(NAMESPACE + ".getDriver",mno);
+		return sqlsession.selectOne(NAMESPACE + ".getDriver", mno);
+	}
+
+	// 회원 정보 가져오기
+	public MemberDTO selectMember(String userid) {
+		return sqlsession.selectOne(NAMESPACE + ".selectMember", userid);
 	}
 
 }

@@ -89,6 +89,8 @@
 							<ul class="dropdown-menu" role="menu">				             
 				                <li><a href="<c:url value='/member/myprofile'/>">
 				                	<i class="fa fa-id-card-o" aria-hidden="true"></i> 내프로필</a></li>
+				                <li><a href="<c:url value='/address'/>">
+				                	<i class="fa fa-id-card-o" aria-hidden="true"></i> 내주소록</a></li>
 				                <li><a href="<c:url value='/logout'/>">
 				                	<i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a></li>
 				                <li><a href="<c:url value='/member/certify'/>">
