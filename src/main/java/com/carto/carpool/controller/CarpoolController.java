@@ -170,7 +170,7 @@ public class CarpoolController {
 	
 	// 카풀 동승
 	@GetMapping("/riding")
-	public String ridingView(HttpServletRequest request, Model model) throws Exception {
+	public String ridingView( Model model, HttpSession session) throws Exception {
 		log.info("GET /carpool/ridingView ...... ");
 		if(session.getAttribute("login") != null) {
 			MemberDTO member = (MemberDTO) session.getAttribute("login");

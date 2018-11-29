@@ -11,14 +11,13 @@
 		select *
 		from member mem, member_auth m_auth
 		where
+		mem.userid=m_auth.userid
 		<include refid="memberSearch" />
-		and mem.userid=m_auth.userid
-
+		LIMIT #{pageStart}, ${perPageNum}
 	</select>
 
 	<!-- 검색 쿼리 회원관리 목록 -->
 	<sql id="memberSearch">
-		1=1
 		<if test="searchType != null">
 			<if test="searchType == 'id'.toString()">
 				AND mem.userid LIKE CONCAT('%', #{keyword},'%')
@@ -41,8 +40,11 @@
 	<!-- 페이징 -->
 	<select id="listCount" resultType="java.lang.Integer">
 	<![CDATA[
-		SELECT COUNT(mno) FROM member
+		SELECT COUNT(mno) from member mem, member_auth m_auth
+		where
+		mem.userid=m_auth.userid
 	]]>
+		<include refid="memberSearch" />
 	</select>
 
 	<!-- 회원 한 명 불러오기 -->
@@ -93,7 +95,8 @@
 		car_i.cpno = car_m.cpno
 		and car_m.payno = pay.payno
 		<include refid="paySearch" />
-		and car_m.matchno = pay.matchno;
+		and car_m.matchno = pay.matchno
+		LIMIT #{pageStart}, ${perPageNum}
 	</select>
 
 
@@ -117,18 +120,27 @@
 			</if>
 		</if>
 		<if test="year != null">
-				AND car_i.start_datetime LIKE CONCAT('%', #{year},'%')
+			AND car_i.start_datetime LIKE CONCAT('%', #{year},'%')
 		</if>
 		<if test="month != null">
-				AND car_i.start_datetime LIKE CONCAT('%', #{month},'%')
+			AND car_i.start_datetime LIKE CONCAT('%', #{month},'%')
 		</if>
 	</sql>
 
 	<!-- 페이징 -->
 	<select id="paylistCount" resultType="java.lang.Integer">
 	<![CDATA[
-		SELECT COUNT(cpno) FROM carpool_info
+		SELECT COUNT(car_m.cpno) from
+		carpool_match car_m, carpool_info car_i, payment pay, member mem_d,
+		member mem_r
+		where mem_d.mno = pay.driver
+		and mem_r.mno = pay.payer
+		and
+		car_i.cpno = car_m.cpno
+		and car_m.payno = pay.payno
+		and car_m.matchno = pay.matchno
 	]]>
+		<include refid="paySearch" />
 	</select>
 
 </mapper>
