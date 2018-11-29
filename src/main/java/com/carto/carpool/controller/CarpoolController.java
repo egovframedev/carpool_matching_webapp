@@ -47,8 +47,9 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/carpool")
 public class CarpoolController {
+	
 	@Autowired
-	private CarpoolService service;
+	private CarpoolService service; // 카풀 서비스 DI
 	
 	@InitBinder
 	public void initDateTime(WebDataBinder binder) {
@@ -56,6 +57,7 @@ public class CarpoolController {
 		binder.registerCustomEditor(Date.class, "startDateTime", new CustomDateEditor(sdf, true));
 	}
 	
+	// URI 에 따른 분기 설정(REUQEST, PROVIDE)
 	private String carpoolType(String uri) {
 		if(uri.indexOf("/carpool/request") > -1) {
 			return "request";

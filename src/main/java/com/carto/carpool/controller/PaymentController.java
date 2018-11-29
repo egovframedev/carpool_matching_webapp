@@ -58,6 +58,7 @@ public class PaymentController {
 		
 		return "pay/paytest";
 	}
+	
 	@RequestMapping(value="pay/insertReg",method={RequestMethod.POST})
 	@ResponseBody
 	public String insertReg(@RequestBody PaymentDTO paymentDTO,HttpSession session) {
