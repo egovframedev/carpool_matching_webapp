@@ -27,7 +27,7 @@
 	                		<div class="col-sm-10">
 	                			<div class="input-group">
 		                			<input type="text" id="startPoint" name="startPoint" class="form-control" 
-		                				placeholder="출발지 입력.." readonly="readonly"/>
+		                				placeholder="출발지 입력.." readonly="readonly" required="required"/>
 		                			<input type="hidden" name="startLong" value="0"/>
 		                			<input type="hidden" name="startLat"  value="0"/>
 		                			<div class="input-group-btn">
@@ -42,7 +42,7 @@
 	                		<div class="col-sm-10">
 	                			<div class="input-group">
 		                			<input type="text" id="endPoint" name="endPoint" class="form-control" 
-		                				placeholder="도착지 입력.." readonly="readonly"/>
+		                				placeholder="도착지 입력.." readonly="readonly" required="required"/>
 		                			<input type="hidden" name="endLong"  value="0"/>
 		                			<input type="hidden" name="endLat"  value="0"/>
 		                			<div class="input-group-btn">
@@ -67,7 +67,7 @@
 	                  		<label for="charge" class="col-sm-2 control-label">금액</label>
 						    <div class="col-sm-3">
 						   		<div class="input-group">
-	                    			<input type="text" class="form-control" name="charge" id="charge" placeholder="금액입력..">
+	                    			<input type="text" class="form-control" name="charge" id="charge" placeholder="금액입력.." readonly="readonly">
 						    		<span class="input-group-addon">원/인</span>
 						    	</div>
 	                  		</div>               
@@ -147,7 +147,7 @@
 	            	</div><!-- /.box-body -->
 	            	<div class="box-footer">
 	            		<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> 등록하기</button>
-	            		<button class="btn btn-default">취소</button>
+	            		<button class="btn btn-default" onclick="location.href='list'">취소</button>
 	            	</div>
 	            	</form>
 	          </div>

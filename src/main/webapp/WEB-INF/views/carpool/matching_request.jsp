@@ -56,7 +56,6 @@
 				<c:otherwise>
 				</c:otherwise>			
 			</c:choose></td>
-			
 		</tr>
 	</c:forEach>
 	<c:if test="${empty matchList}">
