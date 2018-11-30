@@ -11,12 +11,12 @@
 		<!-- 컨텐츠 헤더 부분(Page header) -->
 		<section class="content-header">
 			<h1>
-				전체 결제 내역 <small>목록보기</small>
+				카풀 정보 관리<small>목록보기</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href=" <c:url value='/'/>"><i class="fa fa-home"></i>
 						Home</a></li>
-				<li><a href="<c:url value='/admin/pay/list'/>">결제내역</a></li>
+				<li><a href="<c:url value='/admin/carpool/list'/>">카풀 정보 관리</a></li>
 				<li class="active">목록보기</li>
 			</ol>
 		</section>
@@ -110,13 +110,12 @@
 
 						<thead>
 							<tr role="row">
-								<th style="width: 10%;">체결ID</th>
+								<th style="width: 5%;">체결ID</th>
 								<th style="width: 10%;">운전자</th>
 								<th style="width: 10%;">동승자</th>
-								<th style="width: 10%;">출발지 / 출발시간</th>
-								<th style="width: 10%;">도착지</th>
+								<th style="width: 20%;">출발지 / 출발시간</th>
+								<th style="width: 20%;">도착지</th>
 								<th style="width: 10%;">인원 / 요금</th>
-								<th style="width: 10%;">결제 일자</th>
 								<th style="width: 10%;">진행상황</th>
 							</tr>
 						</thead>
@@ -128,7 +127,7 @@
 									<td>${history.rname }</td>
 									<td>${history.start_point }<br>${history.start_datetime }</td>
 									<td>${history.end_point }</td>
-									<td>${history.seat_num }명<br>${history.amount } 원
+									<td>${history.seat_num } 명<br>${history.amount } 원
 									</td>
 									<td>${history.pay_date }</td>
 									<td><c:if test="${history.progress eq 0 }">

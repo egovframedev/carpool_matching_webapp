@@ -76,7 +76,14 @@ public class AdminController {
 		pageMaker.setTotalCount(adminservice.paylistCount(cri));
 		model.addAttribute("pageMaker", pageMaker);
 
-		return "pay/AllHistory";
+		return "admin/payList";
 	}
 	
+	@RequestMapping(value = "/carpool/list", method = RequestMethod.GET)
+	public String carpoolList() {
+		log.info("carpool/list----------------------------------");
+		
+		
+		return "admin/carpoolList";
+	}
 }
