@@ -12,32 +12,28 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	PaymentDAO payDAO;
 	
-	// 결제 등록
+	// 결제 정보 등록
 	@Override
-	public Integer insertOne(PaymentDTO payDTO) {
-		System.out.println("insert service");
-		return payDAO.insertOne(payDTO);
-		
+	public int registPay(PaymentDTO payDTO) {
+		return payDAO.insertPayment(payDTO);
 	}
 
-	// 결제 정보 보기
+	// 결제 정보 조회
 	@Override
-	public Object SelectOne(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public PaymentDTO getPayment(String payno) {
+		return payDAO.selectPayment(payno);
 	}
 
-	// 결제 삭제
+	// 결제 정보 리스트
 	@Override
-	public Integer RemoveOne(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PaymentDTO> getPayList() {
+		return payDAO.selectPayList();
 	}
 
-	// 결제 내역 목록
+	// 결제 정보 삭제
 	@Override
-	public List<PaymentDTO> selectList() {
-		return payDAO.selectList();
+	public int removePay(String payno) {
+		return payDAO.deletePayment(payno);
 	}
  
 	

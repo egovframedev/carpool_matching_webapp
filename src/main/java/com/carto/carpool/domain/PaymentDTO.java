@@ -1,16 +1,15 @@
 package com.carto.carpool.domain;
 
 import java.util.Date;
-import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
 @Data
 public class PaymentDTO {
-	private int amount;
-	private String payno;
-	private String apply_num;
-	private Date pay_date;
-	private int driverNo;
-	private int matchno;
-	private int payerNo;
+	private String payno;     // 결제 번호
+	private String apply_num; // 결제 인증 번호
+	private Date pay_date;    // 결제 일자
+	private int amount;       // 결제 금액
+	private int matchno;      // 카풀매칭번호
+	private int payerNo;      // 결제자 회원 번호
+	private int driverNo;     // 운전자 회원 번호
 }

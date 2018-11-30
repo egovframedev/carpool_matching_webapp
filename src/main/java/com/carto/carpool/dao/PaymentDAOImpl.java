@@ -10,27 +10,38 @@ import com.carto.carpool.domain.PaymentDTO;
 
 @Repository
 public class PaymentDAOImpl implements  PaymentDAO {
+	private final String NAMESAPCE  = "com.carto.mappers.PayMapper";
+	
 	@Autowired
 	SqlSession sqlsession;
+	
+	// 결제 등록 하기
 	@Override
-	public Integer insertOne(PaymentDTO payDTO) {
-		System.out.println("dao on:"+payDTO.getPayno());
-		return sqlsession.insert("payment.PayMapper.insertOne",payDTO);
+	public int insertPayment(PaymentDTO dto) {
+		return sqlsession.insert(NAMESAPCE + ".insertPayment", dto);
 	}
+	
+	// 결제정보 가져오기
+	@Override
+	public PaymentDTO selectPayment(String payno) {
+		return sqlsession.selectOne(NAMESAPCE + ".selectPayment", payno);
+	}
+	
+	// 결제 리스트 가져오기
+	@Override
+	public List<PaymentDTO> selectPayList() {
+		return sqlsession.selectList(NAMESAPCE + ".selectPayList");
+	}
+	
+	@Override
+	public int deletePayment(String payno) {
+		return sqlsession.delete(NAMESAPCE + ".deletePayment", payno);
+	}
+	
 	@Override
 	public CarpoolMatchDTO selectOne(int num) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public List<PaymentDTO> selectList() {
-		return sqlsession.selectList("payment.PayMapper.selectList");
-	}
-
-	@Override
-	public Integer removeOne(int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+		
 }

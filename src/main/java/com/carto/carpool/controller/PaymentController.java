@@ -1,7 +1,6 @@
 package com.carto.carpool.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +25,7 @@ import lombok.extern.log4j.Log4j;
 public class PaymentController {
 	@Autowired
 	PaymentService payService;
+	
 	@Autowired
 	CarpoolMatchService cmService;
 	
@@ -43,19 +43,19 @@ public class PaymentController {
 		model.addAttribute("driver", driver);
 		log.info(cpjoin);
 		model.addAttribute("member",member);
-		return "pay/paytest";
+		return "carpool/pay_start";
 	}
 	
 	// 결제 처리
 	@RequestMapping(value="pay/insertReg", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<String> insertReg(@RequestBody PaymentDTO paymentDTO, HttpSession session) {
-		log.info("pay/insertReg............." + paymentDTO);
+	public ResponseEntity<String> insertReg(@RequestBody PaymentDTO payDTO, HttpSession session) {
+		log.info("POST pay/insertReg............." + payDTO);
 		
-		int res = payService.insertOne(paymentDTO);
+		int res = payService.registPay(payDTO);
 		if(res > 0) {
-			log.info("paymentDTO Payno: " + paymentDTO.getPayno());
-			cmService.updateCom(paymentDTO.getPayno(), paymentDTO.getMatchno());
+			log.info("paymentDTO Payno: " + payDTO.getPayno());
+			cmService.updateCom(payDTO.getPayno(), payDTO.getMatchno());
 			return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -63,9 +63,19 @@ public class PaymentController {
 	
 	// 결제 완료 화면
 	@GetMapping("pay/complete") 
-	public String complete(@RequestParam("id") String payno, Model model,HttpSession session) {
+	public String complete(@RequestParam("id") String payno, Model model, HttpSession session) {
+		if(session.getAttribute("login") == null) {
+			// TODO : 로그인이 되어 있지 않으면 처리
+		}
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
+		// 결제 정보 가져오기
+		PaymentDTO payDTO = payService.getPayment(payno);
+		if(payDTO.getPayerNo() != (int)member.getMno()) {
+			// TODO : 결제자와 로그인한 회원번호와 비교하여 같지 않으면 처리.
+		}
+		
 		int mno= (int)member.getMno();
+		
 		CarpoolMatchDTO cpjoin = (CarpoolMatchDTO) cmService.selectMatInfoByPayno(payno, mno);
 		System.out.println(cpjoin.toString());
 		model.addAttribute(cpjoin);
@@ -77,7 +87,7 @@ public class PaymentController {
 	
 	@GetMapping("pay/view3")
 	public String view3(Model model) {
-		List<PaymentDTO> listview = payService.selectList();
+		List<PaymentDTO> listview = payService.getPayList();
 		model.addAttribute("listview",listview);
 		return "pay/myhistory";
 	}

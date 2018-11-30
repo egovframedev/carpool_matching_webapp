@@ -1,12 +1,11 @@
 package com.carto.carpool.service;
 
 import java.util.List;
-
 import com.carto.carpool.domain.PaymentDTO;
 
 public interface PaymentService {
-	public Integer insertOne(PaymentDTO payDTO);
-	public Object SelectOne(int num);
-	public Integer RemoveOne(int num);
-	public List<PaymentDTO> selectList();
+	public int registPay(PaymentDTO payDTO);     // 결제 등록
+	public PaymentDTO getPayment(String payno);  // 결제 정보
+	public List<PaymentDTO> getPayList();        // 결제 목록
+	public int removePay(String payno);          // 결제 삭제
 } 
