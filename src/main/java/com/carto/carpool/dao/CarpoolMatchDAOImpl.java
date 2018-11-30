@@ -27,7 +27,7 @@ public class CarpoolMatchDAOImpl implements  CarpoolMatchDAO{
 	}
 	
 	@Override
-	public Object selectDriver(int num) {
+	public Object selectDriver(Integer num) {
 		return sqlsession.selectOne(namespace+"selectDriver",num);
 	}
 	

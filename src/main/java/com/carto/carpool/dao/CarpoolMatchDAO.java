@@ -7,7 +7,7 @@ import com.carto.carpool.domain.CarpoolMatchDTO;
 public interface CarpoolMatchDAO {
 	public Integer insertOne(CarpoolMatchDTO cmDTO);
 	public Object selectOne(int num);
-	public Object selectDriver(int num);
+	public Object selectDriver(Integer num);
 	public List<CarpoolMatchDTO> selectList();
 	public Integer removeOne(int num);
 	public Object selectMatInfoByMno(Integer num);

@@ -274,25 +274,16 @@
 		AND mat.progress =2
 		AND mat.mno=#{mno}
 	</select>
+	
 	<update id="updateCom" parameterType="hashmap">
 		UPDATE carpool_match
-		SET progress=#{progress}
-		, payno = #{payno}
-		WHERE matchno=(SELECT matchno
-		FROM (SELECT matchno
-		FROM carpool_match
-		WHERE mno=#{mno}) a)
+		SET progress = #{progress}
+			, payno = #{payno}
+		WHERE matchno = #{matchno}
 	</update>
 
 	<select id="selectDriver" resultType="memberDTO">
-		SELECT *
-		FROM member
-		WHERE MNO =
-		(SELECT MNO
-		FROM CARPOOL_MATCH
-		WHERE carpool_match.isdriver= 1
-		AND MATCHNO = (SELECT MATCHNO
-		FROM CARPOOL_MATCH
-		WHERE MNO=#{MNO}))
+		SELECT * FROM member
+		WHERE MNO = #{driverNo}
 	</select>
 </mapper>

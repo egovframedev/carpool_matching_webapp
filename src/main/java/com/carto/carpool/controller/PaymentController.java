@@ -29,6 +29,7 @@ public class PaymentController {
 	@Autowired
 	CarpoolMatchService cmService;
 	
+	// 결제 화면
 	@RequestMapping(value="/pay/payment", method=RequestMethod.POST)
 	public String paymentForm(HttpSession session,
 			@RequestParam("driver") Integer driverNo, 
@@ -36,6 +37,7 @@ public class PaymentController {
 		log.info("POST /pay/payment ...... " + driverNo + " - " + matchno);
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
 		MemberDTO driver = (MemberDTO)cmService.SelectDriver(driverNo);
+		log.info(driver);
 		CarpoolMatchDTO cpjoin = (CarpoolMatchDTO)cmService.selectMatInfo((int)member.getMno(), matchno);
 		model.addAttribute("cpjoin",cpjoin);
 		model.addAttribute("driver", driver);
@@ -44,7 +46,7 @@ public class PaymentController {
 		return "pay/paytest";
 	}
 	
-
+	// 결제 처리
 	@RequestMapping(value="pay/insertReg", method=RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> insertReg(@RequestBody PaymentDTO paymentDTO, HttpSession session) {
@@ -53,24 +55,23 @@ public class PaymentController {
 		int res = payService.insertOne(paymentDTO);
 		if(res > 0) {
 			log.info("paymentDTO Payno: " + paymentDTO.getPayno());
-			cmService.updateCom(paymentDTO.getPayno(), session);
+			cmService.updateCom(paymentDTO.getPayno(), paymentDTO.getMatchno());
 			return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
+	
+	// 결제 완료 화면
 	@GetMapping("pay/complete") 
-	public String complete(HttpServletRequest res,Model model,HttpSession session) {
-		String no= res.getParameter("id");
+	public String complete(@RequestParam("id") String payno, Model model,HttpSession session) {
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
 		int mno= (int)member.getMno();
-		CarpoolMatchDTO cpjoin =(CarpoolMatchDTO)cmService.selectMatInfoByPayno(no,mno);
+		CarpoolMatchDTO cpjoin = (CarpoolMatchDTO) cmService.selectMatInfoByPayno(payno, mno);
 		System.out.println(cpjoin.toString());
 		model.addAttribute(cpjoin);
-		log.info("cpjoin getmno:"+cpjoin.getMno());
-		log.info("cpjoin toString:"+cpjoin.toString());
-		log.info("model toString:"+model.toString());
-		
-		
+		log.info("cpjoin getmno:" + cpjoin.getMno());
+		log.info("cpjoin toString:" + cpjoin.toString());
+		log.info("model toString:" + model.toString());		
 		return "pay/payComplete";
 	}
 	
@@ -80,6 +81,7 @@ public class PaymentController {
 		model.addAttribute("listview",listview);
 		return "pay/myhistory";
 	}
+	
 	@GetMapping("pay/view4")
 	public String view4() {
 		return "pay/paytest";

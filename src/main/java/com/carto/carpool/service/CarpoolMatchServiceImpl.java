@@ -45,8 +45,8 @@ public class CarpoolMatchServiceImpl implements CarpoolMatchService {
 	}
 
 	@Override
-	public Object SelectDriver(int num) {
-		return cmDAO.selectDriver(num);
+	public Object SelectDriver(Integer dirverNo) {
+		return cmDAO.selectDriver(dirverNo);
 	}
 
 	@Override
@@ -61,20 +61,18 @@ public class CarpoolMatchServiceImpl implements CarpoolMatchService {
 
 	@Override
 	public Object selectMatInfoByPayno(String num, int mno) {
-		HashMap<String, Object> map = new HashMap();
+		HashMap<String, Object> map = new HashMap<>();
 		map.put("mno", Integer.valueOf(mno));
 		map.put("payno", num);
 		return cmDAO.selectMatInfoByPayno(map);
 	}
 
 	@Override
-	public Object updateCom(String paynum, HttpSession session) {
-		HashMap<String,Object> map = new HashMap();
-		MemberDTO member= (MemberDTO)session.getAttribute("login");
-		log.info("updateCOM.member:"+ member.toString());
+	public Object updateCom(String payno, Integer matchno) {
+		HashMap<String,Object> map = new HashMap<>();
 		map.put("progress", 2);
-		map.put("payno", paynum);
-		map.put("mno",member.getMno());
+		map.put("payno", payno);
+		map.put("matcno", matchno);
 		return cmDAO.updateCom(map);
 	}
 
