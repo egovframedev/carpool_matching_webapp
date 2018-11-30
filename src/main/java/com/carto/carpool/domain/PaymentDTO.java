@@ -10,4 +10,7 @@ public class PaymentDTO {
 	private String payno;
 	private String apply_num;
 	private Date pay_date;
+	private int driverNo;
+	private int matchno;
+	private int payerNo;
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,34 +44,19 @@ public class PaymentController {
 		return "pay/paytest";
 	}
 	
-	@GetMapping("pay/payment")
-	public String payment(HttpSession session, Model model) {
-		MemberDTO member =(MemberDTO)session.getAttribute("login");
-		 int num=  (int) member.getMno();
-		 System.out.println(num);
-		 System.out.println(member.toString());
-		MemberDTO driver = (MemberDTO)cmService.SelectDriver(num);
-		
-		CarpoolMatchDTO cpjoin = (CarpoolMatchDTO)cmService.selectMatInfo(num);
-		log.info("cpjoin: " + cpjoin.toString());
-		model.addAttribute("driver",driver);
-		model.addAttribute("cpjoin",cpjoin);
-		model.addAttribute("member",member);
-		
-		return "pay/paytest";
-	}
-	
-	@RequestMapping(value="pay/insertReg",method={RequestMethod.POST})
+
+	@RequestMapping(value="pay/insertReg", method=RequestMethod.POST)
 	@ResponseBody
-	public String insertReg(@RequestBody PaymentDTO paymentDTO,HttpSession session) {
-		System.out.println(paymentDTO);
-		int res=payService.insertOne(paymentDTO);
-		System.out.println("res :"+res);
-		log.info("paymentDTO Payno: " + paymentDTO.getPayno());
-		cmService.updateCom(paymentDTO.getPayno(), session);
-		return "pay/paymentTemp"; 
+	public ResponseEntity<String> insertReg(@RequestBody PaymentDTO paymentDTO, HttpSession session) {
+		log.info("pay/insertReg............." + paymentDTO);
 		
-		
+		int res = payService.insertOne(paymentDTO);
+		if(res > 0) {
+			log.info("paymentDTO Payno: " + paymentDTO.getPayno());
+			cmService.updateCom(paymentDTO.getPayno(), session);
+			return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
 	@GetMapping("pay/complete") 
 	public String complete(HttpServletRequest res,Model model,HttpSession session) {

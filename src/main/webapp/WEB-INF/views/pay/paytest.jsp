@@ -149,16 +149,22 @@
             console.log(rsp);
             if (rsp.success) {
             	 //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-                jQuery.ajax({
+                $.ajax({
                   url: "<c:url value='/'/>pay/insertReg", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
                   type: "POST",
-                  headers: { "Content-Type": "application/json" },
+                  headers: { 
+                	 "Content-Type" : "application/json",
+  					"X-HTTP-Method-Override" : "POST"
+                  },
+                  dataType: 'text',
                   data:JSON.stringify( {
                     payno : rsp.imp_uid,
                     amount : rsp.paid_amount, 
                     apply_num : rsp.apply_num, 
                 	pay_date : rsp.paid_at,
-                	driverNo : ${driver.mno}
+                	payerNo: ${member.mno},
+                	driverNo : ${driver.mno},
+                	matchno: ${cpjoin.matchno}
                 	//payno 아임포트 모듈 거래고유벊
                 	//amount 결제 금액
                 	//apply_num 카드사 승인번호
@@ -167,7 +173,7 @@
                   })
                 }).done(function(data) {
                 	console.log("결제 성공 fail");
-                   console.log('호출끝남');
+                    console.log('호출끝남');
                   //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
                   if ( rsp.success ) {
                     var msg = '결제가 완료되었습니다.';
@@ -176,7 +182,9 @@
                     msg += '\n결제 금액 : ' + rsp.paid_amount;
                     msg += '카드 승인번호 : ' + rsp.apply_num;
                     alert(msg);
+                    
                     window.location = getContextPath()+'/pay/complete?id=' + rsp.imp_uid  //완료페이지로 이동
+                    		
                   } else {
                     console.log('결제실패함');
                     //[3] 아직 제대로 결제가 되지 않았습니다.
@@ -186,7 +194,9 @@
                 	console.log("결제 실패 fail");
                 	 var msg = '결제에 실패하였습니다.'+data;
                     msg += '에러내용 : ' + rsp.error_msg;
+                    console.log(data);
                     alert(msg);
+             
                    console.log("결제 fail data:"+data+'rsp:'+rsp);
                   /*  window.location =  getContextPath()+'/pay/payment'   */
                   });
