@@ -63,5 +63,5 @@ public interface CarpoolService {
 	
 	public List<MyCarpoolDTO> getMyCarpoolList(Integer mno) throws Exception;
 	
-	public void confirmMatching(Integer matchno) throws Exception;
+	public int confirmMatching(Integer matchno) throws Exception;
 }

@@ -67,7 +67,7 @@
 	                  		<label for="charge" class="col-sm-2 control-label">금액</label>
 						    <div class="col-sm-3">
 						   		<div class="input-group">
-	                    			<input type="text" class="form-control" name="charge" id="charge" placeholder="금액입력.." readonly="readonly">
+	                    			<input type="text" class="form-control" name="charge" id="charge" placeholder="금액입력.." required="required">
 						    		<span class="input-group-addon">원/인</span>
 						    	</div>
 	                  		</div>               

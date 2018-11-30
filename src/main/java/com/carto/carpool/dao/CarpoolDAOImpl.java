@@ -81,8 +81,8 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 	}
 
 	@Override
-	public void confirmMatching(Integer matchno) throws Exception {
-		session.update(NAMESPACE + ".confirmMatching", matchno);
+	public int confirmMatching(Integer matchno) throws Exception {
+		return session.update(NAMESPACE + ".confirmMatching", matchno);
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public interface CarpoolDAO {
 	 * @param matchno
 	 * @throws Exception
 	 */
-	public void confirmMatching(Integer matchno) throws Exception;
+	public int confirmMatching(Integer matchno) throws Exception;
 	
 	/**
 	 * 카풀 매칭 삭제 처리

@@ -111,8 +111,8 @@ public class CarpoolServiceImpl implements CarpoolService {
 	}
 
 	@Override
-	public void confirmMatching(Integer matchno) throws Exception {
-		//carpoolDAO.confirmMatching(matchno);
+	public int confirmMatching(Integer matchno) throws Exception {
+		return carpoolDAO.confirmMatching(matchno);
 	}
 
 }

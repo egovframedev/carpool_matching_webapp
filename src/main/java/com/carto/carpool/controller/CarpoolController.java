@@ -149,7 +149,7 @@ public class CarpoolController {
 		return "carpool/matching_request";
 	}
 	
-	// AJAX 카풀
+	// AJAX 카풀 매칭
 	@PostMapping({"/request/requestMatching", "/provide/requestMatching"})
 	@ResponseBody
 	public ResponseEntity<String> requestMatching(@RequestBody CPMatchingDTO dto, 
@@ -183,15 +183,31 @@ public class CarpoolController {
 		return "carpool/riding_view";
 	}
 	
+	// 카풀 동승
+	@GetMapping("/driving")
+	public String drivingView(HttpSession session, Model model) throws Exception {
+		log.info("GET /carpool/ridingView ...... ");
+		if(session.getAttribute("login") != null) {
+			MemberDTO member = (MemberDTO) session.getAttribute("login");
+			List<MyCarpoolDTO> list = service.getMyCarpoolList((int)member.getMno());
+			// list.forEach(carpool -> log.info(carpool));
+			model.addAttribute("list", list);
+		}
+		return "carpool/riding_view";
+	}
+	
 	@PostMapping("/confirmMatching")
 	@ResponseBody
 	public ResponseEntity<String> confirmMatching(@RequestBody CPMatchingDTO dto, 
 			HttpSession session) throws Exception {
-		log.info("AJAX /confirmMatching......");
+		log.info("AJAX /confirmMatching......" );
+		// MemberDTO member  = (MemberDTO)session.getAttribute("login");
+		// log.info(member);
 
 		if(session.getAttribute("login") != null) {
-			service.confirmMatching(dto.getMatchno());			
-			return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			if(service.confirmMatching(dto.getMatchno()) > 0) {			
+				return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			}
 		}
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
