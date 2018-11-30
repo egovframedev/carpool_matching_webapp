@@ -80,8 +80,6 @@
 											<c:out value="${cri.searchType eq 'id'? 'selected' : ''}"/>>출발지</option>
 										<option value="end"
 											<c:out value="${cri.searchType eq 'nm'? 'selected' : ''}"/>>도착지</option>
-										<option value="stime"
-											<c:out value="${cri.searchType eq 'tel'? 'selected' : ''}"/>>출발시간</option>
 										<option value="dirver"
 											<c:out value="${cri.searchType eq 'type'? 'selected' : ''}"/>>운전자</option>
 										<option value="rider"
@@ -138,10 +136,14 @@
 									</c:if> <c:if test="${history.progress eq 1 }">
 									승인
 									</c:if> <c:if test="${history.progress eq 2 }">
-									결제 완료
+									탑승
 									</c:if> <c:if test="${history.progress eq 3 }">
+									결제 완료
+									</c:if>
+									<c:if test="${history.progress eq 9 }">
 									취소
-									</c:if></td>
+									</c:if>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -80,22 +80,14 @@
 	<!-- 전체 결제내역 목록 -->
 	<select id="payAllList" resultType="payHistory"
 		parameterType="criteria">
-		select distinct car_m.matchno, mem_d.name as dname,
-		mem_r.name as
-		rname, car_m.progress, car_i.start_point,
-		car_i.end_point,
-		car_i.start_datetime, car_i.seat_num, pay.amount,
-		pay.pay_date
+		select car_m.matchno, mem_d.name as dname, mem_r.name as rname, car_i.start_point, car_i.end_point, car_i.start_datetime, car_i.seat_num, pay.amount, pay.pay_date, car_m.progress
 		from
-		carpool_match car_m, carpool_info car_i, payment pay, member mem_d,
-		member mem_r
+		carpool_match car_m, carpool_info car_i, payment pay, member mem_d, member mem_r
 		where mem_d.mno = pay.driver
 		and mem_r.mno = pay.payer
-		and
-		car_i.cpno = car_m.cpno
-		and car_m.payno = pay.payno
-		<include refid="paySearch" />
 		and car_m.matchno = pay.matchno
+		<include refid="paySearch" />
+		and car_i.cpno = car_m.cpno
 		LIMIT #{pageStart}, ${perPageNum}
 	</select>
 
@@ -108,9 +100,6 @@
 			</if>
 			<if test="searchType == 'end'.toString()">
 				AND car_i.end_point LIKE CONCAT('%', #{keyword},'%')
-			</if>
-			<if test="searchType == 'stime'.toString()">
-				AND car_i.start_datetime LIKE CONCAT('%', #{keyword},'%')
 			</if>
 			<if test="searchType == 'dirver'.toString()">
 				AND mem_d.name LIKE CONCAT('%', #{keyword},'%')
@@ -131,14 +120,11 @@
 	<select id="paylistCount" resultType="java.lang.Integer">
 	<![CDATA[
 		SELECT COUNT(car_m.cpno) from
-		carpool_match car_m, carpool_info car_i, payment pay, member mem_d,
-		member mem_r
+		carpool_match car_m, carpool_info car_i, payment pay, member mem_d, member mem_r
 		where mem_d.mno = pay.driver
 		and mem_r.mno = pay.payer
-		and
-		car_i.cpno = car_m.cpno
-		and car_m.payno = pay.payno
 		and car_m.matchno = pay.matchno
+		and car_i.cpno = car_m.cpno
 	]]>
 		<include refid="paySearch" />
 	</select>
