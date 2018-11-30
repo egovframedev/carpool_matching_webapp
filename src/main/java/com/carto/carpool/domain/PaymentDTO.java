@@ -12,4 +12,13 @@ public class PaymentDTO {
 	private int matchno;      // 카풀매칭번호
 	private int payerNo;      // 결제자 회원 번호
 	private int driverNo;     // 운전자 회원 번호
+	
+	/*
+	public Date getPay_date() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date date= new Date(pay_date);
+		sdf.format(date);
+		return date;
+	}
+	*/
 }

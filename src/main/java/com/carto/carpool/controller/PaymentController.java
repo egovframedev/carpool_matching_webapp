@@ -18,6 +18,8 @@ import com.carto.carpool.domain.PaymentDTO;
 import com.carto.carpool.service.CarpoolMatchService;
 import com.carto.carpool.service.PaymentService;
 import com.carto.member.domain.MemberDTO;
+import com.carto.member.service.MemberService;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -28,6 +30,8 @@ public class PaymentController {
 	
 	@Autowired
 	CarpoolMatchService cmService;
+	@Autowired
+	MemberService memService;
 	
 	// 결제 화면
 	@RequestMapping(value="/pay/payment", method=RequestMethod.POST)

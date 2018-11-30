@@ -75,5 +75,4 @@ public class CarpoolMatchServiceImpl implements CarpoolMatchService {
 		map.put("matcno", matchno);
 		return cmDAO.updateCom(map);
 	}
-
 }
