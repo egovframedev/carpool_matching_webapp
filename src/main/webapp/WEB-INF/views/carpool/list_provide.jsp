@@ -40,41 +40,34 @@
 					<h3 class="box-title">카풀 제공 조회</h3>
 				</div>
 				<div class="box-body">
-					<form method="GET">
+					<form method="get">
 					<div class="row">
-						<div class="col-md-10">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-map-marker text-danger" aria-hidden="true"></i> 출발지</span>
-										<input type="text" class="form-control" name="searchStart" placeholder="출발지 입력...">							
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-map-marker text-primary" aria-hidden="true"></i> 도착지</span>
-										<input type="text" class="form-control" name="searchEnd" placeholder="도착지 입력...">							
-									</div>
-								</div>
-							</div>
-							<div class="row mt10">
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발일시</span>
-										<input type="text" class="form-control form_datetime"  name="searchDate" placeholder="출발일시" />
-									</div>
-								</div>
+						<div class="col-xs-4">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-map-marker text-danger" aria-hidden="true"></i></span>
+								<input type="text" class="form-control" name="searchStart" placeholder="출발지 입력..." value="${cri.searchStart}"/>							
 							</div>
 						</div>
-						<div class="col-md-2">
-							<button type="submit" id="btnSearch" class="btn btn-lg btn-success btn-block mt10" >
-								<i class="fa fa-search"></i>&nbsp;&nbsp;검색
+						<div class="col-xs-4">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-map-marker text-primary" aria-hidden="true"></i></span>
+								<input type="text" class="form-control" name="searchEnd" placeholder="도착지 입력..." value="${cri.searchEnd}"/>							
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+								<input type="text" class="form-control form_datetime"  name="searchDate" placeholder="출발일시" value="${cri.searchDate}" />
+							</div>
+						</div>
+						<div class="col-xs-1">
+							<button type="submit" id="btnSearch" class="btn btn-success btn-block" >
+								<i class="fa fa-search"></i> 검색
 							</button>						
-						</div>
+						</div>							
 					</div>
 					</form>
-				</div>
-				<!-- /.box-body -->
+				</div><!-- /.box-body -->
 			</div>
 			<!-- // 검색 부분 -->
 			<!-- 결과 리스트 부분 -->
@@ -140,25 +133,28 @@
 						<!-- /.box-body -->
 						<!-- 페이지네이션 -->
 						<div class="box-footer clearfix">
-							<ul class="pagination pagination-sm no-margin">
-								<li><a href="#">«</a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">»</a></li>
+							<ul class="pagination no-margin">
+							<c:if test="${paging.prev}">
+								<li><a href="list${paging.makeQuery(paging.startPage -1)}"><i class="fa fa-arrow-left"></i></a></li>
+							</c:if>
+							<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+								<li <c:out value="${paging.cri.page == idx ? 'class=active':''}"/>>
+									<a href="list${paging.makeQuery(idx)}">${idx}</a></li>
+							</c:forEach>
+							<c:if test="${paging.next && paging.endPage > 0}">
+								<li><a href="list${paging.makeQuery(paging.endPage + 1)}"><i class="fa fa-arrow-right"></i></a></li>
+							</c:if>
 							</ul>
 							<div class="btn-group pull-right">
-								<button type="button" class="btn btn-primary pull-right" onclick="location.href='regist'">
-									<i class="fa fa-plus text-danger"></i>&nbsp;&nbsp; 카풀 제공 등록
+								<button type="button" class="btn btn-primary btn-lg pull-right" onclick="location.href='regist'">
+									<i class="fa fa-plus"></i> 카풀 요청 등록
 								</button>
 							</div>
 						</div>
-					</div>
-					<!-- /.box -->
+					</div><!-- /.box -->
 				</div>
 			</div>
-		</section>
-		<!-- /.content -->
+		</section><!-- /.content -->
 	</div>
 </div>
 <script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>

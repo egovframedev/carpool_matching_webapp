@@ -87,12 +87,14 @@
 								<span class="hidden-xs">${login.name}[${login.userid}]</span>
 							</a>
 							<ul class="dropdown-menu" role="menu">				             
-				                <li><a href="<c:url value='/member/myprofile'/>">
+				                 <li><a href="<c:url value='/member/myprofile'/>">
 				                	<i class="fa fa-id-card-o" aria-hidden="true"></i> 내프로필</a></li>
 				                <li><a href="<c:url value='/logout'/>">
 				                	<i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a></li>
-				                <li><a href="<c:url value='/member/certify'/>">
+				                <c:if test="${login.authority == 'ROLE_RIDER'}">
+				                <li><a href="<c:url value='/member/driver/certify'/>">
 				                	<i class="fa fa-id-card" aria-hidden="true"></i> 운전자인증</a></li>
+				                </c:if>
 		              		</ul>
 						</li>
 						<!-- 관리자 링크 -->

@@ -43,39 +43,32 @@
 				<div class="box-body">
 					<form method="get">
 					<div class="row">
-						<div class="col-md-10">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-map-marker text-danger" aria-hidden="true"></i> 출발지</span>
-										<input type="text" class="form-control" name="searchStart" placeholder="출발지 입력..." value="${cri.searchStart}"/>							
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-map-marker text-primary" aria-hidden="true"></i> 도착지</span>
-										<input type="text" class="form-control" name="searchEnd" placeholder="도착지 입력..." value="${cri.searchEnd}"/>							
-									</div>
-								</div>
-							</div>
-							<div class="row mt10">
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i> 출발일시</span>
-										<input type="text" class="form-control form_datetime"  name="searchDate" placeholder="출발일시" value="${cri.searchDate}" />
-									</div>
-								</div>
+						<div class="col-xs-4">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-map-marker text-danger" aria-hidden="true"></i></span>
+								<input type="text" class="form-control" name="searchStart" placeholder="출발지 입력..." value="${cri.searchStart}"/>							
 							</div>
 						</div>
-						<div class="col-md-2">
-							<button type="submit" id="btnSearch" class="btn btn-lg btn-success btn-block" >
+						<div class="col-xs-4">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-map-marker text-primary" aria-hidden="true"></i></span>
+								<input type="text" class="form-control" name="searchEnd" placeholder="도착지 입력..." value="${cri.searchEnd}"/>							
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+								<input type="text" class="form-control form_datetime"  name="searchDate" placeholder="출발일시" value="${cri.searchDate}" />
+							</div>
+						</div>
+						<div class="col-xs-1">
+							<button type="submit" id="btnSearch" class="btn btn-success btn-block" >
 								<i class="fa fa-search"></i> 검색
 							</button>						
-						</div>
+						</div>							
 					</div>
 					</form>
-				</div>
-				<!-- /.box-body -->
+				</div><!-- /.box-body -->
 			</div>
 			<!-- // 검색 부분 -->
 			<!-- 결과 리스트 부분 -->
@@ -88,57 +81,56 @@
 						<!-- /.box-header -->
 						<div class="box-body table-responsive no-padding">
 							<table class="carpool-info table table-hover table-striped">
-								<thead>
-									<tr class="bg-primary">								
-										<th style="width:10%">동승자</th>
-										<th>출발지 
-											<i class="fa fa-long-arrow-right" aria-hidden="true"></i> 
-											도착지 / 출발시간
-										</th>
-										<th>자리</th>
-										<th>금액</th>
-									</tr>
-								<thead>
-								<tbody>
-								<c:forEach var="cpinfo" items="${list}">
-									<tr>
-										<td class="text-center"><c:choose><%-- 프로필 사진 처리 --%>
-											<c:when test="${!empty cpinfo.user.photo}">
-												<img src="<c:url value="/img/user3-128x128.jpg"/>"
-													alt="profile" class="img-circle" /> 
-											</c:when>
-											<c:when test="${cpinfo.user.gender.string eq 'MALE'}">
-												<img src="<c:url value="/img/avatar_male_3.png"/>"
-													alt="male" class="img-circle" /> 
-											</c:when>
-											<c:when test="${cpinfo.user.gender.string eq 'FEMALE'}">
-												<img src="<c:url value="/img/avatar_female_1.png"/>"
-													alt="male" class="img-circle"/> 
-											</c:when>
-											<c:otherwise>
-												<img src="<c:url value="/img/avatar_female_6.png"/>"
-													alt="male" class="img-circle"/> 
-											</c:otherwise>
-											</c:choose>
-											<span class="user-name">${cpinfo.user.name}</span>
-										</td>
-										<td><a href="detail${paging.makeQuery(paging.cri.page)}&cpno=${cpinfo.cpno}">
-											<span class="start-point">${cpinfo.startPoint}</span> 
-											<span class="arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-											<span class="end-point">${cpinfo.endPoint}</span></a>
-											<span class="start-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;
-												<fmt:formatDate value="${cpinfo.startDateTime}" pattern="yyyy-MM-dd HH시 mm분"/></span>
-										</td>
-										<td><span class="seat-num">
-												${cpinfo.seatNum}<small>좌석</small></span></td>
-										<td><span class="charge">
-												<fmt:formatNumber value="${cpinfo.charge}" pattern="#,###"/>원</span>/인</td>
-									</tr>
-								</c:forEach>							
-								</tbody>
+							<thead>
+								<tr class="bg-primary">								
+									<th style="width:10%">동승자</th>
+									<th>출발지 
+										<i class="fa fa-long-arrow-right" aria-hidden="true"></i> 
+										도착지 / 출발시간
+									</th>
+									<th>자리</th>
+									<th>금액</th>
+								</tr>
+							<thead>
+							<tbody>
+							<c:forEach var="cpinfo" items="${list}">
+								<tr>
+									<td class="text-center"><c:choose><%-- 프로필 사진 처리 --%>
+										<c:when test="${!empty cpinfo.user.photo}">
+											<img src="<c:url value="/img/user3-128x128.jpg"/>"
+												alt="profile" class="img-circle" /> 
+										</c:when>
+										<c:when test="${cpinfo.user.gender.string eq 'MALE'}">
+											<img src="<c:url value="/img/avatar_male_3.png"/>"
+												alt="male" class="img-circle" /> 
+										</c:when>
+										<c:when test="${cpinfo.user.gender.string eq 'FEMALE'}">
+											<img src="<c:url value="/img/avatar_female_1.png"/>"
+												alt="male" class="img-circle"/> 
+										</c:when>
+										<c:otherwise>
+											<img src="<c:url value="/img/avatar_female_6.png"/>"
+												alt="male" class="img-circle"/> 
+										</c:otherwise>
+										</c:choose>
+										<span class="user-name">${cpinfo.user.name}</span>
+									</td>
+									<td><a href="detail${paging.makeQuery(paging.cri.page)}&cpno=${cpinfo.cpno}">
+										<span class="start-point">${cpinfo.startPoint}</span> 
+										<span class="arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+										<span class="end-point">${cpinfo.endPoint}</span></a>
+										<span class="start-time"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;
+											<fmt:formatDate value="${cpinfo.startDateTime}" pattern="yyyy-MM-dd HH시 mm분"/></span>
+									</td>
+									<td><span class="seat-num">
+											${cpinfo.seatNum}<small>좌석</small></span></td>
+									<td><span class="charge">
+											<fmt:formatNumber value="${cpinfo.charge}" pattern="#,###"/>원</span>/인</td>
+								</tr>
+							</c:forEach>							
+							</tbody>
 							</table>
-						</div>
-						<!-- /.box-body -->
+						</div><!-- /.box-body -->
 						<!-- 페이지네이션 -->
 						<div class="box-footer clearfix">
 							<ul class="pagination no-margin">
@@ -159,24 +151,21 @@
 								</button>
 							</div>
 						</div>
-					</div>
-					<!-- /.box -->
+					</div><!-- /.box -->
 				</div>
 			</div>
-		</section>
-		<!-- /.content -->
+		</section><!-- /.content -->
 	</div>
-	<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
-	<script type="text/javascript">
-	    $(".form_datetime").datetimepicker({
-	    	language: 'ko',
-	    	format: 'yyyy-mm-dd - P HH:ii',
-	    	showMeridian: true,
-	        autoclose: true,
-	        todayBtn: true
-	    });
-	</script> 
-</div>
-<!-- 컨텐츠 끝  -->
+</div><!-- 컨텐츠 끝  -->
+<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<c:url value='/'/>vendor/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ko.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+    	language: 'ko',
+    	format: 'yyyy-mm-dd - P HH:ii',
+    	showMeridian: true,
+        autoclose: true,
+        todayBtn: true
+    });
+</script>
 <%@ include file="../includes/footer.jsp"%>
