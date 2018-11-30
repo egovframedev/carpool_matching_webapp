@@ -18,4 +18,9 @@
 		FROM payment
 	  	ORDER BY pay_date DESC 
 	</select>
+	<select id="selectPayment">
+		SELECT *
+		  FROM payment
+		  where payno = #{payno}
+	</select>
 </mapper>

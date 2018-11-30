@@ -19,6 +19,8 @@ import com.carto.carpool.domain.PaymentDTO;
 import com.carto.carpool.service.CarpoolMatchService;
 import com.carto.carpool.service.PaymentService;
 import com.carto.member.domain.MemberDTO;
+import com.carto.member.service.MemberService;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -28,6 +30,8 @@ public class PaymentController {
 	PaymentService payService;
 	@Autowired
 	CarpoolMatchService cmService;
+	@Autowired
+	MemberService memService;
 	
 	@RequestMapping(value="/pay/payment", method=RequestMethod.POST)
 	public String paymentForm(HttpSession session,
@@ -53,23 +57,16 @@ public class PaymentController {
 		int res = payService.insertOne(paymentDTO);
 		if(res > 0) {
 			log.info("paymentDTO Payno: " + paymentDTO.getPayno());
-			cmService.updateCom(paymentDTO.getPayno(), session);
+			cmService.updateCom(paymentDTO.getPayno(), paymentDTO.getMatchno());
 			return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
 	@GetMapping("pay/complete") 
-	public String complete(HttpServletRequest res,Model model,HttpSession session) {
-		String no= res.getParameter("id");
-		MemberDTO member = (MemberDTO)session.getAttribute("login");
-		int mno= (int)member.getMno();
-		CarpoolMatchDTO cpjoin =(CarpoolMatchDTO)cmService.selectMatInfoByPayno(no,mno);
-		System.out.println(cpjoin.toString());
-		model.addAttribute(cpjoin);
-		log.info("cpjoin getmno:"+cpjoin.getMno());
-		log.info("cpjoin toString:"+cpjoin.toString());
-		log.info("model toString:"+model.toString());
-		
+	public String complete(@RequestParam("id") String payno,Model model,HttpSession session) {
+		System.out.println("-------payno:"+payno);
+		PaymentDTO payment =(PaymentDTO)payService.SelectOne(payno);
+		model.addAttribute("pay", payment);
 		
 		return "pay/payComplete";
 	}

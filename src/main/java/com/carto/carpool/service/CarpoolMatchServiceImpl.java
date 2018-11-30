@@ -68,13 +68,11 @@ public class CarpoolMatchServiceImpl implements CarpoolMatchService {
 	}
 
 	@Override
-	public Object updateCom(String paynum, HttpSession session) {
+	public Object updateCom(String paynum,int matchno) {
 		HashMap<String,Object> map = new HashMap();
-		MemberDTO member= (MemberDTO)session.getAttribute("login");
-		log.info("updateCOM.member:"+ member.toString());
 		map.put("progress", 2);
 		map.put("payno", paynum);
-		map.put("mno",member.getMno());
+		map.put("matchno",matchno);
 		return cmDAO.updateCom(map);
 	}
 
