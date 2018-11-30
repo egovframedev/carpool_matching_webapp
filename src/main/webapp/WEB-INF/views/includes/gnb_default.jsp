@@ -105,7 +105,7 @@
 								<i class="fa fa-gears"></i></a>
 							<ul class="dropdown-menu" role="menu">
 				                <li><a href="<c:url value='/admin/member/list'/>">회원관리</a></li>
-				                <li><a href="<c:url value='/admin/carpool/lst'/>">카풀정보관리</a></li>
+				                <li><a href="<c:url value='/admin/carpool/list'/>">카풀정보관리</a></li>
 				                <li><a href="<c:url value='/admin/pay/list'/>">결제정산관리</a></li>
 		              		</ul>	
 						</li>
