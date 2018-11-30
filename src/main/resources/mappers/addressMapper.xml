@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carto.mappers.AddressMapper">
+	<!-- 주소 타입의 갯수 출력 -->
+	<select id="CountType" resultType="int">
+
+		SELECT
+		COUNT(*)
+		FROM
+		address
+		WHERE
+		mno=#{mno}
+		AND
+		addr_type = #{addr_type}
+
+	</select>
+	<!-- 주소 목록 출력 -->
+	<select id="AddressList" parameterType="long"
+		resultType="com.carto.address.domain.AddressDTO">
+		SELECT
+		mno,
+		addr_type,
+		addr_no, 
+		addr_name,
+		address1,
+		address2,
+		address3
+		FROM
+		carto.address
+		WHERE
+		mno = #{mno}
+		ORDER BY
+		addr_type ASC
+	</select>
+
+	<insert id="AddressInsert"
+		parameterType="com.carto.address.domain.AddressDTO">
+		INSERT
+		INTO
+		carto.address
+		(mno, addr_type, addr_name,
+		address1,
+		address2, address3)
+		VALUES
+		(#{mno}, #{addr_type}, #{addr_name},
+		#{address1},
+		#{address2}, #{address3})
+	</insert>
+
+	<update id="AddressUpdate"
+		parameterType="com.carto.address.domain.AddressDTO">
+		UPDATE
+		carto.address
+		SET
+		addr_name = #{addr_name},
+		address1 = #{address1},
+		address2 =
+		#{address2},
+		address3 = #{address3}
+		where
+		mno =
+		#{mno}
+		and
+		addr_type =
+		#{addr_type}
+		ORDER BY
+		addr_regdate
+		ASC limit 1
+	</update>
+
+	<update id="AddressNameUpdate"
+		parameterType="com.carto.address.domain.AddressDTO">
+		UPDATE
+		carto.address
+		SET
+		addr_name = #{addr_name}
+		where
+		mno = #{mno}
+		and
+		addr_no = #{addr_no}
+		
+	</update>
+	
+	<delete id="AddressDelete" parameterType="int">
+		DELETE
+		FROM
+		carto.address
+		WHERE
+		addr_no = #{addr_no}
+	</delete>
+	
+</mapper>

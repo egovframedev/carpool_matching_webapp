@@ -77,8 +77,6 @@ public class BoardController {
 		
 		MemberDTO member=(MemberDTO)session.getAttribute("login");
 		model.addAttribute("member",member);
-		
-		
 
 		return "board/detail";
 	}
@@ -164,10 +162,14 @@ public class BoardController {
 	// 답글 작성 QNA만 사용
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public String replyGET(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri, BoardDTO board,
-			Model model) throws Exception {
+			Model model, HttpSession session) throws Exception {
 		log.info("replyGET---------------------------------------");
 		cri.strToBtype(btype);
 		model.addAttribute("cri", cri);
+		
+		MemberDTO member=(MemberDTO)session.getAttribute("login");
+		model.addAttribute("member",member);
+		
 		return "board/reply";
 	}
 
@@ -179,7 +181,7 @@ public class BoardController {
 		log.info(board.toString());
 
 		boardservice.reply(board);
-
+		
 		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 메세지 설정
 
 		return "redirect:/board/" + btype + "/detail?bno=" + board.getBno();

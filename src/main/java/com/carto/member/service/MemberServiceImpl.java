@@ -164,17 +164,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO login(LoginDTO dto) throws Exception {
 		MemberDTO member = manager.login(dto);
-		if(!member.isApproval_status()) { 
+		if (!member.isApproval_status()) {
 			throw new NotAuthorizedUserException();
 		}
 		return member;
 	}
-	
+
 	@Override
 	public void keepLogin(String userid, String sessionId, Date next) throws Exception {
 		manager.keepLogin(userid, sessionId, next);
 	}
-	
+
 	// 세션키로 로그인 체크
 	@Override
 	public MemberDTO checkLoginBefore(String value) {
@@ -186,13 +186,13 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO viewMember(MemberDTO memberdto) throws Exception {
 		return manager.viewMember(memberdto);
 	}
-	
+
 	@Override
-	public int insertDriver(DriverDTO dto,int mno) {
-		mno=1;
+	public int insertDriver(DriverDTO dto, int mno) {
+		mno = 1;
 		dto.setMno(mno);
 		return manager.insertDriver(dto);
-		
+
 	}
 
 	@Override
@@ -204,7 +204,11 @@ public class MemberServiceImpl implements MemberService {
 	public DriverDTO getDriver(int mno) {
 		return manager.getDriver(mno);
 	}
-	
-	
+
+	// 회원정보 가져오기
+	@Override
+	public MemberDTO selectMember(String userid) {
+		return manager.selectMember(userid);
+	}
 
 }

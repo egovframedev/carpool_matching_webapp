@@ -112,7 +112,7 @@ public class CarpoolServiceImpl implements CarpoolService {
 
 	@Override
 	public void confirmMatching(Integer matchno) throws Exception {
-		carpoolDAO.confirmMatching(matchno);
+		//carpoolDAO.confirmMatching(matchno);
 	}
 
 }

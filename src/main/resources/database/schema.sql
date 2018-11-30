@@ -35,15 +35,26 @@ CREATE TABLE `member_auth` (
 	CONSTRAINT `FK_MEMBER_AUTH` FOREIGN KEY (`userid`) REFERENCES `member` (`userid`) -- 아이디 외래키 지정
 ) COMMENT='회원 권한' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
--- 주소록
-CREATE TABLE `ADDRESS` (
-	`mno`       INT          NULL COMMENT '회원번호',
-	`addr_type` TINYINT      NULL COMMENT '주소구분',
-	`address`   VARCHAR(200) NULL COMMENT '주소지',  
-	`location`  VARCHAR(100) NULL COMMENT '주소좌표',
+CREATE TABLE `address` (
+	`mno` INT(11) NOT NULL COMMENT '회원번호',
+	`addr_no` INT(11) NOT NULL AUTO_INCREMENT COMMENT '주소번호',
+	`addr_name` VARCHAR(50) NULL DEFAULT 'place' COMMENT '주소이름',
+	`addr_type` TINYINT(4) NULL DEFAULT NULL COMMENT '주소구분',
+	`addr_regdate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '주소등록시간',
+	`address1` VARCHAR(200) NULL DEFAULT NULL COMMENT '우편번호',
+	`address2` VARCHAR(200) NULL DEFAULT NULL COMMENT '주소',
+	`address3` VARCHAR(200) NULL DEFAULT NULL COMMENT '상세주소',
+	`loc_long` VARCHAR(100) NULL DEFAULT NULL COMMENT '주소좌표 x',
+	`loc_lat` VARCHAR(100) NULL DEFAULT NULL COMMENT '주소좌표 y',
+	UNIQUE INDEX `addr_no` (`addr_no`),
 	INDEX `FK_MEMBER_TO_ADDRESS` (`mno`),
 	CONSTRAINT `FK_MEMBER_TO_ADDRESS` FOREIGN KEY (`mno`) REFERENCES `member` (`mno`)
-) COMMENT '주소록' ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+)
+COMMENT='주소록'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=66
+;
 
 -- 운전자 2018-11-28 
 CREATE TABLE `DRIVER` (
@@ -95,6 +106,22 @@ CREATE TABLE `carpool_info` (
 	CONSTRAINT `FK_MEMBER_TO_CARPOOL_INFO` FOREIGN KEY (`mno`) REFERENCES `member` (`mno`)
 ) COMMENT='카풀정보' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
+-- 결제내역 수정: 2018-11-28
+CREATE TABLE `payment` (
+	`payno`     VARCHAR(100) NOT NULL  COMMENT '결제번호',
+	`matchno`   INT(11)      NOT NULL  COMMENT '카풀매칭번호',
+	`payer`     INT(11)      NOT NULL  COMMENT '결제자',
+	`driver`    INT(11)      NOT NULL  COMMENT '운전자',
+	`pay_date`  TIMESTAMP    NULL DEFAULT CURRENT_TIMESTAMP COMMENT '결제일자',
+	`amount`    INT(11)      NULL      COMMENT '결제금액',
+	`apply_num` VARCHAR(100) NULL	   COMMENT '승인번호',  
+	PRIMARY KEY (`payno`),
+	INDEX `FK_DRIVER_TO_MEMBER` (`driver`),
+	INDEX `FK_PAYER_TO_MEMBER` (`payer`),
+	CONSTRAINT `FK_DRIVER_TO_MEMBER` FOREIGN KEY (`driver`) REFERENCES `member` (`mno`),
+	CONSTRAINT `FK_PAYER_TO_MEMBER` FOREIGN KEY (`payer`) REFERENCES `member` (`mno`)
+) COMMENT='결제내역' COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
 -- 카풀매칭
 CREATE TABLE `carpool_match` (
 	`matchno`    INT(11)  NOT NULL AUTO_INCREMENT COMMENT '매칭번호',
@@ -114,22 +141,6 @@ CREATE TABLE `carpool_match` (
 	CONSTRAINT `FK_PAYMENT_TO_CARPOOL_MATCH` FOREIGN KEY (`payno`) REFERENCES `payment` (`payno`)
 ) COMMENT='카풀매칭' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
--- 결제내역 수정: 2018-11-28
-CREATE TABLE `payment` (
-	`payno`     VARCHAR(100) NOT NULL  COMMENT '결제번호',
-	`matchno`   INT(11)      NOT NULL  COMMENT '카풀매칭번호',
-	`payer`     INT(11)      NOT NULL  COMMENT '결제자',
-	`driver`    INT(11)      NOT NULL  COMMENT '운전자',
-	`pay_date`  TIMESTAMP    NULL DEFAULT CURRENT_TIMESTAMP COMMENT '결제일자',
-	`amount`    INT(11)      NULL      COMMENT '결제금액',
-	`apply_num` VARCHAR(100) NULL	   COMMENT '승인번호',  
-	PRIMARY KEY (`payno`),
-	INDEX `FK_DRIVER_TO_MEMBER` (`driver`),
-	INDEX `FK_PAYER_TO_MEMBER` (`payer`),
-	CONSTRAINT `FK_DRIVER_TO_MEMBER` FOREIGN KEY (`driver`) REFERENCES `member` (`mno`),
-	CONSTRAINT `FK_PAYER_TO_MEMBER` FOREIGN KEY (`payer`) REFERENCES `member` (`mno`)
-) COMMENT='결제내역' COLLATE='utf8_general_ci' ENGINE=InnoDB;
-
 -- 평가리뷰
 CREATE TABLE `review` (
 	`rvno`       INT(11) NOT NULL AUTO_INCREMENT  COMMENT '리뷰번호',
@@ -147,7 +158,7 @@ CREATE TABLE `grade` (
 	`review_cnt`  INT(11)     NULL DEFAULT 0      COMMENT '평점 인원',
 	PRIMARY KEY (`gno`),
 	INDEX `FK_MEMBER_TO_GRADE` (`target_no`),
-	CONSTRAINT `FK_MEMBER_TO_GRADE` FOREIGN KEY (`target_no`) REFERENCES `member` (`mno`),
+	CONSTRAINT `FK_MEMBER_TO_GRADE` FOREIGN KEY (`target_no`) REFERENCES `member` (`mno`)
 ) COMMENT='평가평점' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 
 -- 게시판
