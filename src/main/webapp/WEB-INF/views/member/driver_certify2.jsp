@@ -75,7 +75,7 @@
 						<div id="carRegRes" class="img-box">
 							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
 						</div>
-						<input type="hidden" name="carreg_photo" id="carregPhoto" />
+						<input type="hidden" name="carReg_photo" id="carRegPhoto" />
 					</div>
 				</div>
 			</div>

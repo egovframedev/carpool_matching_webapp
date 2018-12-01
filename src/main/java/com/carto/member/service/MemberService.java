@@ -34,12 +34,16 @@ public interface MemberService {
 	public MemberDTO viewMember(MemberDTO memberdto) throws Exception;
 
 	// 드라이버 만들기
-	public int insertDriver(DriverDTO dto, int mno);
+	public int insertDriver(DriverDTO dto);
 
 	public int UpdateDriverVerti(DriverDTO dto);
 
 	public DriverDTO getDriver(int mno);
 
 	public MemberDTO selectMember(String userid) throws Exception;
+	
+	public MemberDTO getMember(int mno);
+
+	public int UpdateDriver(DriverDTO dto);
 
 }

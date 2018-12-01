@@ -1,4 +1,4 @@
--- 
+﻿-- 
 -- CarTO DB 스키마 
 -- 수정 : 2018-11-29
 --
@@ -56,7 +56,7 @@ ENGINE=InnoDB
 AUTO_INCREMENT=66
 ;
 
--- 운전자 2018-11-28 
+-- 운전자 2018-12-1 
 CREATE TABLE `DRIVER` (
 	`mno`             INT          NOT NULL 	     COMMENT '회원번호', -- 회원번호
 	`license_no`      VARCHAR(20)  NULL     DEFAULT NULL COMMENT '운전면허번호', -- 운전면허번호
@@ -67,13 +67,13 @@ CREATE TABLE `DRIVER` (
 	`car_year`        VARCHAR(10)  NULL     DEFAULT NULL COMMENT '차량연식', -- 차량연식
 	`insurance`       VARCHAR(20)  NULL     DEFAULT NULL COMMENT '보험정보', -- 보험정보
 	`license_photo`   VARCHAR(100) NULL     DEFAULT NULL COMMENT '운전면허증사진', -- 운전면허증사진
-	`license_chk`     TINYINT      NULL     DEFAULT NULL COMMENT '운전면허증확인', -- 운전면허증확인
+	`license_chk`     TINYINT      NULL     DEFAULT 1 COMMENT '운전면허증확인', -- 운전면허증확인 (0취소, 1 서류검토중, 2 서류검토완료 )
 	`insurance_photo` VARCHAR(100) NULL     DEFAULT NULL COMMENT '보험증서 사진', -- 보험증서 사진
-	`insurance_chk`   TINYINT      NULL     DEFAULT NULL COMMENT '보험증서 확인', -- 보험증서 확인
+	`insurance_chk`   TINYINT      NULL     DEFAULT 1 COMMENT '보험증서 확인', -- 보험증서 확인 (0취소, 1 서류검토중, 2 서류검토완료 )
 	`car_photo`       VARCHAR(100) NULL     DEFAULT NULL COMMENT '차량정면사진', -- 차량정면사진
-	`car_photo_chk`   TINYINT      NULL     DEFAULT NULL COMMENT '차량사진 확인', -- 차량사진 확인
+	`car_photo_chk`   TINYINT      NULL     DEFAULT 1 COMMENT '차량사진 확인', -- 차량사진 확인 (0취소, 1 서류검토중, 2 서류검토완료 )
 	`carReg_photo`    VARCHAR(100) NULL     DEFAULT NULL COMMENT '차량등록증 사진', -- 차량등록증 사진
-	`carReg_photo_chk`TINYINT      NULL     DEFAULT NULL COMMENT '차량등록증 확인', -- 차량등록증 확인
+	`carReg_photo_chk`TINYINT      NULL     DEFAULT 1 COMMENT '차량등록증 확인', -- 차량등록증 확인 (0취소, 1 서류검토중, 2 서류검토완료 )
 	`post_date`       TIMESTAMP    NULL 	DEFAULT CURRENT_TIMESTAMP COMMENT '승인날짜', -- 승인날짜
 	`post_state`      TINYINT      NULL     DEFAULT NULL COMMENT '승인상태', -- 승인상태( 승인취소 0 , 승인요청 1 , 승인완료 2 )
 	PRIMARY KEY (`mno`),

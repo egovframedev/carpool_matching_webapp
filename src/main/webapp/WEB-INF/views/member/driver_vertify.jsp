@@ -93,17 +93,17 @@
 					<div class="col-md-6">
 						<label >자동차등록증</label>
 						<div id="carRegRes" class="img-box">
-							<c:if test="${driver.carreg_photo_chk eq false}">
+							<c:if test="${driver.carReg_photo_chk eq false}">
 							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
 							</c:if>
-							<c:if test="${driver.carreg_photo_chk ne false}">
-							<img src="<c:url value='/img/'/>${driver.carreg_photo}" alt="no image" />
+							<c:if test="${driver.carReg_photo_chk ne false}">
+							<img src="<c:url value='/img/'/>${driver.carReg_photo}" alt="no image" />
 							</c:if>
 						</div>
-						<c:if test="${driver.carreg_photo_chk}">
+						<c:if test="${driver.carReg_photo_chk}">
 						<c:set value="checked" var="ck"/>
 						</c:if>
-						<input type="checkbox" name="carreg_photo_chk" ${ck} />
+						<input type="checkbox" name="carReg_photo_chk" ${ck} />
 						<c:set value="" var="ck"/>
 					</div>
 	

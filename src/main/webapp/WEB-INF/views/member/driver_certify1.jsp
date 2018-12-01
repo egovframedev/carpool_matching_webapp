@@ -30,37 +30,37 @@
 				<div class="form-group">
                  	<label for="license_no" class="col-sm-2 control-label">운전면허번호</label>
 				    <div class="col-sm-6">
-                   		<input type="text" class="form-control" name="license_no" id="license_no" placeholder="운전면허번호 입력..">
+                   		<input type="text" class="form-control" name="license_no" id="license_no" placeholder="운전면허번호 입력.." value="${driver.license_no}">
                  	</div>               
                	</div>
                	<div class="form-group">
                  	<label for="car_no" class="col-sm-2 control-label">차량번호</label>
 				    <div class="col-sm-6">
-                   		<input type="text" class="form-control" name="car_no" id="car_no" placeholder="차량번호 입력..">
+                   		<input type="text" class="form-control" name="car_no" id="car_no" placeholder="차량번호 입력.." value="${driver.car_no}">
                  	</div>               
                	</div>
                	<div class="form-group">
                  	<label for="car_prod" class="col-sm-2 control-label">차량제조사</label>
 				    <div class="col-sm-6">
-                   		<input type="text" class="form-control" name="car_prod" id="car_prod" placeholder="차량제조사입력..">
+                   		<input type="text" class="form-control" name="car_prod" id="car_prod" placeholder="차량제조사입력.." value="${driver.car_prod}">
                  	</div>               
                	</div>
                	<div class="form-group">
                  	<label for="car_model" class="col-sm-2 control-label">차량모델명</label>
 				    <div class="col-sm-6">
-                   		<input type="text" class="form-control" name="car_model" id="car_model" placeholder="차량모델명입력..">
+                   		<input type="text" class="form-control" name="car_model" id="car_model" placeholder="차량모델명입력.." value="${driver.car_model}">
                  	</div>               
                	</div>
                	<div class="form-group">
                  	<label for="car_color" class="col-sm-2 control-label">차량색상</label>
 				    <div class="col-sm-6">
-                   		<input type="text" class="form-control" name="car_color" id="car_color" placeholder="차량색상입력..">
+                   		<input type="text" class="form-control" name="car_color" id="car_color" placeholder="차량색상입력.."  value="${driver.car_color}">
                  	</div>               
                	</div>
                	<div class="form-group">
                  	<label for="car_year" class="col-sm-2 control-label">차량연식</label>
 				    <div class="col-sm-6">
-                   		<input type="text" class="form-control" name="car_year" id="car_year" placeholder="차량연식입력..">
+                   		<input type="text" class="form-control" name="car_year" id="car_year" placeholder="차량연식입력.."  value="${driver.car_year}">
                  	</div>               
                	</div>
 			</div>

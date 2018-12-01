@@ -188,9 +188,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int insertDriver(DriverDTO dto, int mno) {
-		mno = 1;
-		dto.setMno(mno);
+	public int insertDriver(DriverDTO dto) {
 		return manager.insertDriver(dto);
 
 	}
@@ -209,6 +207,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDTO selectMember(String userid) {
 		return manager.selectMember(userid);
+	}
+
+	@Override
+	public MemberDTO getMember(int mno) {
+		return manager.getMember(mno);
+	}
+
+	@Override
+	public int UpdateDriver(DriverDTO dto) {
+		return manager.UpdateDriver(dto);
 	}
 
 }

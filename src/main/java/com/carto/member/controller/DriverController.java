@@ -40,17 +40,23 @@ public class DriverController {
 	
 	// 회원 서류 체크
 	@RequestMapping(value = "/member/driver/certify", method = RequestMethod.GET)
-	public String certify1() throws Exception {
+	public String certify1(HttpSession session,Model model) throws Exception {
 		log.info("member/certify1-----------------------");
+		MemberDTO member = (MemberDTO)session.getAttribute("login");
+		
+		DriverDTO driver=ms.getDriver((int)member.getMno());
+		model.addAttribute("driver",driver);
 
 		return "member/driver_certify1";
 	}
 	
 	@RequestMapping(value = "/member/driver/certify2", method = RequestMethod.POST)
-	public String certify2(@ModelAttribute("driver") DriverDTO driver,HttpSession session ) throws Exception {
+	public String certify2(@ModelAttribute("driver") DriverDTO driver,HttpSession session,Model model ) throws Exception {
 		log.info("member/certify2-----------------------");
-		/*MemberDTO member =(MemberDTO)session.getAttribute("login");
-		driver.setMno((int)member.getMno());*/
+		MemberDTO member =(MemberDTO)session.getAttribute("login");
+		driver.setMno((int)member.getMno());
+		System.out.println(driver);
+		model.addAttribute("driver",driver);
 		return "member/driver_certify2";
 		
 		
@@ -106,12 +112,12 @@ public class DriverController {
 	public String cetiryOk(DriverDTO dto,HttpSession session ,Model model) {
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
 		log.info(member);
-		DriverDTO driver=ms.getDriver((int)member.getMno());
-		if(driver.getMno() != null) {
-			ms.UpdateDriverVerti(dto);
+		DriverDTO driver=ms.getDriver(dto.getMno());
+		if(driver != null) {
+			ms.UpdateDriver(dto);
 		}
 		else 
-			ms.insertDriver(dto,(int)member.getMno());
+			ms.insertDriver(dto);
 		driver=ms.getDriver((int)member.getMno());
 		model.addAttribute("driver",driver);
 		
@@ -131,7 +137,7 @@ public class DriverController {
 	public String verifyOk(Integer mno,Model model,DriverDTO driver) {
 		log.info(driver);
 		ms.UpdateDriverVerti(driver);
-		if(driver.isCar_photo_chk() && driver.isCarReg_photo_chk() && driver.isInsurance_chk() && driver.isLicense_chk())
+/*		if(driver.isCar_photo_chk() && driver.isCarReg_photo_chk() && driver.isInsurance_chk() && driver.isLicense_chk())*/
 		model.addAttribute("driver",ms.getDriver(mno));
 		return "redirect:/admin/member/list";
 	}

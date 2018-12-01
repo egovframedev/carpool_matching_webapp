@@ -91,5 +91,15 @@ public class MemberDAO {
 	public MemberDTO selectMember(String userid) {
 		return sqlsession.selectOne(NAMESPACE + ".selectMember", userid);
 	}
+	
+	public MemberDTO getMember(int mno) {
+		return sqlsession.selectOne(NAMESPACE + ".getMember", mno);
+	}
+
+	public int UpdateDriver(DriverDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlsession.update(NAMESPACE+".updateDriver",dto);
+	}
+
 
 }

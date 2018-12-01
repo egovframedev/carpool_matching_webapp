@@ -21,7 +21,7 @@
 				<ol class="breadcrumb">
 					<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>
 					<li><a href="<c:url value='/member/driver/certify'/>"><i class="fa fa-dashboard"></i> 운전자인증</a></li>
-					<li class="active">인증 서류 결과 ${driver.license_chk},${driver.car_photo_chk}</li>
+					<li class="active">인증 서류 결과</li>
 				</ol>
 			</section>
 		</section>
@@ -31,7 +31,7 @@
 			<div class="box-header with-border">
 				<h3 class="box-title">운전자 기본 정보 입력</h3>
 			</div>
-			<form  role="form" action="admin/member/list" method="post" class="form-horizontal">
+			<form  role="form" action="/carpool" method="post" class="form-horizontal">
 				<input type="hidden" name="mno" value="${driver.mno}" />
 			<div class="box-body uploadbox">
 				<div class="row">
@@ -39,11 +39,14 @@
 						<label>운전면허증</label>
 						<div id="licenseRes" class="img-box">
 							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							<c:if test="${driver.license_chk ne false}">
-							인증 확인
+							<c:if test="${driver.license_chk eq 0}">
+							검토 실패
 							</c:if>
-							<c:if test="${driver.license_chk eq false}">
-							인증 실패
+							<c:if test="${driver.license_chk eq 1}">
+							서류 검토중
+							</c:if>
+							<c:if test="${driver.license_chk eq 2}">
+							서류 통과
 							</c:if>
 						</div>
 					</div>
@@ -51,26 +54,32 @@
 						<label>자동차 사진</label>
 						<div id="carRes" class="img-box">
 							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							<c:if test="${driver.car_photo_chk ne false}">
-							인증 확인
+							<c:if test="${driver.car_photo_chk eq 0}">
+							검토 실패
 							</c:if>
-							<c:if test="${driver.car_photo_chk eq false}">
-							인증 실패
+							<c:if test="${driver.car_photo_chk eq 1}">
+							서류 검토중
+							</c:if>
+							<c:if test="${driver.car_photo_chk eq 2}">
+							서류 통과
 							</c:if>
 						</div>
 					</div>
 					
 				</div>
-				<div class="row">
+			 	<div class="row">
 					<div class="col-md-6">
 						<label >보험증서</label>
 						<div id="insuranceRes" class="img-box">
 							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							<c:if test="${driver.insurance_chk ne false}">
-							인증 확인
+							<c:if test="${driver.insurance_chk eq 0}">
+							검토 실패
 							</c:if>
-							<c:if test="${driver.insurance_chk eq false}">
-							인증 실패
+							<c:if test="${driver.insurance_chk eq 1}">
+							서류 검토중
+							</c:if>
+							<c:if test="${driver.insurance_chk eq 2}">
+							서류 통과
 							</c:if>
 						</div>
 					</div>
@@ -78,11 +87,14 @@
 						<label >자동차등록증</label>
 						<div id="carRegRes" class="img-box">
 							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							<c:if test="${driver.carreg_photo_chk ne false}">
-							인증 확인
+							<c:if test="${driver.carReg_photo_chk eq 0}">
+							검토 실패
 							</c:if>
-							<c:if test="${driver.carreg_photo_chk eq false}">
-							인증 실패
+							<c:if test="${driver.carReg_photo_chk eq 1}">
+							서류 검토중
+							</c:if>
+							<c:if test="${driver.carReg_photo_chk eq 2}">
+							서류 통과
 							</c:if>
 						</div>
 					</div>
@@ -111,8 +123,8 @@
 		function modifyGO(){
 			var formObj = $("form[role='form']");
 			
-			formObj.attr("action", "vertify");
-			formObj.attr("method", "post");
+			formObj.attr("action", "certify");
+			formObj.attr("method", "get");
 			formObj.submit();
 		}
 </script>
