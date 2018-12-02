@@ -49,4 +49,10 @@ public class MainController {
 		
 		return "main";
 	}
+	
+	@RequestMapping("/serviceIntro")
+	public String serviceIntro() {
+		
+		return "serviceIntro";
+	}
 }
