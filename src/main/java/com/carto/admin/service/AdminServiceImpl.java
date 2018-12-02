@@ -25,12 +25,6 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDAO.listCount(cri);
 	}
-	
-	@Override
-	public int paylistCount(Criteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return adminDAO.paylistCount(cri);
-	}
 
 	// 회원 한명 정보 가져오기
 	@Override
@@ -51,10 +45,30 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		adminDAO.deleteMember(mno);
 	}
-	
+
+	// 전체 결제 내역
 	@Override
 	public Object payAllList(Criteria cri) throws Exception {
 		// TODO Auto-generated method stub
 		return adminDAO.payAllList(cri);
+	}
+
+	@Override
+	public int paylistCount(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return adminDAO.paylistCount(cri);
+	}
+
+	// 카풀 진행 내역
+	@Override
+	public Object carpoolAllList(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return adminDAO.carpoolAllList(cri);
+	}
+
+	@Override
+	public int carpoollistCount(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return adminDAO.carpoollistCount(cri);
 	}
 }

@@ -117,7 +117,6 @@
 								<th style="width: 25%;">도착지</th>
 								<th style="width: 10%;">인원 / 요금</th>
 								<th style="width: 10%;">결제 일자</th>
-								<th style="width: 10%;">진행상황</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -131,19 +130,6 @@
 									<td>${history.seat_num }명<br>${history.amount } 원
 									</td>
 									<td>${history.pay_date }</td>
-									<td><c:if test="${history.progress eq 0 }">
-									카풀 대기
-									</c:if> <c:if test="${history.progress eq 1 }">
-									승인
-									</c:if> <c:if test="${history.progress eq 2 }">
-									탑승
-									</c:if> <c:if test="${history.progress eq 3 }">
-									결제 완료
-									</c:if>
-									<c:if test="${history.progress eq 9 }">
-									취소
-									</c:if>
-									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

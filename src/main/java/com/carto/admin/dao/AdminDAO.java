@@ -13,8 +13,6 @@ public interface AdminDAO {
 
 	public int listCount(Criteria cri) throws Exception; // 페이징
 
-	public int paylistCount(Criteria cri) throws Exception;
-
 	public MemberDTO selectMember(Integer mno) throws Exception; // 회원 한명 불러오기
 
 	public void modifyMember(MemberDTO dto) throws Exception; // 회원 정보 수정
@@ -23,4 +21,9 @@ public interface AdminDAO {
 
 	public Object payAllList(Criteria cri) throws Exception; // 전체 결제 내역
 
+	public int paylistCount(Criteria cri) throws Exception;
+
+	public Object carpoolAllList(Criteria cri) throws Exception; // 카풀 진행 내역
+
+	public int carpoollistCount(Criteria cri) throws Exception;
 }

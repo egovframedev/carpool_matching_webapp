@@ -80,9 +80,19 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/carpool/list", method = RequestMethod.GET)
-	public String carpoolList() {
+	public String carpoolList(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 		log.info("carpool/list----------------------------------");
-		
+		log.info(cri);
+		Object obj = adminservice.carpoolAllList(cri);
+		System.out.println(obj);
+		model.addAttribute("list", obj);
+
+		// 페이징 처리 부분
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+
+		pageMaker.setTotalCount(adminservice.carpoollistCount(cri));
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "admin/carpoolList";
 	}

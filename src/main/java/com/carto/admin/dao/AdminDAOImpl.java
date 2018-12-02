@@ -26,12 +26,6 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".listCount", cri);
 	}
-	
-	@Override
-	public int paylistCount(Criteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return session.selectOne(namespace + ".paylistCount", cri);
-	}
 
 	// 회원 한명 불러오기
 	@Override
@@ -58,6 +52,25 @@ public class AdminDAOImpl implements AdminDAO {
 	public Object payAllList(Criteria cri) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectList(namespace + ".payAllList", cri);
+	}
+
+	@Override
+	public int paylistCount(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".paylistCount", cri);
+	}
+
+	// 카풀 진행 내역
+	@Override
+	public Object carpoolAllList(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace + ".carpoolAllList" , cri);
+	}
+
+	@Override
+	public int carpoollistCount(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace + ".carpoolListCount", cri);
 	}
 
 }

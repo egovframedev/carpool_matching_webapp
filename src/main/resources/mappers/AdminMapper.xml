@@ -80,12 +80,17 @@
 	<!-- 전체 결제내역 목록 -->
 	<select id="payAllList" resultType="payHistory"
 		parameterType="criteria">
-		select car_m.matchno, mem_d.name as dname, mem_r.name as rname, car_i.start_point, car_i.end_point, car_i.start_datetime, car_i.seat_num, pay.amount, pay.pay_date, car_m.progress
+		select car_m.matchno, mem_d.name as dname, mem_r.name as rname,
+		car_i.start_point, car_i.end_point, car_i.start_datetime,
+		car_i.seat_num, pay.amount, pay.pay_date
 		from
-		carpool_match car_m, carpool_info car_i, payment pay, member mem_d, member mem_r
-		where mem_d.mno = pay.driver
+		carpool_match car_m,
+		carpool_info car_i, payment pay, member mem_d, member mem_r
+		where
+		mem_d.mno = pay.driver
 		and mem_r.mno = pay.payer
-		and car_m.matchno = pay.matchno
+		and car_m.matchno =
+		pay.matchno
 		<include refid="paySearch" />
 		and car_i.cpno = car_m.cpno
 		LIMIT #{pageStart}, ${perPageNum}
@@ -119,7 +124,8 @@
 	<!-- 페이징 -->
 	<select id="paylistCount" resultType="java.lang.Integer">
 	<![CDATA[
-		SELECT COUNT(car_m.cpno) from
+		SELECT COUNT(car_m.cpno)
+		from
 		carpool_match car_m, carpool_info car_i, payment pay, member mem_d, member mem_r
 		where mem_d.mno = pay.driver
 		and mem_r.mno = pay.payer
@@ -127,6 +133,30 @@
 		and car_i.cpno = car_m.cpno
 	]]>
 		<include refid="paySearch" />
+	</select>
+
+	<!-- /admin/carpool 부분 -->
+	<!-- 카풀 진행 목록 -->
+	<select id="carpoolAllList" resultType="payHistory"  parameterType="criteria">
+		select car_m.matchno, mem_d.name as dname, mem_r.name as rname,
+		car_i.start_point, car_i.end_point, car_i.start_datetime,
+		car_i.seat_num, car_i.charge, car_m.progress
+		from
+		carpool_match car_m, carpool_info car_i,member mem_d, member mem_r
+		where car_i.cpno = car_m.cpno
+		 <include refid="paySearch" /> 
+		LIMIT #{pageStart}, ${perPageNum}
+	</select>
+
+	<!-- 페이징 -->
+	<select id="carpoolListCount" resultType="java.lang.Integer">
+	<![CDATA[
+		SELECT COUNT(car_m.cpno)
+		from
+		carpool_match car_m, carpool_info car_i
+		where car_i.cpno = car_m.cpno
+	]]>
+		<!-- <include refid="paySearch" /> -->
 	</select>
 
 </mapper>

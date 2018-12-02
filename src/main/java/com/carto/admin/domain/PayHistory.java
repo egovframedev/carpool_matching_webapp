@@ -16,6 +16,7 @@ public class PayHistory {
 	private String end_point; // 도착지 주소
 	private String start_datetime; // 출발 일자/시간
 	private int amount; // 금액
+	private int charge; // 금액
 	private int seat_num; // 카풀 인원
 	private Integer matchno;
 	private Integer progress; // 진행상황(대기 0, 승인 1, 완료 2, 취소 3)

@@ -127,20 +127,19 @@
 									<td>${history.rname }</td>
 									<td>${history.start_point }<br>${history.start_datetime }</td>
 									<td>${history.end_point }</td>
-									<td>${history.seat_num } 명<br>${history.amount } 원
+									<td>${history.seat_num } 명<br>${history.charge } 원
 									</td>
-									<td>${history.pay_date }</td>
 									<td><c:if test="${history.progress eq 0 }">
-									카풀 대기
+									<span class="label label-default">카풀 대기</span>
 									</c:if> <c:if test="${history.progress eq 1 }">
-									승인
+									<span class="label label-success">승인</span>
 									</c:if> <c:if test="${history.progress eq 2 }">
-									탑승
+									<span class="label label-info">탑승</span>
 									</c:if> <c:if test="${history.progress eq 3 }">
-									결제 완료
+									<span class="label label-primary">결제 완료</span>
 									</c:if>
 									<c:if test="${history.progress eq 9 }">
-									취소
+									<span class="label label-danger">취소</span>
 									</c:if>
 									</td>
 								</tr>
