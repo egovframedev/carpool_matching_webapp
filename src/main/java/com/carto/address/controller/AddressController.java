@@ -60,8 +60,8 @@ public class AddressController {
 	}
 
 	// 주소 삭제
-	@RequestMapping(value = "/deleteAddress", method= {RequestMethod.GET, RequestMethod.POST})
-	public String deleteAddress(@RequestParam(value = "checkArray[]")List<Integer> deleteList, @ModelAttribute("AddressDTO") AddressDTO addressdto, ModelMap model) throws Exception {
+	@RequestMapping(value = "/deleteAddress", method = { RequestMethod.GET, RequestMethod.POST })
+	public String deleteAddress(@RequestParam(value = "checkArray[]") List<Integer> deleteList, @ModelAttribute("AddressDTO") AddressDTO addressdto, ModelMap model) throws Exception {
 		ArrayList<Integer> deleteArray = new ArrayList<>();
 		for (int i = 0; i < deleteList.size(); i++) {
 			deleteArray.add(deleteList.get(i));

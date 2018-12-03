@@ -90,13 +90,17 @@
 		WHERE mem.userid = #{userid} AND mem.userpw =
 		#{userpw}
 	</select>
+	
 	<!-- 로그인 유지 -->
 	<select id="keepLogin">
-		UPDATE member_auth
-		SET sessionKey = #{sessionId}, sessionLimit=#{next}
-		WHERE userid =
-		#{userid}
+		UPDATE 
+		member_auth
+		SET 
+		sessionKey = #{sessionId}, sessionLimit=#{next}
+		WHERE 
+		userid = #{userid}
 	</select>
+	
 	<!-- 세션키로 로그인 체크 -->
 	<select id="checkUserWithSessionKey" resultType="MemberDTO">
 		SELECT mno,
@@ -225,6 +229,54 @@
 
 	</select>
 	
+	<!-- ID 찾기 -->
+	<select id="findId" parameterType="MemberDTO" resultType="java.lang.String">
+		SELECT
+		userid
+		FROM
+		member
+		WHERE
+		name=#{name}
+		AND
+		email=#{email}
+	
+	</select>
+	
+	<!-- PW 찾기 -->
+	<update id="findPw" parameterType="MemberDTO">
+		UPDATE 
+		member 
+		SET 
+		userpw = #{userpw} 
+		WHERE 
+		userid = #{userid}
+		AND
+		email=#{email}
+		
+	</update>
+	
+	<!-- 프로필 수정 -->
+	<update id="updateProfile" parameterType="MemberDTO">
+		UPDATE 
+		member 
+		SET 
+		email = #{email},
+		phone = #{phone}
+		WHERE 
+		userid = #{userid}
+		
+	</update>
+	
+	<!-- 이메일 변경시 권한 변경/ 이메일 인증키 업데이트-->
+	<update id="approval_status" parameterType="MemberDTO">
+		UPDATE 
+		member 
+		SET 
+		approval_status = 'false',
+		approval_key = #{approval_key} 
+		WHERE 
+		userid = #{userid}
+	</update>
 
 
 </mapper>

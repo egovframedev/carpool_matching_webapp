@@ -17,7 +17,7 @@
 		<div class="collapse navbar-collapse pull-left">
 			<ul class="nav navbar-nav">
             	<li class="active"><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME <span class="sr-only">(current)</span></a></li>
-            	<li><a href="<c:url value='/board/introduction'/>">서비스 소개</a></li>
+            	<li><a href="<c:url value='/introduction'/>">서비스 소개</a></li>
             	<li class="dropdown">
               		<a href="#" class="dropdown-toggle" data-toggle="dropdown">고객센터 <span class="caret"></span></a>
               		<ul class="dropdown-menu" role="menu">

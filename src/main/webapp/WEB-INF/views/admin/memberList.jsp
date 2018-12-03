@@ -1,24 +1,24 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../includes/header.jsp"%>
-<!-- Content Wrapper. Containes page content -->
+<!-- 컨텐츠 시작  -->
 <div class="content-wrapper">
-	<div class="col-sm-offset-1 col-sm-10">
-		<!-- Content Header (Page header) -->
+	<div class="container">
+		<!-- 컨텐츠 헤더 부분(Page header) -->
 		<section class="content-header">
-			<h1>
-				회원관리 <small>목록보기 </small>
-			</h1>
-			<ol class="breadcrumb">
-				<li><a href=" <c:url value='/'/>"><i class="fa fa-home"></i>
-						Home</a></li>
-				<li><a href="<c:url value='/admin/member/list'/>">회원관리</a></li>
-				<li class="active">목록보기</li>
-			</ol>
+			<!-- 컨텐츠 헤더 부분(Page header) -->
+			<section class="content-header">
+				<h1><i class="fa fa-slideshare" aria-hidden="true"></i>
+					운전자인증<small>기본정보입력</small></h1>
+				<ol class="breadcrumb">
+					<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>
+					<li><a href="<c:url value='/member/driver/certify1'/>"><i class="fa fa-dashboard"></i> 운전자인증</a></li>
+					<li class="active">기본정보입력</li>
+				</ol>
+			</section>
 		</section>
-		<!-- Main content -->
+	<!-- 메인 컨텐츠 부분 -->
 
 		<div class="box-body">
 			<div id="example1_wrapper"

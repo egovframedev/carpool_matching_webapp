@@ -50,7 +50,7 @@ public class MainController {
 		return "main";
 	}
 	
-	@RequestMapping("/serviceIntro")
+	@RequestMapping("/introduction")
 	public String serviceIntro() {
 		
 		return "serviceIntro";
