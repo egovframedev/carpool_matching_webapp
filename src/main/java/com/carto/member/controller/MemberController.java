@@ -1,7 +1,6 @@
 package com.carto.member.controller;
 
 import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +18,7 @@ import com.carto.member.domain.MemberDTO;
 import com.carto.member.domain.NotAuthorizedUserException;
 import com.carto.member.service.MemberServiceImpl;
 import com.carto.member.util.RegisterRequest;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j

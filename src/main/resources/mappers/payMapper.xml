@@ -34,4 +34,14 @@
 		DELETE FROM payment
 		WHERE payno = #{payno}
 	</delete>
+	
+	<select id="selectCPMatch" resultType="CarpoolMatchDTO">
+		SELECT
+			matchno, mat.mno, mat.cpno, mat.match_date AS matchDate,
+			progress, payno, isdriver AS driverChk, cpnum, paysum,
+			start_point, end_point, cp.reg_date, payno
+		FROM carpool_info cp
+		RIGHT JOIN carpool_match mat ON cp.cpno = mat.cpno
+		WHERE matchno = #{matchno}
+	</select>
 </mapper>

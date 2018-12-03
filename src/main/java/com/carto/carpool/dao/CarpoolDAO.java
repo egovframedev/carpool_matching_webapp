@@ -79,4 +79,12 @@ public interface CarpoolDAO {
 	 * @throws Exception
 	 */
 	public void deleteMatching(Integer matchno) throws Exception;
+	
+	/**
+	 * 카풀 매칭 가져오기
+	 * @param matchno
+	 * @return
+	 * @throws Exception
+	 */
+	public CarpoolMatchDTO getCPMatch(Integer matchno) throws Exception;
 }

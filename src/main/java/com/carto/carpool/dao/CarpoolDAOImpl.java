@@ -90,4 +90,9 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 		session.update(NAMESPACE + ".deleteMatching", matchno);
 	}
 
+	@Override
+	public CarpoolMatchDTO getCPMatch(Integer matchno) throws Exception {
+		return session.selectOne(NAMESPACE + ".selectMatInfo", matchno);
+	}
+
 }

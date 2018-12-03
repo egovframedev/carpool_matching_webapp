@@ -9,7 +9,4 @@ public interface PaymentDAO {
 	public PaymentDTO selectPayment(String payno);  // 결제 정보 가져오기
 	public List<PaymentDTO> selectPayList();        // 결제 정보 리스트
 	public int deletePayment(String payno);         // 결제 정보 삭제
-	
-	public CarpoolMatchDTO selectOne(int num);    // 결제 정보 가져오기
-	
 }

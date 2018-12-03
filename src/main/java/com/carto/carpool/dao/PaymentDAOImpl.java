@@ -33,15 +33,9 @@ public class PaymentDAOImpl implements  PaymentDAO {
 		return sqlsession.selectList(NAMESAPCE + ".selectPayList");
 	}
 	
+	// 결제 정보 삭제
 	@Override
 	public int deletePayment(String payno) {
 		return sqlsession.delete(NAMESAPCE + ".deletePayment", payno);
-	}
-	
-	@Override
-	public CarpoolMatchDTO selectOne(int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-		
+	}		
 }

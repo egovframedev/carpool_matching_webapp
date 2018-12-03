@@ -233,24 +233,17 @@
 	<!-- 결제 관련 쿼리 /////////////////////////////////////////////////////// -->
 	<select id="selectMatInfo" parameterType="int" resultMap="carpoolMatchMap">
 		SELECT
-			matchno,
-			mat.mno AS mat_mno,
-			mat.match_date,
-			charge,
-			start_point,
-			end_point,
-			cp.reg_date,
-			payno
+			matchno, mat.mno AS mat_mno, mat.match_date, cpnum, paysum, payno, isdriver,
+			cp.cpno, cptype, start_point, end_point, start_datetime, seat_num
 		FROM carpool_info cp
 		RIGHT JOIN carpool_match mat ON cp.cpno = mat.cpno
-		WHERE mat.mno = #{mno}
-			AND mat.progress = 1 
-			AND cp.start_datetime >= sysdate()
+		WHERE matchno = #{matchno}
 	</select>
+	
 	<select id="selectMatInfoByMatchNo" resultMap="carpoolMatchMap">
 		SELECT
 			matchno, mat.mno AS mat_mno, mat.match_date, payno, paysum, cpnum, isdriver, 
-			start_point, end_point, charge, cp.reg_date
+			cp.cpno, cptype, start_point, end_point, start_datetime, seat_num, charge, cp.reg_date
 		FROM carpool_info cp
 		RIGHT JOIN carpool_match mat ON cp.cpno = mat.cpno
 		WHERE mat.matchno = #{matchno}	AND mat.progress = 1
@@ -260,14 +253,8 @@
 	<select id="selectMatInfoByPayno" parameterType="hashmap"
 		resultMap="carpoolMatchMap">
 		SELECT
-		matchno,
-		mat.mno AS mat_mno,
-		match_date,
-		charge,
-		start_point,
-		end_point,
-		reg_date,
-		payno
+			matchno, mat.mno AS mat_mno, match_date, charge, start_point,end_point,
+			reg_date, payno
 		FROM carpool_info cp
 		RIGHT JOIN carpool_match mat ON cp.cpno = mat.cpno
 		WHERE mat.payno = #{payno}
