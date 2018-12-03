@@ -40,14 +40,20 @@ public interface MemberService {
 	
 	public MemberDTO getMember(int mno);
 	
+	//비밀번호 찾기
 	public void findpw(HttpServletResponse response, MemberDTO member) throws Exception;
-	//find id
+	
+	//아이디 찾기
 	public String findId(MemberDTO member, HttpServletResponse response) throws Exception;
 	
+	//프로필 업데이트
 	public void updateProfile(HttpServletResponse response, MemberDTO member, String logEmail) throws Exception;
 	
 	//비밀번호 변경
 	public MemberDTO updatePw(MemberDTO member, String oldpw, HttpServletResponse response) throws Exception;
+	
+	//회원탈퇴
+	public boolean withdrawal(MemberDTO member, HttpServletResponse response) throws Exception;
 	
 	
 }

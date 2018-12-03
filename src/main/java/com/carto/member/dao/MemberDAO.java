@@ -130,5 +130,10 @@ public class MemberDAO {
 	public void updatepw(MemberDTO member) throws Exception {
 		sqlsession.update(NAMESPACE + ".updatePw", member);
 	}
+	
+	//회원탈퇴
+	public int withdrawal(MemberDTO member) throws Exception{
+		return sqlsession.delete(NAMESPACE + ".withdrawal", member);
+	}
 
 }

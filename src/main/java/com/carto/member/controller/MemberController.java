@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 import com.carto.member.domain.NotAuthorizedUserException;
+import com.carto.member.domain.WithdrawalUserException;
 import com.carto.member.service.MemberService;
 import com.carto.member.service.MemberServiceImpl;
 import com.carto.member.util.RegisterRequest;
@@ -101,6 +102,10 @@ public class MemberController {
 			log.info("비인가 사용자 입니다.");
 			rttr.addFlashAttribute("error", "등록하신 이메일을 통하여 인증바랍니다.");
 			return "redirect:/login";
+		} catch (WithdrawalUserException e) {
+			log.info("탈퇴한 회원 입니다.");
+			rttr.addFlashAttribute("error", "존재하지 않은 계정이거나 잘못 입력하였습니다.");
+			return "redirect:/login";
 		} catch (NullPointerException e) {
 			rttr.addFlashAttribute("error", "존재하지 않은 계정이거나 잘못 입력하였습니다.");
 			return "redirect:/login";
@@ -119,19 +124,18 @@ public class MemberController {
 
 	// 회원 정보 수정
 	@RequestMapping(value = "/member/myprofile")
-	public ModelAndView adresslist(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+	public ModelAndView memberProfile(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		MemberDTO member = (MemberDTO) session.getAttribute("login");
 		System.out.println("memberid: " + member.getUserid());
-		member = service.selectMember(member.getUserid());
 		ModelAndView mav = new ModelAndView();
+		member = service.selectMember(member.getUserid());
 		if (member != null) {
 			mav.setViewName("member/profile");
 			mav.addObject("memberlist", member);
 			log.info("mno값 ================>>>" + member.getMno());
 			return mav;
 		}
-
-		log.info("세션 없이 주소등록에 접근 불가 _ 비인가 사용자입니다.");
+		log.info("세션 없이 프로필에 접근 불가 _ 비인가 사용자입니다.");
 		response.sendRedirect(request.getContextPath() + "/login");
 		return null;
 	}
@@ -177,8 +181,14 @@ public class MemberController {
 	@RequestMapping(value = "/member/updatePw", method = RequestMethod.POST)
 	public void update_pw(@ModelAttribute MemberDTO member, @RequestParam("oldpw") String oldpw, HttpSession session, HttpServletResponse response) throws Exception {
 		session.setAttribute("member", service.updatePw(member, oldpw, response));
-		//response.sendRedirect("/carpool/member/myprofile");
 	}
 
 	// 회원 탈퇴
+	@RequestMapping(value = "/member/withdrawal", method = RequestMethod.POST)
+	public void withdrawal(@ModelAttribute MemberDTO member, HttpSession session, HttpServletResponse response) throws Exception {
+		if (service.withdrawal(member, response)) {
+			session.invalidate();
+		}
+	}
+
 }

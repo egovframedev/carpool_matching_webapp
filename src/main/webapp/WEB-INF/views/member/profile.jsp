@@ -151,16 +151,21 @@ $(function(){
 						</div>
 
 						<div class="box-footer">
-							<div>
-								<label>회원 탈퇴</label>
-							</div>
-							<div>
-								<label>PASSWORD :</label> <input class="pwinput" type="password"
-									placeholder="비밀번호 입력">
-							</div>
-							<div>
-								<button class="pull-right btn btn-danger">회원 탈퇴</button>
-							</div>
+							<form id="withdrawal" action="/carpool/member/withdrawal"
+								method="post">
+								<div>
+									<label>회원 탈퇴</label>
+								</div>
+								<input type="hidden" id="userid" name="userid"
+									value="${memberlist.userid}">
+								<div>
+									<label>PASSWORD :</label> <input class="pwinput" id="userpw"
+										name="userpw" type="password" placeholder="비밀번호 입력">
+								</div>
+								<div>
+									<button type="submit" class="pull-right btn btn-danger">회원 탈퇴</button>
+								</div>
+							</form>
 						</div>
 
 					</div>

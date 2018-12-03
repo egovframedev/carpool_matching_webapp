@@ -295,6 +295,18 @@
 		 userid = #{userid}
 		
 	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="withdrawal" parameterType="MemberDTO">
+		UPDATE
+		member 
+		SET 
+		mstate = 0 
+		WHERE 
+		userid = #{userid}
+		AND 
+		userpw = #{userpw}
+	</update>
 
 
 </mapper>

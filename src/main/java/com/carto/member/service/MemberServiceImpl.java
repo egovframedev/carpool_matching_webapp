@@ -21,6 +21,7 @@ import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 import com.carto.member.domain.NotAuthorizedUserException;
+import com.carto.member.domain.WithdrawalUserException;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -194,6 +195,10 @@ public class MemberServiceImpl implements MemberService {
 		if (!member.isApproval_status()) {
 			throw new NotAuthorizedUserException();
 		}
+		if(member.getMstate().toString().equals("DISABLE")) {
+			throw new WithdrawalUserException();
+		}
+	
 		return member;
 	}
 
@@ -315,6 +320,28 @@ public class MemberServiceImpl implements MemberService {
 			out.println("</script>");
 			out.close();
 			return manager.selectMember(member.getUserid());
+		}
+	}
+
+	// 회원탈퇴
+	@Override
+	public boolean withdrawal(MemberDTO member, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if (manager.withdrawal(member) != 1) {
+			out.println("<script>");
+			out.println("alert('입력하신 정보를 다시 확인하세요.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return false;
+		} else {
+			out.println("<script>");
+			out.println("alert('탈퇴 처리 되었습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return true;
 		}
 	}
 
