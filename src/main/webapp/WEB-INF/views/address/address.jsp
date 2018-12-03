@@ -60,7 +60,7 @@
 </head>
 
 <body>
-	
+
 	<form id="addressInsertForm" name="addressInsertForm" method="post">
 		<div>
 			<input type="hidden" name="mno" id="mno" value="${login.mno}"><br>
@@ -102,7 +102,7 @@
 		</form>
 	</div>
 	<hr>
-	<h3>${login.userid}(${login.mno})님의 주소록</h3>
+	<h3>${login.userid}(${login.mno})님의주소록</h3>
 	<div>
 		<table>
 			<tr>
@@ -198,6 +198,7 @@
 		function toggle_EditOpt() {
 			$(".edit_Addr").toggle();
 		}
+		
 	</script>
 </body>
 </html>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.carto.member.domain.LoginDTO;
@@ -133,4 +134,42 @@ public class MemberController {
 		response.sendRedirect(request.getContextPath() + "/login");
 		return null;
 	}
+	
+	//회원정보 수정(AJAX)
+		@RequestMapping(value = "/member/myprofile/modify", method=RequestMethod.POST)
+		@ResponseBody
+		public void modify_profile(@ModelAttribute MemberDTO member, HttpServletResponse response, HttpSession session) throws Exception{
+			log.info("프로필 수정 컨트롤러 진입");
+			MemberDTO logMem = (MemberDTO) session.getAttribute("login");
+			String logEmail = logMem.getEmail();
+			System.out.println("로그인 이메일 : " + logMem.getEmail());
+			System.out.println("수정된 이메일 : " + member.getEmail());
+			service.updateProfile(response, member, logEmail);
+		}
+
+		// ID/ PW FIND FORM
+		@RequestMapping(value = "/member/find/idpw")
+		public String findIdPw() {
+			return "/member/findidpw/idpw";
+		}
+
+		// FIND ID
+		@RequestMapping(value = "/member/find/id", method = RequestMethod.POST)
+		public String findId(@ModelAttribute MemberDTO member, HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
+			member.setEmail(request.getParameter("id_email"));
+			member.setName(request.getParameter("id_name"));
+			System.out.println(member.toString());
+			model.addAttribute("userfindid", service.findId(member, response));
+			model.addAttribute("name", member.getName());
+
+			return "/member/findidpw/idpw";
+		}
+		
+		//FIND PASSWORD
+		@RequestMapping(value = "/member/find/pw", method = RequestMethod.POST)
+		@ResponseBody
+		public void find_pw(@ModelAttribute MemberDTO member, HttpServletResponse response) throws Exception{
+			service.findpw(response, member);
+		}
+		
 }

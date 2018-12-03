@@ -17,7 +17,7 @@ public interface MemberService {
 
 	public String approval_key() throws Exception;
 
-	public void sendmail(MemberDTO member) throws Exception;
+	public void sendmail(MemberDTO member, String div) throws Exception;
 
 	public void approval_member(MemberDTO member, HttpServletResponse response) throws Exception;
 
@@ -45,5 +45,10 @@ public interface MemberService {
 	public MemberDTO getMember(int mno);
 
 	public int UpdateDriver(DriverDTO dto);
-
+	
+	public void findpw(HttpServletResponse response, MemberDTO member) throws Exception;
+	//find id
+	public String findId(MemberDTO member, HttpServletResponse response) throws Exception;
+	
+	public void updateProfile(HttpServletResponse response, MemberDTO member, String logEmail) throws Exception;
 }

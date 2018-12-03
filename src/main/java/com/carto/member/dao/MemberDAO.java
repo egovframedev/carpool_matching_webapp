@@ -91,15 +91,33 @@ public class MemberDAO {
 	public MemberDTO selectMember(String userid) {
 		return sqlsession.selectOne(NAMESPACE + ".selectMember", userid);
 	}
-	
+
 	public MemberDTO getMember(int mno) {
 		return sqlsession.selectOne(NAMESPACE + ".getMember", mno);
 	}
 
 	public int UpdateDriver(DriverDTO dto) {
 		// TODO Auto-generated method stub
-		return sqlsession.update(NAMESPACE+".updateDriver",dto);
+		return sqlsession.update(NAMESPACE + ".updateDriver", dto);
 	}
 
+	// 회원 아이디 찾기
+	public String findId(MemberDTO member) throws Exception {
+		return sqlsession.selectOne(NAMESPACE + ".findId", member);
+	}
+
+	// 회원 비밀번호 찾기(비밀번호 변경)
+	public int findPw(MemberDTO member) throws Exception {
+		return sqlsession.update(NAMESPACE + ".findPw", member);
+	}
+
+	public int updateProfile(MemberDTO member) throws Exception {
+		return sqlsession.update(NAMESPACE + ".updateProfile", member);
+	}
+
+	// 이메일 변경시에만 사용. 이메일 인증 false, 인증키 업데이트
+	public void approval_status(MemberDTO member) {
+		sqlsession.update(NAMESPACE + ".approval_status", member);
+	}
 
 }
