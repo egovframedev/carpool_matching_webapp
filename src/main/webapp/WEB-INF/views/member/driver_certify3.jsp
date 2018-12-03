@@ -128,5 +128,65 @@
 			formObj.submit();
 		}
 </script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var bno = ${boardDTO.bno};
+		var formObj = $("form[role='form']");
+		var rootPath = '<c:url value="/"/>';
+	
+		(function(){
+			$.getJSON( rootPath + "/getAttachList", {bno: bno} , function(arr){
+				//console.log(arr);
+				//alert(arr);
+				var str = "";
+				$(arr).each(function(i, attach){
+					// image type
+					if(attach.fileType) {
+						var fileCallPath = encodeURIComponent(attach.uploadpath + "/s_" + attach.uuid + "_" + attach.filename);
+						str += '<li data-path="'+attach.uploadpath + '" data-uuid="' + attach.uuid 
+							+ '" data-filename="'+ attach.filename +'" data-type="'+ attach.fileType +'"><div>';						
+						str += '<img src="<c:url value="/"/>member/display?filename=' + fileCallPath + '" class="img-thumbnail" />';
+						str += "</div></li>";
+					} else  {
+						str += '<li data-path="'+attach.uploadpath + '" data-uuid="' + attach.uuid 
+							+ '" data-filename="'+ attach.filename +'" data-type="'+ attach.fileType +'"><div>';
+						str += '<span>'+ attach.filename +'</span>';					
+						str += '<img src="<c:url value="/"/>img/attach.png" class="img-thumbnail"></a>';
+						str += '</div></li>';
+					}
+				});
+				$(".uploadResult ul").html(str);
+			}); // end getJson
+		})(); // end function
+		
+		$(".uploadResult").on("click", "li", function(e){
+			// console.log("view image");
+			var liObj = $(this);
+			var path = encodeURIComponent(liObj.data("path") + "/" + liObj.data("uuid") + "_" + liObj.data("filename"));
+			if(liObj.data("type")) {
+				showImage(path.replace(new RegExp(/\\/g), "/"));
+			} else  {
+				// download
+				self.location = "<c:url value='/'/>download?filename=" + path;
+			}
+		});
+		
+		function showImage(fileCallPath) {
+			alert(fileCallPath);
+			$(".bigPictureWrapper").css("display", "flex").show();
+			$(".bigPicture")
+				.html("<img src='<c:url value='/'/>member/display?filename=" + fileCallPath + "'/>")
+				.animate({width:'100%', height: '100%'}, 1000);
+		}
+		$(".bigPictureWrapper").on("click", function(e){
+			$(".bigPicture").animate({width:'0%', height:'0%'}, 1000);
+			setTimeout(function(){
+				$('.bigPictureWrapper').hide();
+			}, 1000)
+		});
+		
+		
+	});
+</script>
 <!-- 컨텐츠 끝  -->
 <%@ include file="../includes/footer.jsp"%>
