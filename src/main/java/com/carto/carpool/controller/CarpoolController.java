@@ -211,4 +211,12 @@ public class CarpoolController {
 		}
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
+	
+	// 카풀 내역
+	@GetMapping({"/carpool/request/log", "/carpool/privide/log"})
+	public String carpoolLogList(HttpServletRequest request) {
+		String cpType = carpoolType(request.getRequestURI());
+		
+		return "carpool/loglist_" + cpType;
+	}
 }
