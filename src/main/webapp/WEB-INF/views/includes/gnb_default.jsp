@@ -13,7 +13,7 @@
 					<ul class="nav navbar-nav">
 		            	<li class="active">
 		            		<a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</span></a></li>
-		            	<li><a href="<c:url value='/board/introduction'/>">서비스 소개</a></li>
+		            	<li><a href="<c:url value='/introduction'/>">서비스 소개</a></li>
 						<c:if test="${!empty login and login.authority == 'ROLE_RIDER'}">
 						<li class="dropdown">
 		              		<a href="<c:url value='/carpool/request/list'/>" class="dropdown-toggle" 
