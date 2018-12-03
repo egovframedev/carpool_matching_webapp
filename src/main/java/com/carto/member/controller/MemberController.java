@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 import com.carto.member.domain.NotAuthorizedUserException;
+import com.carto.member.service.MemberService;
 import com.carto.member.service.MemberServiceImpl;
 import com.carto.member.util.RegisterRequest;
 
@@ -27,7 +28,7 @@ import lombok.extern.log4j.Log4j;
 public class MemberController {
 
 	@Autowired
-	private MemberServiceImpl service;
+	private MemberService service;
 
 	// 1. 약관
 	@RequestMapping(value = "/member/join/step1")
@@ -134,42 +135,50 @@ public class MemberController {
 		response.sendRedirect(request.getContextPath() + "/login");
 		return null;
 	}
-	
-	//회원정보 수정(AJAX)
-		@RequestMapping(value = "/member/myprofile/modify", method=RequestMethod.POST)
-		@ResponseBody
-		public void modify_profile(@ModelAttribute MemberDTO member, HttpServletResponse response, HttpSession session) throws Exception{
-			log.info("프로필 수정 컨트롤러 진입");
-			MemberDTO logMem = (MemberDTO) session.getAttribute("login");
-			String logEmail = logMem.getEmail();
-			System.out.println("로그인 이메일 : " + logMem.getEmail());
-			System.out.println("수정된 이메일 : " + member.getEmail());
-			service.updateProfile(response, member, logEmail);
-		}
 
-		// ID/ PW FIND FORM
-		@RequestMapping(value = "/member/find/idpw")
-		public String findIdPw() {
-			return "/member/findidpw/idpw";
-		}
+	// 회원정보 수정(AJAX)
+	@RequestMapping(value = "/member/myprofile/modify", method = RequestMethod.POST)
+	@ResponseBody
+	public void modify_profile(@ModelAttribute MemberDTO member, HttpServletResponse response, HttpSession session) throws Exception {
+		log.info("프로필 수정 컨트롤러 진입");
+		MemberDTO logMem = (MemberDTO) session.getAttribute("login");
+		String logEmail = logMem.getEmail();
+		System.out.println("로그인 이메일 : " + logMem.getEmail());
+		System.out.println("수정된 이메일 : " + member.getEmail());
+		service.updateProfile(response, member, logEmail);
+	}
 
-		// FIND ID
-		@RequestMapping(value = "/member/find/id", method = RequestMethod.POST)
-		public String findId(@ModelAttribute MemberDTO member, HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
-			member.setEmail(request.getParameter("id_email"));
-			member.setName(request.getParameter("id_name"));
-			System.out.println(member.toString());
-			model.addAttribute("userfindid", service.findId(member, response));
-			model.addAttribute("name", member.getName());
+	// ID/ PW FIND FORM
+	@RequestMapping(value = "/member/find/idpw")
+	public String findIdPw() {
+		return "/member/findidpw/idpw";
+	}
 
-			return "/member/findidpw/idpw";
-		}
-		
-		//FIND PASSWORD
-		@RequestMapping(value = "/member/find/pw", method = RequestMethod.POST)
-		@ResponseBody
-		public void find_pw(@ModelAttribute MemberDTO member, HttpServletResponse response) throws Exception{
-			service.findpw(response, member);
-		}
-		
+	// FIND ID
+	@RequestMapping(value = "/member/find/id", method = RequestMethod.POST)
+	public String findId(@ModelAttribute MemberDTO member, HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
+		member.setEmail(request.getParameter("id_email"));
+		member.setName(request.getParameter("id_name"));
+		System.out.println(member.toString());
+		model.addAttribute("userfindid", service.findId(member, response));
+		model.addAttribute("name", member.getName());
+
+		return "/member/findidpw/idpw";
+	}
+
+	// FIND PASSWORD
+	@RequestMapping(value = "/member/find/pw", method = RequestMethod.POST)
+	@ResponseBody
+	public void find_pw(@ModelAttribute MemberDTO member, HttpServletResponse response) throws Exception {
+		service.findpw(response, member);
+	}
+
+	// 비밀번호 변경
+	@RequestMapping(value = "/member/updatePw", method = RequestMethod.POST)
+	public void update_pw(@ModelAttribute MemberDTO member, @RequestParam("oldpw") String oldpw, HttpSession session, HttpServletResponse response) throws Exception {
+		session.setAttribute("member", service.updatePw(member, oldpw, response));
+		//response.sendRedirect("/carpool/member/myprofile");
+	}
+
+	// 회원 탈퇴
 }

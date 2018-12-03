@@ -278,13 +278,23 @@
 		userid = #{userid}
 	</update>
 	
-	
-
 	<select id="getAttach" resultType="attachfileDTO">
 		SELECT * FROM
 		attachfileDTO
 		WHERE mno = #{mno}
 	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw" parameterType="MemberDTO">
+		 UPDATE 
+		 member 
+		 SET 
+		 userpw = #{userpw}, 
+		 pwdate = SYSDATE()
+		 WHERE 
+		 userid = #{userid}
+		
+	</update>
 
 
 </mapper>

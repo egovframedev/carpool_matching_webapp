@@ -45,4 +45,9 @@ public interface MemberService {
 	public String findId(MemberDTO member, HttpServletResponse response) throws Exception;
 	
 	public void updateProfile(HttpServletResponse response, MemberDTO member, String logEmail) throws Exception;
+	
+	//비밀번호 변경
+	public MemberDTO updatePw(MemberDTO member, String oldpw, HttpServletResponse response) throws Exception;
+	
+	
 }

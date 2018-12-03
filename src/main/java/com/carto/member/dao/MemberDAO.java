@@ -121,9 +121,14 @@ public class MemberDAO {
 	public void approval_status(MemberDTO member) {
 		sqlsession.update(NAMESPACE + ".approval_status", member);
 	}
-	
+
 	public List<DriverDTO> getAttach(Integer mno) throws Exception {
 		return sqlsession.selectList(NAMESPACE + ".getAttach", mno);
+	}
+
+	// 비밀번호 변경
+	public void updatepw(MemberDTO member) throws Exception {
+		sqlsession.update(NAMESPACE + ".updatePw", member);
 	}
 
 }

@@ -225,7 +225,6 @@ public class MemberServiceImpl implements MemberService {
 		return manager.getMember(mno);
 	}
 
-
 	// Find ID
 	@Override
 	public String findId(MemberDTO member, HttpServletResponse response) throws Exception {
@@ -294,4 +293,29 @@ public class MemberServiceImpl implements MemberService {
 		}
 		manager.updateProfile(member);
 	}
+
+	// 비밀번호 수정
+	@Transactional
+	@Override
+	public MemberDTO updatePw(MemberDTO member, String oldpw, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if (!oldpw.equals(manager.selectMember(member.getUserid()).getUserpw())) {
+			out.println("<script>");
+			out.println("alert('기존 비밀번호가 다릅니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return null;
+		} else {
+			manager.updatepw(member);
+			out.println("<script>");
+			out.println("alert('비밀번호가 변경 되었습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return manager.selectMember(member.getUserid());
+		}
+	}
+
 }
