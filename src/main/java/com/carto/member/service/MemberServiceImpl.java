@@ -214,22 +214,6 @@ public class MemberServiceImpl implements MemberService {
 		return manager.viewMember(memberdto);
 	}
 
-	@Override
-	public int insertDriver(DriverDTO dto) {
-		return manager.insertDriver(dto);
-
-	}
-
-	@Override
-	public int UpdateDriverVerti(DriverDTO dto) {
-		return manager.UpdateDriverVerti(dto);
-	}
-
-	@Override
-	public DriverDTO getDriver(int mno) {
-		return manager.getDriver(mno);
-	}
-
 	// 회원정보 가져오기
 	@Override
 	public MemberDTO selectMember(String userid) {
@@ -241,10 +225,6 @@ public class MemberServiceImpl implements MemberService {
 		return manager.getMember(mno);
 	}
 
-	@Override
-	public int UpdateDriver(DriverDTO dto) {
-		return manager.UpdateDriver(dto);
-	}
 
 	// Find ID
 	@Override
@@ -313,11 +293,5 @@ public class MemberServiceImpl implements MemberService {
 			out.close();
 		}
 		manager.updateProfile(member);
-	}
-
-	@Override
-	public List<DriverDTO> getAttach(Integer mno) throws Exception {
-		// TODO Auto-generated method stub
-		return manager.getAttach(mno);
 	}
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carto.mappers.DriverMapper">
+
+
+
+	<!-- 드라이버 정보 -->
+	<select id="getDriver" resultType="driverDTO">
+		SELECT
+		mno ,
+		license_no ,
+		car_no ,
+		car_prod ,
+		car_model ,
+		car_color ,
+		car_year ,
+		insurance ,
+		license_photo ,
+		license_chk ,
+		insurance_photo ,
+		insurance_chk ,
+		car_photo ,
+		car_photo_chk ,
+		carreg_photo ,
+		carreg_photo_chk ,
+		post_date ,
+		post_state
+		FROM
+		driver
+		where
+		mno=#{mno}
+	</select>
+	
+	<!-- 드라이버 추가 -->
+
+	<insert id="insertDriver" parameterType="DriverDTO">
+		insert into driver( mno
+		, license_no , car_no , car_prod , car_model , car_color , car_year ,
+		insurance , license_photo  , insurance_photo  , car_photo  , carreg_photo ,
+		 post_date , post_state )
+		values(#{mno},#{license_no},#{car_no},#{car_prod},#{car_model},#{car_color},#{car_year},#{insurance},#{license_photo},#{ insurance_photo },#{ car_photo
+		},#{carReg_photo},#{post_date},1)
+	</insert>
+	<!-- 업데이트 드라이버 -->
+	<update id="updateDriver" parameterType="DriverDTO">
+		update driver
+		set license_no =#{license_no}
+		, car_no =#{car_no}
+		, car_prod = #{car_prod} 
+		, car_model = #{car_model}
+		, car_color = #{car_color}
+		, car_year = #{car_year}
+		, insurance = #{insurance}
+		, license_photo= #{license_photo}
+		, insurance_photo = #{insurance_photo}
+		, car_photo = #{car_photo}
+		, carreg_photo = #{carReg_photo}
+		where mno = #{mno}
+	</update>
+	<!-- 업데이트 드라이버 관리자가 서류 검토시에 사용 -->
+	<update id="updateDriverVertify" parameterType="DriverDTO">
+		update driver
+		set license_chk= #{license_chk}
+		, insurance_chk = #{insurance_chk}
+		, car_photo_chk = #{car_photo_chk}
+		, carReg_photo_chk = #{carReg_photo_chk}
+		, post_state = #{post_state}
+		where mno = #{mno}
+	</update>
+	
+
+	<select id="getAttach" resultType="attachfileDTO">
+		SELECT * FROM
+		attachfileDTO
+		WHERE mno = #{mno}
+	</select>
+
+
+</mapper>

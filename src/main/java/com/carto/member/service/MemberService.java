@@ -36,24 +36,13 @@ public interface MemberService {
 	// 회원 로그인 정보
 	public MemberDTO viewMember(MemberDTO memberdto) throws Exception;
 
-	// 드라이버 만들기
-	public int insertDriver(DriverDTO dto);
-
-	public int UpdateDriverVerti(DriverDTO dto);
-
-	public DriverDTO getDriver(int mno);
-
 	public MemberDTO selectMember(String userid) throws Exception;
 	
 	public MemberDTO getMember(int mno);
-
-	public int UpdateDriver(DriverDTO dto);
 	
 	public void findpw(HttpServletResponse response, MemberDTO member) throws Exception;
 	//find id
 	public String findId(MemberDTO member, HttpServletResponse response) throws Exception;
 	
 	public void updateProfile(HttpServletResponse response, MemberDTO member, String logEmail) throws Exception;
-
-	public List<DriverDTO> getAttach(Integer mno) throws Exception;
 }

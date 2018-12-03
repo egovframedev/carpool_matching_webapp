@@ -30,6 +30,7 @@ import com.carto.board.domain.AttachfileDTO;
 import com.carto.board.service.BoardService;
 import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.MemberDTO;
+import com.carto.member.service.DriverService;
 import com.carto.member.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
@@ -38,6 +39,8 @@ import lombok.extern.log4j.Log4j;
 public class DriverController {
 	@Autowired
 	MemberService ms;
+	@Autowired
+	DriverService ds;
 	
 	// 회원 서류 체크
 	@RequestMapping(value = "/member/driver/certify", method = RequestMethod.GET)
@@ -45,7 +48,7 @@ public class DriverController {
 		log.info("member/certify1-----------------------");
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
 		
-		DriverDTO driver=ms.getDriver((int)member.getMno());
+		DriverDTO driver=ds.getDriver((int)member.getMno());
 		model.addAttribute("driver",driver);
 
 		return "member/driver_certify1";
@@ -67,7 +70,7 @@ public class DriverController {
 	@ResponseBody
 	public  ResponseEntity<String> uploadAction(MultipartFile[] uploadFile, String item, String userid) {
 		List<String> list = new ArrayList<>();
-		String uploadFolder = "c:\\upload\\driver\\";
+		String uploadFolder = "D:\\upload\\driver\\";
 		log.info("/member/uploadAction........." + item + ": " + userid);
 		for (MultipartFile multipartFile : uploadFile) {
 			//log.info("Upload File Name: " + multipartFile.getOriginalFilename());
@@ -113,13 +116,13 @@ public class DriverController {
 	public String cetiryOk(DriverDTO dto,HttpSession session ,Model model) {
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
 		log.info(member);
-		DriverDTO driver=ms.getDriver(dto.getMno());
+		DriverDTO driver=ds.getDriver(dto.getMno());
 		if(driver != null) {
-			ms.UpdateDriver(dto);
+			ds.UpdateDriver(dto);
 		}
 		else 
-			ms.insertDriver(dto);
-		driver=ms.getDriver((int)member.getMno());
+			ds.insertDriver(dto);
+		driver=ds.getDriver((int)member.getMno());
 		model.addAttribute("driver",driver);
 		
 		return "member/driver_certify3";
@@ -127,7 +130,7 @@ public class DriverController {
 	
 	@RequestMapping(value="/member/driver/vertify", method= RequestMethod.POST)
 	public String verify(int mno,Model model) {
-		DriverDTO driver = ms.getDriver(mno);
+		DriverDTO driver = ds.getDriver(mno);
 		System.out.println(driver);
 		model.addAttribute("driver",driver);
 		
@@ -137,15 +140,15 @@ public class DriverController {
 	@RequestMapping(value="/member/driver/verifyOk", method= RequestMethod.POST)
 	public String verifyOk(Integer mno,Model model,DriverDTO driver) {
 		log.info(driver);
-		ms.UpdateDriverVerti(driver);
+		ds.UpdateDriverVerti(driver);
 /*		if(driver.isCar_photo_chk() && driver.isCarReg_photo_chk() && driver.isInsurance_chk() && driver.isLicense_chk())*/
-		model.addAttribute("driver",ms.getDriver(mno));
+		model.addAttribute("driver",ds.getDriver(mno));
 		return "redirect:/admin/member/list";
 	}
 	
 	@RequestMapping("/getAttachList")
 	@ResponseBody
 	public List<DriverDTO> getAttach(@RequestParam("mno") Integer mno) throws Exception {
-		return ms.getAttach(mno);
+		return ds.getAttach(mno);
 	}
 }
