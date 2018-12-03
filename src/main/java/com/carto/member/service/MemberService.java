@@ -1,8 +1,11 @@
 package com.carto.member.service;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
@@ -51,4 +54,6 @@ public interface MemberService {
 	public String findId(MemberDTO member, HttpServletResponse response) throws Exception;
 	
 	public void updateProfile(HttpServletResponse response, MemberDTO member, String logEmail) throws Exception;
+
+	public List<DriverDTO> getAttach(Integer mno) throws Exception;
 }

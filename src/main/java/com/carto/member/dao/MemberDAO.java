@@ -2,11 +2,13 @@ package com.carto.member.dao;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
@@ -118,6 +120,10 @@ public class MemberDAO {
 	// 이메일 변경시에만 사용. 이메일 인증 false, 인증키 업데이트
 	public void approval_status(MemberDTO member) {
 		sqlsession.update(NAMESPACE + ".approval_status", member);
+	}
+	
+	public List<DriverDTO> getAttach(Integer mno) throws Exception {
+		return sqlsession.selectList(NAMESPACE + ".getAttach", mno);
 	}
 
 }

@@ -277,6 +277,14 @@
 		WHERE 
 		userid = #{userid}
 	</update>
+	
+	
+
+	<select id="getAttach" resultType="attachfileDTO">
+		SELECT * FROM
+		attachfileDTO
+		WHERE mno = #{mno}
+	</select>
 
 
 </mapper>

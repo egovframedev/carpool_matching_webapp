@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.carto.board.domain.AttachfileDTO;
+import com.carto.board.service.BoardService;
 import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.MemberDTO;
 import com.carto.member.service.MemberService;
@@ -93,7 +94,7 @@ public class DriverController {
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(@RequestParam("filename") String FileName) {
 		log.info("display ... filaname: " + FileName);
-		File file = new File("c:\\upload\\driver\\" + FileName);
+		File file = new File("D:\\upload\\driver\\" + FileName);
 		log.info("file: " + file);
 		ResponseEntity<byte[]> result = null;
 		try {
@@ -140,5 +141,11 @@ public class DriverController {
 /*		if(driver.isCar_photo_chk() && driver.isCarReg_photo_chk() && driver.isInsurance_chk() && driver.isLicense_chk())*/
 		model.addAttribute("driver",ms.getDriver(mno));
 		return "redirect:/admin/member/list";
+	}
+	
+	@RequestMapping("/getAttachList")
+	@ResponseBody
+	public List<DriverDTO> getAttach(@RequestParam("mno") Integer mno) throws Exception {
+		return ms.getAttach(mno);
 	}
 }

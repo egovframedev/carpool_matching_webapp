@@ -2,6 +2,7 @@ package com.carto.member.service;
 
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import org.apache.commons.mail.HtmlEmail;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.carto.board.domain.AttachfileDTO;
 import com.carto.member.dao.MemberDAO;
 import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
@@ -311,5 +313,11 @@ public class MemberServiceImpl implements MemberService {
 			out.close();
 		}
 		manager.updateProfile(member);
+	}
+
+	@Override
+	public List<DriverDTO> getAttach(Integer mno) throws Exception {
+		// TODO Auto-generated method stub
+		return manager.getAttach(mno);
 	}
 }
