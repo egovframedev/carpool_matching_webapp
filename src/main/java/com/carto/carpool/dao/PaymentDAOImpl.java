@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.PaymentDTO;
+import com.carto.carpool.domain.ReviewDTO;
 
 @Repository
 public class PaymentDAOImpl implements  PaymentDAO {
@@ -37,5 +38,10 @@ public class PaymentDAOImpl implements  PaymentDAO {
 	@Override
 	public int deletePayment(String payno) {
 		return sqlsession.delete(NAMESAPCE + ".deletePayment", payno);
+	}
+
+	@Override
+	public int insertReview(ReviewDTO dto) {
+		return sqlsession.insert(NAMESAPCE + ".insertReview", dto);
 	}		
 }

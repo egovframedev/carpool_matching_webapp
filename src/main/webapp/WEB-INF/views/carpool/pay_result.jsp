@@ -51,9 +51,9 @@
 							<h3 class="box-title">여정평가하기</h3>
 						</div>
 						
-						<form accept-charset="UTF-8" action="" method="post">
+						<form accept-charset="UTF-8" action="reviewPost" method="post">
 						<div class="box-box">
-	                        <input id="ratings-hidden" name="rating" type="hidden"> 
+	                        <input id="ratings-hidden" name="starPoint" type="hidden"> 
 	                        <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
 	        
 	                        <div class="text-right">

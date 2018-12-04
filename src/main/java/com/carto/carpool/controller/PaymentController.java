@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.PaymentDTO;
+import com.carto.carpool.domain.ReviewDTO;
 import com.carto.carpool.service.CarpoolMatchService;
 import com.carto.carpool.service.PaymentService;
 import com.carto.member.domain.MemberDTO;
@@ -91,16 +92,13 @@ public class PaymentController {
 		return "carpool/pay_result";
 	}
 	
-	@GetMapping("pay/view3")
-	public String view3(Model model) {
-		List<PaymentDTO> listview = payService.getPayList();
-		model.addAttribute("listview",listview);
-		return "pay/myhistory";
+	@GetMapping("pay/reviewPost")
+	public String complet(ReviewDTO dto, HttpSession session) throws Exception {
+		if(session.getAttribute("login") == null) {
+			// TODO : 로그인이 되어 있지 않으면 처리
+		}
+		MemberDTO member = (MemberDTO)session.getAttribute("login");
+		
+		return "redirect:/carpool/riding";
 	}
-	
-	@GetMapping("pay/view4")
-	public String view4() {
-		return "pay/paytest";
-	}
-	
 }

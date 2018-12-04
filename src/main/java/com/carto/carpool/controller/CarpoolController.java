@@ -226,9 +226,11 @@ public class CarpoolController {
 			model.addAttribute("driveList", service.cpLogListByDriver((int)member.getMno()));			
 		} else {
 			model.addAttribute("logList", service.cpLogListByPayer((int)member.getMno()));			
-		}
-		
+		}		
 		log.info("/carpool/request/loglist....");
 		return "carpool/loglist_" + cpType;
 	}
+	
+	
+	
 }
