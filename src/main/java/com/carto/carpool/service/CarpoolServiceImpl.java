@@ -12,6 +12,7 @@ import com.carto.carpool.dao.CarpoolDAO;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolLogDTO;
 import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
@@ -113,6 +114,17 @@ public class CarpoolServiceImpl implements CarpoolService {
 	@Override
 	public int confirmMatching(Integer matchno) throws Exception {
 		return carpoolDAO.confirmMatching(matchno);
+	}
+
+	@Override
+	public List<CarpoolLogDTO> cpLogListByPayer(Integer payer) throws Exception {
+		return carpoolDAO.getCPLogListByPayer(payer);
+	}
+
+	@Override
+	public List<CarpoolLogDTO> cpLogListByDriver(Integer driver) throws Exception {
+		// TODO Auto-generated method stub
+		return carpoolDAO.getCPLogListByDriver(driver);
 	}
 
 }

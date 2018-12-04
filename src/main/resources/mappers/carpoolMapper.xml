@@ -220,7 +220,10 @@
 	
 	<!-- 운전자 정보  -->
 	<select id="getDriver" parameterType="int" resultType="DriverDTO">
-		SELECT * FROM driver WHERE mno = #{mno}
+		SELECT * 
+		FROM driver drv 
+		JOIN member mem ON drv.mno = mem.mno
+		WHERE drv.mno = #{mno}
 	</select>
 	
 	<!-- 카풀 매칭 수락 -->
@@ -272,5 +275,45 @@
 	<select id="selectDriver" resultType="memberDTO">
 		SELECT * FROM member
 		WHERE MNO = #{driverNo}
+	</select>
+	
+	<select id="getCPLogListByPayer" resultType="CarpoolLogDTO">
+		SELECT 
+			pay.payno, pay.matchno, mat.cpno,
+			rid.mno AS riderNo, rid.name AS riderName,
+			drv.mno AS driverNo, drv.name AS driverName,
+			mat.cpnum, pay.amount,
+			pay.pay_date AS payDate,
+			cp.start_point AS startPoint,
+			cp.end_point AS endPoint,
+			cp.start_datetime AS startDatetime,
+			mat.progress
+		FROM payment pay
+		JOIN carpool_match mat ON pay.matchno = mat.matchno
+		LEFT JOIN carpool_info cp ON mat.cpno = cp.cpno
+		LEFT JOIN member rid ON pay.payer = rid.mno
+		LEFT JOIN member drv ON pay.driver = drv.mno
+		WHERE pay.payer = #{payer}
+		ORDER BY pay.pay_date DESC
+	</select>
+	
+	<select id="getCPLogListByDriver" resultType="CarpoolLogDTO">
+		SELECT 
+			pay.payno, pay.matchno, mat.cpno,
+			rid.mno AS riderNo, rid.name AS riderName,
+			drv.mno AS driverNo, drv.name AS driverName,
+			mat.cpnum, pay.amount,
+			pay.pay_date AS payDate,
+			cp.start_point AS startPoint,
+			cp.end_point AS endPoint,
+			cp.start_datetime AS startDatetime,
+			mat.progress
+		FROM payment pay
+		JOIN carpool_match mat ON pay.matchno = mat.matchno
+		LEFT JOIN carpool_info cp ON mat.cpno = cp.cpno
+		LEFT JOIN member rid ON pay.payer = rid.mno
+		LEFT JOIN member drv ON pay.driver = drv.mno
+		WHERE pay.payer = #{driver}
+		ORDER BY pay.pay_date DESC
 	</select>
 </mapper>

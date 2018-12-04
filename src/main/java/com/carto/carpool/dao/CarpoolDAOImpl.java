@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolLogDTO;
 import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
@@ -95,4 +96,14 @@ public class CarpoolDAOImpl implements CarpoolDAO {
 		return session.selectOne(NAMESPACE + ".selectMatInfo", matchno);
 	}
 
+	@Override
+	public List<CarpoolLogDTO> getCPLogListByPayer(Integer payer) throws Exception {
+		return session.selectList(NAMESPACE + ".getCPLogListByPayer", payer);
+	}
+
+	@Override
+	public List<CarpoolLogDTO> getCPLogListByDriver(Integer driver) throws Exception {
+		
+		return session.selectList(NAMESPACE + ".getCPLogListByDriver", driver);
+	}
 }

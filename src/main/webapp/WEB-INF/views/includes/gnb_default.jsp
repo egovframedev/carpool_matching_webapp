@@ -22,7 +22,7 @@
 				                <li><a href="<c:url value='/carpool/request/list'/>">카풀요청</a></li>
 				                <li><a href="<c:url value='/carpool/provide/list'/>">카풀제공</a></li>
 				                <li><a href="<c:url value='/carpool/riding'/>">카풀동승</a></li>
-				                <li><a href="<c:url value='/carpool/riding/log'/>">카풀내역</a></li>				                
+				                <li><a href="<c:url value='/carpool/request/loglist'/>">카풀내역</a></li>				                
 		              		</ul>
 		              	</li>
 						</c:if>
@@ -34,7 +34,7 @@
 				                <li><a href="<c:url value='/carpool/request/list'/>">카풀요청</a></li>
 				                <li><a href="<c:url value='/carpool/provide/list'/>">카풀제공</a></li>
 				                <li><a href="<c:url value='/carpool/driving'/>">카풀운행</a></li>
-				                <li><a href="<c:url value='/carpool/driving/log'/>">카풀내역</a></li>				                
+				                <li><a href="<c:url value='/carpool/provide/loglist'/>">카풀내역</a></li>				                
 		              		</ul>
 		              	</li>
 						</c:if>

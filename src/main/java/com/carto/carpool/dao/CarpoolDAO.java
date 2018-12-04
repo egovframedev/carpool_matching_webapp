@@ -5,6 +5,7 @@ import java.util.List;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolLogDTO;
 import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
@@ -87,4 +88,13 @@ public interface CarpoolDAO {
 	 * @throws Exception
 	 */
 	public CarpoolMatchDTO getCPMatch(Integer matchno) throws Exception;
+	
+	/**
+	 * 카풀 내역 가져오기
+	 * @param payer
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CarpoolLogDTO> getCPLogListByPayer(Integer payer) throws Exception;
+	public List<CarpoolLogDTO> getCPLogListByDriver(Integer driver) throws Exception;
 }

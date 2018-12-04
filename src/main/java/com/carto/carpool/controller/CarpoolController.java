@@ -213,10 +213,22 @@ public class CarpoolController {
 	}
 	
 	// 카풀 내역
-	@GetMapping({"/carpool/request/log", "/carpool/privide/log"})
-	public String carpoolLogList(HttpServletRequest request) {
+	@GetMapping({"/request/loglist", "/provide/loglist"})
+	public String carpoolLogList(HttpServletRequest request, Model model) throws Exception {
 		String cpType = carpoolType(request.getRequestURI());
+		HttpSession session = request.getSession();
+		if(session.getAttribute("login") == null) {
+			// 로그인이 안됨
+		}
+		MemberDTO member = (MemberDTO) session.getAttribute("login");
+		if(cpType.equals("provide")) {
+			model.addAttribute("logList", service.cpLogListByPayer((int)member.getMno()));			
+			model.addAttribute("driveList", service.cpLogListByDriver((int)member.getMno()));			
+		} else {
+			model.addAttribute("logList", service.cpLogListByPayer((int)member.getMno()));			
+		}
 		
+		log.info("/carpool/request/loglist....");
 		return "carpool/loglist_" + cpType;
 	}
 }

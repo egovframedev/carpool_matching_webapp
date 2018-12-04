@@ -45,7 +45,6 @@
 		<c:forEach var="cp" items="${list}">
 			<div class="box">
 				<div class="box-header with-border">
-			    	<h3 class="box-title">오늘의 카풀</h3>
 			    	<div class="box-tools pull-right">
 			    	    <button type="button" class="btn btn-box-tool" data-widget="collapse">
 			       			<i class="fa fa-minus"></i>
@@ -81,18 +80,59 @@
 			    				</li>
 			    				<li class="cp-option">
 			    					<span class="tlt"><i class="fa fa-car" aria-hidden="true"></i> 동승조건</span>
-			    					<span class="label label-success">뒷자리</span>
-			    					<span class="label label-primary">트렁크 사용</span>
-			    					<span class="label label-danger">비흡연</span>
-			    					<span class="label label-warning">음악을 들으며 동승</span>
+			    					<c:choose>
+									<c:when test="${cp.cpMatch.carpool.seatOpt == 1}">
+										<span class="label label-success">조수석</span>
+									</c:when>
+									<c:otherwise>
+										<span class="label label-success">뒷자리</span>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${cp.cpMatch.carpool.driveOpt == 1}">
+										<span class="label label-warning">대화가능</span>
+									</c:when>
+									<c:when test="${cp.cpMatch.carpool.driveOpt == 2}">
+										<span class="label label-warning">조용하게</span>
+									</c:when>
+									<c:when test="${cp.cpMatch.carpool.driveOpt == 3}">
+										<span class="label label-warning">음악을 들으며</span>
+									</c:when>
+									<c:otherwise>
+										<span class="label label-warning">정주행</span>
+									</c:otherwise>
+								</c:choose>
+								<c:if test="${cp.cpMatch.carpool.trunkUse}">
+									<span class="label label-primary">트렁크사용</span>
+								</c:if>
+								<c:if test="${!cp.cpMatch.carpool.smokeUse}">
+									<span class="label label-danger">비흡연</span>
+								</c:if>				
 			    				</li>
 			    			</ul>
 			    			<div class="driver-box">
 			    				<div class="driver-img col-md-3">
-			    					<img src="<c:url value='/img/'/>user8-128x128.jpg" alt="운전자 사진" class="img-circle" />
-			    					<span>여상문</span>
+			    							<c:choose><%-- 프로필 사진 처리 --%>
+											<c:when test="${!empty cp.driver.photo}">
+												<img src="<c:url value="/img/user8-128x128.jpg"/>"
+													alt="profile" class="img-circle" /> 
+											</c:when>
+											<c:when test="${cp.driver.gender.string eq 'MALE'}">
+												<img src="<c:url value="/img/avatar_male_3.png"/>"
+													alt="male" class="img-circle" /> 
+											</c:when>
+											<c:when test="${cp.driver.gender.string eq 'FEMALE'}">
+												<img src="<c:url value="/img/avatar_female_1.png"/>"
+													alt="male" class="img-circle"/> 
+											</c:when>
+											<c:otherwise>
+												<img src="<c:url value="/img/avatar_female_6.png"/>"
+													alt="male" class="img-circle"/> 
+											</c:otherwise>
+											</c:choose>			    			
+			    					<span>${cp.driver.name}</span>
 			    					<a href="#" class="btn btn-default send-msg">
-			    						<i class="fa fa-envelope-o"></i> Androper88</a>
+			    						<i class="fa fa-envelope-o"></i>${cp.driver.userid}</a>
 			    				</div>
 			    				<div class="driver-info col-md-5">
 			    					<h4>운전자 정보</h4>
@@ -119,7 +159,7 @@
 			    	<button class="btn btn-default pull-left">취소하기</button>
 			    	<button class="btn btn-primary pull-right btnPayment"
 			    		data-driver="${cp.driver.mno}" data-matchno="${cp.cpMatch.matchno}"><i class="fa fa-credit-card"></i>&nbsp; 결제하기</button>
-			    	<button class="btn btn-success pull-right" style="margin-right: 10px;"><i class="fa fa-check"></i>&nbsp; 탑승완료</button>
+			    	<!-- <button class="btn btn-success pull-right" style="margin-right: 10px;"><i class="fa fa-check"></i>&nbsp; 탑승완료</button> -->
 				</div><!-- box-footer -->
 			</div><!-- /.box -->
 		</c:forEach>

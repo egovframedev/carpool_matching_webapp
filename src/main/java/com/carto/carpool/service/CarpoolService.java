@@ -6,6 +6,7 @@ import java.util.Map;
 import com.carto.carpool.domain.CPMatchingDTO;
 import com.carto.carpool.domain.CarpoolCriteria;
 import com.carto.carpool.domain.CarpoolDTO;
+import com.carto.carpool.domain.CarpoolLogDTO;
 import com.carto.carpool.domain.CarpoolProvideDTO;
 import com.carto.carpool.domain.CarpoolRequestDTO;
 import com.carto.carpool.domain.MyCarpoolDTO;
@@ -64,4 +65,7 @@ public interface CarpoolService {
 	public List<MyCarpoolDTO> getMyCarpoolList(Integer mno) throws Exception;
 	
 	public int confirmMatching(Integer matchno) throws Exception;
+	
+	public List<CarpoolLogDTO> cpLogListByPayer(Integer payer) throws Exception;
+	public List<CarpoolLogDTO> cpLogListByDriver(Integer driver) throws Exception;
 }
