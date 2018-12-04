@@ -231,10 +231,11 @@
 		//드라이버 인증서류 확인
 		function driverRegGO(formObj){
 			var driConfirm = confirm('드라이버 인증을 확인하시겠습니까?');
-
-			formObj.action= '<c:url value="/"/>member/driver/vertify';
-            formObj.method="post";
-            formObj.submit();
+			 if (delConfirm) {
+				formObj.action= '<c:url value="/"/>member/driver/vertify';
+	            formObj.method="post";
+	            formObj.submit();
+			 }
 		}
 </script>
 

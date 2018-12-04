@@ -16,7 +16,7 @@ public interface BoardDAO {
 
 	public void delete(Integer bno) throws Exception; // 게시글 삭제
 
-	public List<BoardDTO> list(Criteria cri) throws Exception; // 검색에 따른 게시글 목록
+	public List<BoardDTO> list(Criteria cri, BoardDTO dto) throws Exception; // 검색에 따른 게시글 목록
 
 	public int listCount(Criteria cri) throws Exception; // 검색에 따른 데이터 갯수 반환
 

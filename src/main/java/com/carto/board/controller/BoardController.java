@@ -48,12 +48,12 @@ public class BoardController {
 
 	// 목록 보기
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri, Model model)
-			throws Exception {
+	public String list(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri,BoardDTO dto, Model model) throws Exception {
 		log.info("list-----------------------------------");
-
 		log.info(cri.toString());
-		model.addAttribute("list", boardservice.list(cri));
+		log.info(dto.toString());
+		
+		model.addAttribute("list", boardservice.list(cri, dto));
 
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -70,28 +70,28 @@ public class BoardController {
 
 	// 상세 보기
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model, HttpSession session)
-			throws Exception {
+	public String read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model,
+			HttpSession session) throws Exception {
 		log.info("detail---------------------------------------");
 		model.addAttribute(boardservice.detail(bno));
-		
-		MemberDTO member=(MemberDTO)session.getAttribute("login");
-		model.addAttribute("member",member);
+
+		MemberDTO member = (MemberDTO) session.getAttribute("login");
+		model.addAttribute("member", member);
 
 		return "board/detail";
 	}
 
 	// 새 게시글 작성
 	@RequestMapping(value = "/regist", method = RequestMethod.GET)
-	public String registGET(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri, Model model, HttpSession session)
-			throws Exception {
+	public String registGET(@PathVariable("btype") String btype, @ModelAttribute("cri") Criteria cri, Model model,
+			HttpSession session) throws Exception {
 		log.info("registGET---------------------------------------");
 		cri.strToBtype(btype);
 		model.addAttribute("cri", cri);
 
-		MemberDTO member=(MemberDTO)session.getAttribute("login");
-		model.addAttribute("member",member);
-		
+		MemberDTO member = (MemberDTO) session.getAttribute("login");
+		model.addAttribute("member", member);
+
 		return "board/regist";
 	}
 
@@ -166,10 +166,10 @@ public class BoardController {
 		log.info("replyGET---------------------------------------");
 		cri.strToBtype(btype);
 		model.addAttribute("cri", cri);
-		
-		MemberDTO member=(MemberDTO)session.getAttribute("login");
-		model.addAttribute("member",member);
-		
+
+		MemberDTO member = (MemberDTO) session.getAttribute("login");
+		model.addAttribute("member", member);
+
 		return "board/reply";
 	}
 
@@ -181,7 +181,7 @@ public class BoardController {
 		log.info(board.toString());
 
 		boardservice.reply(board);
-		
+
 		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 메세지 설정
 
 		return "redirect:/board/" + btype + "/detail?bno=" + board.getBno();
