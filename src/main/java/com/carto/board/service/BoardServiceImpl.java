@@ -1,6 +1,8 @@
 package com.carto.board.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,8 +69,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDTO> list(Criteria cri) throws Exception {
-		return boardDAO.list(cri);
+	public List<BoardDTO> list(Criteria cri, BoardDTO dto) throws Exception {
+		return boardDAO.list(cri, dto);
 	}
 
 	@Override

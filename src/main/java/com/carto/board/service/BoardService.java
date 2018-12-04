@@ -16,7 +16,7 @@ public interface BoardService {
 
 	public void delete(Integer bno) throws Exception; // 글 삭제
 
-	public List<BoardDTO> list(Criteria cri) throws Exception; // 글 목록
+	public List<BoardDTO> list(Criteria cri, BoardDTO dto) throws Exception; // 글 목록
 
 	public int listCount(Criteria cri) throws Exception;
 

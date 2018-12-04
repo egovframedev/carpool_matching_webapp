@@ -28,8 +28,8 @@
 						<div class="col-sm-10 text-right">
 							<form action="list" method="get" class="navbar-form"
 								style="padding: 10px 0px;">
-								<input type="hidden" name="page" value="1" /> <input
-									type="hidden" name="perPageNum" value="${cri.perPageNum}" />
+								<input type="hidden" name="page" value="1" /> 
+								<input type="hidden" name="perPageNum" value="${cri.perPageNum}" />
 								<div class="form-group">
 									<select name="searchType" class="form-control"
 										style="width: 140px;">
@@ -86,6 +86,7 @@
 						<tbody>
 							<c:forEach var="board" items="${list}" varStatus="status">
 								<tr>
+								<input type="hidden" name="grpno" id="grpno" value="${board.grpno }">
 									<td>${board.bno}</td>
 									<td><c:forEach begin="1" end="${board.depth}">&nbsp;&nbsp;</c:forEach>
 										<c:if test="${board.step gt 0 }">
@@ -93,8 +94,7 @@
 										href="detail${pageMaker.makeSearch(pageMaker.cri.page)}&bno=${board.bno}">${board.title}</a>
 									</td>
 									<td>${board.writer}</td>
-									<td><fmt:formatDate value="${board.reg_date}"
-											pattern="yyyy-MM-dd HH:mm" /></td>
+									<td><fmt:formatDate value="${board.reg_date}" pattern="yyyy-MM-dd HH:mm" /></td>
 									<td><span class="badge bg-red">${board.hit}</span></td>
 								</tr>
 							</c:forEach>

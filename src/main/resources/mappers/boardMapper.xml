@@ -41,14 +41,14 @@
 		#{bno}
 	</delete>
 
+	<!-- !!!!!!!여기수정!!!!!!! -->
 	<!-- 게시글 목록 -->
-	<select id="list" resultType="boardDTO" parameterType="criteria">
-	<![CDATA[
+	<select id="list"  resultType="boardDTO" parameterType="map" >
 		SELECT *
 		FROM board
 		WHERE btype = #{btypeNum}
-	]]>
 		<include refid="search" />
+		<!-- or grpno = #{grpno} -->
 		ORDER BY grpno DESC, step ASC
 		LIMIT #{pageStart}, ${perPageNum}
 	</select>
@@ -131,7 +131,8 @@
 	<select id="getAttach" resultType="attachfileDTO">
 		SELECT * FROM
 		attachfile
-		WHERE bno = #{bno}
+		WHERE
+		bno = #{bno}
 	</select>
 
 	<delete id="deleteAttach">
@@ -144,14 +145,15 @@
 		VALUES
 		(#{filename}, #{bno})
 	</insert>
-	
-	
-		<!-- 메인 페이지 board list 불러오기 -->
-	<select id="mainCenterList" resultType="boardDTO" parameterType="criteria">
-		SELECT * FROM board 
+
+
+	<!-- 메인 페이지 board list 불러오기 -->
+	<select id="mainCenterList" resultType="boardDTO"
+		parameterType="criteria">
+		SELECT * FROM board
 		WHERE btype = #{btypeNum}
 		order by bno desc
-		LIMIT 0,5 
+		LIMIT 0,5
 	</select>
 
 </mapper>

@@ -25,7 +25,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public BoardDTO detail(Integer bno) throws Exception {		
+	public BoardDTO detail(Integer bno) throws Exception {
 		return session.selectOne(namespace + ".detail", bno);
 	}
 
@@ -40,8 +40,19 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardDTO> list(Criteria cri) throws Exception {
-		return session.selectList(namespace + ".list", cri);
+	public List<BoardDTO> list(Criteria cri, BoardDTO dto) throws Exception {
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("btypeNum", cri.getBtypeNum());
+		map.put("grpno", dto.getGrpno());
+		map.put("pageStart", cri.getPageStart());
+		map.put("perPageNum", cri.getPerPageNum());
+		map.put("searchType", cri.getSearchType());
+		map.put("keyword", cri.getKeyword());
+
+		System.out.println("=============================map : " + map);
+
+		return session.selectList(namespace + ".list", map);
 	}
 
 	@Override
@@ -53,7 +64,7 @@ public class BoardDAOImpl implements BoardDAO {
 	public void updateViewCnt(Integer bno) throws Exception {
 		session.update(namespace + ".updateViewCnt", bno);
 	}
-	
+
 	@Override
 	public void addAttach(String filename, Integer bno) throws Exception {
 		Map<String, Object> paramMap = new HashMap<>();
@@ -61,7 +72,7 @@ public class BoardDAOImpl implements BoardDAO {
 		paramMap.put("bno", bno);
 		session.insert(namespace + ".addAttach", paramMap);
 	}
-	
+
 	@Override
 	public List<AttachfileDTO> getAttach(Integer bno) throws Exception {
 		return session.selectList(namespace + ".getAttach", bno);
@@ -69,34 +80,33 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override // 특정 게시물 번호에 속하는 모든 첨부파일을 삭제합니다.
 	public void deleteAttach(Integer bno) throws Exception {
-		session.delete(namespace + ".deleteAttach", bno);		
+		session.delete(namespace + ".deleteAttach", bno);
 	}
 
 	@Override // 수정된 상태의 파일과 이름과 이미 등록되어 있는 게시물의 번호가 필요함
 	public void replaceAttach(String filename, Integer bno) throws Exception {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("bno", bno);
-		paramMap.put("filename", filename);		
+		paramMap.put("filename", filename);
 		session.insert(namespace + ".replaceAttach", paramMap);
 	}
-	
+
 	// 답글 등록
 	@Override
 	public void reply(BoardDTO dto) throws Exception {
 		// TODO Auto-generated method stub
 		session.insert(namespace + ".reply", dto);
 	}
-	
+
 	@Override
 	public void addreply(BoardDTO dto) throws Exception {
 		session.insert(namespace + ".addreply", dto);
 	}
 
-	//main page에 board 불러오는 거
+	// main page에 board 불러오는 거
 	@Override
 	public List<BoardDTO> mainCenterList(Criteria cri) throws Exception {
 		return session.selectList(namespace + ".mainCenterList", cri);
 	}
-	
 
 }
