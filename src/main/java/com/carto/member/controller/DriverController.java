@@ -129,7 +129,7 @@ public class DriverController {
 	}
 	
 	@RequestMapping(value="/member/driver/vertify", method= RequestMethod.POST)
-	public String verify(int mno,Model model) {
+	public String verify(@RequestParam("mno")int mno,Model model) {
 		DriverDTO driver = ds.getDriver(mno);
 		System.out.println(driver);
 		model.addAttribute("driver",driver);
@@ -138,11 +138,11 @@ public class DriverController {
 		
 	}
 	@RequestMapping(value="/member/driver/verifyOk", method= RequestMethod.POST)
-	public String verifyOk(Integer mno,Model model,DriverDTO driver) {
-		log.info(driver);
+	public String verifyOk(Model model,DriverDTO driver) {
+		log.info("verifyOk------"+driver);
 		ds.UpdateDriverVerti(driver);
 /*		if(driver.isCar_photo_chk() && driver.isCarReg_photo_chk() && driver.isInsurance_chk() && driver.isLicense_chk())*/
-		model.addAttribute("driver",ds.getDriver(mno));
+		/*model.addAttribute("driver",ds.getDriver(mno));*/
 		return "redirect:/admin/member/list";
 	}
 	

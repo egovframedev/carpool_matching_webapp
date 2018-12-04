@@ -5,7 +5,7 @@
 <style>
 	.uploadbox label {display: block;}
 	.uploadbox .img-box { max-height: 400px; background-color: #e1e1e1; overflow: hidden; margin-top: 10px; margin-bottom: 10px;}
-	.uploadbox .img-box img { width: 100%; height: 100%; }
+	.uploadbox .img-box img { width: 100%; height: 300px; }
 	
 
 </style>
@@ -37,38 +37,37 @@
 			<div class="box-body uploadbox">
 				<div class="row">
 					<div class="col-md-6">
-						<label>운전면허증</label>
+						<label>운전면허증${driver.license_chk}</label>
 						<div id="licenseRes" class="img-box">
-							<c:if test="${driver.license_photo eq null}">
-							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							</c:if>
-							<c:if test="${driver.license_photo ne null}">
-							<img src="<c:url value='/img/'/>${drive.license_photo}" alt="no image" />
-							</c:if>
+							<c:choose>
+								<c:when test="${empty driver.license_photo}">
+									 <img src="<c:url value='/img/'/>no_image.png" alt="no image" /> 
+								</c:when>
+								<c:otherwise>
+									<img src='<c:url value='/'/>member/display?filename=${driver.license_photo}'/>	
+								</c:otherwise>
+							</c:choose>
 						</div>
-						<c:set value="" var="ck"/>
-						<c:if test="${driver.license_chk}">
-						<c:set value="checked" var="ck"/>
-						</c:if>
-						<input type="checkbox" name="license_chk"  ${ck} />
+						<input type="radio" name="license_photo_chk" value="0" ${driver.license_chk eq 0 ?'checked' : ''}/> 승인 취소
+						<input type="radio" name="license_photo_chk" value="1" ${driver.license_chk eq 1 ?'checked' : ''}/> 승인 대기
+						<input type="radio" name="license_photo_chk" value="2" ${driver.license_chk eq 2 ?'checked' : ''}/> 승인 통과
 						
 					</div>
 					<div class="col-md-6">
 						<label>자동차 사진</label>
 						<div id="carRes" class="img-box">
-							
-							<c:if test="${driver.car_photo_chk eq false}">
-							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							</c:if>
-							<c:if test="${driver.car_photo_chk ne false}">
-							<img src="<c:url value='/img/'/>${drive.car_photo}" alt="no image" />
-							</c:if>
+							<c:choose>
+								<c:when test="${empty driver.car_photo}">
+									 <img src="<c:url value='/img/'/>no_image.png" alt="no image" /> 
+								</c:when>
+								<c:otherwise>
+									<img src='<c:url value='/'/>member/display?filename=${driver.car_photo}'/>	
+								</c:otherwise>
+							</c:choose>
 						</div>
-						<c:set value="" var="ck"/>
-						<c:if test="${driver.car_photo_chk}">
-						<c:set value="checked" var="ck"/>
-						</c:if>
-						<input type="checkbox" name="car_photo_chk" ${ck} />
+						<input type="radio" name="car_photo_chk" value="0" ${driver.car_photo_chk eq 0 ? 'checked' : ''}/> 승인 취소
+						<input type="radio" name="car_photo_chk" value="1" ${driver.car_photo_chk eq 1 ? 'checked' : ''}/> 승인 대기
+						<input type="radio" name="car_photo_chk" value="2" ${driver.car_photo_chk eq 2 ? 'checked' : ''}/> 승인 통과
 					</div>
 					
 				</div>
@@ -76,35 +75,34 @@
 					<div class="col-md-6">
 						<label >보험증서</label>
 						<div id="insuranceRes" class="img-box">
-							<c:if test="${driver.insurance_chk eq false}">
-							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							</c:if>
-							<c:if test="${driver.insurance_chk ne false}">
-							<img src="<c:url value='/img/'/>${driver.insurance_photo}" alt="no image" />
-							</c:if>
+							<c:choose>
+								<c:when test="${empty driver.insurance_photo}">
+									 <img src="<c:url value='/img/'/>no_image.png" alt="no image" /> 
+								</c:when>
+								<c:otherwise>
+									<img src='<c:url value='/'/>member/display?filename=${driver.insurance_photo}'/>	
+								</c:otherwise>
+							</c:choose>
 						</div>
-						<c:set value="" var="ck"/>
-						<c:if test="${driver.insurance_chk}">
-						<c:set value="checked" var="ck"/>
-						</c:if>
-						<input type="checkbox" name="insurance_chk" ${ck}/>
-						<c:set value="" var="ck"/>
+						<input type="radio" name="insurance_chk" value="0" ${driver.insurance_chk eq 0 ?'checked' : ''}/> 승인 취소
+						<input type="radio" name="insurance_chk" value="1"${driver.insurance_chk eq 1 ?'checked' : ''}/> 승인 대기
+						<input type="radio" name="insurance_chk" value="2"${driver.insurance_chk eq 2 ?'checked' : ''}/> 승인 통과
 					</div>
 					<div class="col-md-6">
 						<label >자동차등록증</label>
 						<div id="carRegRes" class="img-box">
-							<c:if test="${driver.carReg_photo_chk eq false}">
-							<img src="<c:url value='/img/'/>no_image.png" alt="no image" />
-							</c:if>
-							<c:if test="${driver.carReg_photo_chk ne false}">
-							<img src="<c:url value='/img/'/>${driver.carReg_photo}" alt="no image" />
-							</c:if>
+							<c:choose>
+								<c:when test="${empty driver.carReg_photo}">
+									 <img src="<c:url value='/img/'/>no_image.png" alt="no image" /> 
+								</c:when>
+								<c:otherwise>
+									<img src='<c:url value='/'/>member/display?filename=${driver.carReg_photo}'/>	
+								</c:otherwise>
+							</c:choose>
 						</div>
-						<c:if test="${driver.carReg_photo_chk}">
-						<c:set value="checked" var="ck"/>
-						</c:if>
-						<input type="checkbox" name="carReg_photo_chk" ${ck} />
-						<c:set value="" var="ck"/>
+						<input type="radio" name="carReg_photo_chk" value="0" ${driver.carReg_photo_chk eq 0 ?'checked' : ''}/> 승인 취소
+						<input type="radio" name="carReg_photo_chk" value="1" ${driver.carReg_photo_chk eq 1 ?'checked' : ''}/> 승인 대기
+						<input type="radio" name="carReg_photo_chk" value="2" ${driver.carReg_photo_chk eq 2 ?'checked' : ''}/> 승인 통과
 					</div>
 	
 				</div>

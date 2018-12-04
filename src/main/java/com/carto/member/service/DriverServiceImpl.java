@@ -22,6 +22,7 @@ import com.carto.member.domain.DriverDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 import com.carto.member.domain.NotAuthorizedUserException;
+import com.mysql.jdbc.log.Log;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -37,6 +38,13 @@ public class DriverServiceImpl implements DriverService {
 
 	@Override
 	public int UpdateDriverVerti(DriverDTO dto) {
+		if(dto.getCar_photo_chk() ==2 && dto.getCarReg_photo_chk() ==2
+				&& dto.getLicense_chk()==2 && dto.getInsurance_chk()==2){
+			dto.setPost_state(2);
+		}
+		else{
+			dto.setPost_state(0);
+		}
 		return manager.UpdateDriverVerti(dto);
 	}
 
