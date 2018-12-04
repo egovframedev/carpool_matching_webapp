@@ -77,13 +77,13 @@
 										<option value="n"
 											<c:out value="${cri.searchType == null? 'selected' : ''}"/>>검색조건선택</option>
 										<option value="start"
-											<c:out value="${cri.searchType eq 'id'? 'selected' : ''}"/>>출발지</option>
+											<c:out value="${cri.searchType eq 'start'? 'selected' : ''}"/>>출발지</option>
 										<option value="end"
-											<c:out value="${cri.searchType eq 'nm'? 'selected' : ''}"/>>도착지</option>
+											<c:out value="${cri.searchType eq 'end'? 'selected' : ''}"/>>도착지</option>
 										<option value="dirver"
-											<c:out value="${cri.searchType eq 'type'? 'selected' : ''}"/>>운전자</option>
+											<c:out value="${cri.searchType eq 'dirver'? 'selected' : ''}"/>>운전자</option>
 										<option value="rider"
-											<c:out value="${cri.searchType eq 'email'? 'selected' : ''}"/>>동승자</option>
+											<c:out value="${cri.searchType eq 'rider'? 'selected' : ''}"/>>동승자</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -159,30 +159,36 @@
 					</ul>
 				</div>
 			</div>
+		</section>
 	</div>
-	</section>
 	<!-- /.content -->
-</div>
 </div>
 <!-- 컨텐츠 끝  -->
 
 <script>
 	$(document).ready(function() {
-
 		$('#year').change(function() {
-			// 드롭다운리스트에서 선택된 값을 텍스트박스에 출력
 			var selectedText = $("#year option:selected").text();
 			//$("option:selected").text();
 			//$(":selected").text();  // 드롭다운리스트가 하나밖에 없다면 이렇게 써도 됨
-
 		});
 
 		$('#month').change(function() {
-			// 드롭다운리스트에서 선택된 값을 텍스트박스에 출력
 			var selectedText = $("#month option:selected").text();
 			//$("option:selected").text();
 			//$(":selected").text();  // 드롭다운리스트가 하나밖에 없다면 이렇게 써도 됨
 			frm.submit();
+		});
+		
+		$("#btnSearch").on("click",	function(evt) {
+			evt.preventDefault();
+			console.log("btnSearch Click......");
+			self.location = "list"
+							+ '${pageMaker.makeQuery(1)}'
+							+ '&searchType='
+							+ $("select[name='searchType'] option:selected").val()
+							+ "&keyword="
+							+ $('#inputKeyword').val();
 		});
 	});
 </script>

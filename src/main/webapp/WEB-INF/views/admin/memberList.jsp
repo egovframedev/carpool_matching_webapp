@@ -1,22 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp"%>
 <!-- 컨텐츠 시작  -->
 <div class="content-wrapper">
-	<div class="container">
+	<div class="col-sm-offset-1 col-sm-10">
 		<!-- 컨텐츠 헤더 부분(Page header) -->
 		<section class="content-header">
-			<!-- 컨텐츠 헤더 부분(Page header) -->
-			<section class="content-header">
-				<h1><i class="fa fa-slideshare" aria-hidden="true"></i>
-					운전자인증<small>기본정보입력</small></h1>
-				<ol class="breadcrumb">
-					<li><a href="<c:url value='/'/>"><i class="fa fa-home"></i> HOME</a></li>
-					<li><a href="<c:url value='/member/driver/certify1'/>"><i class="fa fa-dashboard"></i> 운전자인증</a></li>
-					<li class="active">기본정보입력</li>
-				</ol>
-			</section>
+			<h1>
+				회원관리 <small>목록보기 </small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href=" <c:url value='/'/>"><i class="fa fa-home"></i>
+						Home</a></li>
+				<li><a href="<c:url value='/admin/member/list'/>">회원관리</a></li>
+				<li class="active">목록보기</li>
+			</ol>
 		</section>
 	<!-- 메인 컨텐츠 부분 -->
 
@@ -134,7 +134,7 @@
 												title="수정"> <i class="fa fa-pencil-square-o"></i></a></td>
 											<td><a onclick="removeGo(form${status.index })"
 												title="삭제"> <i class="fa fa-trash"></i></a></td>
-											<td><a onclick="driverRegGO(form${status.index }}"><i class="fa fa-file-image-o"
+											<td><a onclick="driverRegGO(form${status.index })"><i class="fa fa-file-image-o"
 													title="운전자서류인증"></i></a></td>
 										</tr>
 									</form>
@@ -172,7 +172,7 @@
 </div>
 
 <script>
-	$(document).ready(function() {	
+	$(document).ready(function() {
 		$("#btnSearch").on("click",	function(evt) {
 			evt.preventDefault();
 			console.log("btnSearch Click......");
@@ -229,13 +229,12 @@
 			}
 		}
 		//드라이버 인증서류 확인
-		function driverRegGO(mno){
-			var delConfirm = confirm('해당 회원의 서류를 확인하시겠습니까??');
-			if (delConfirm) {
-				
-				formObj.action= "${contextPath}/member/driver/vertify";
-				formObj.submit();
-			}
+		function driverRegGO(formObj){
+			var driConfirm = confirm('드라이버 인증을 확인하시겠습니까?');
+
+			formObj.action= '<c:url value="/"/>member/driver/vertify';
+            formObj.method="post";
+            formObj.submit();
 		}
 </script>
 

@@ -96,12 +96,6 @@
 <!-- /.content-wrapper -->
 <script src="<c:url value='/vendor'/>/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-	/* var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-	var maxSize = 5242880; // 5MB
-	var boardPath = '<c:url value="/board/${cri.btype}/"/>'; 
-	var ctxPath = '<c:url value="/"/>';
-	var formObj = $("form[name='modForm']");
-	var bno = '<c:out value="${boardDTO.bno}"/>'; */
 	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880; // 5MB

@@ -77,13 +77,13 @@
 										<option value="n"
 											<c:out value="${cri.searchType == null? 'selected' : ''}"/>>검색조건선택</option>
 										<option value="start"
-											<c:out value="${cri.searchType eq 'id'? 'selected' : ''}"/>>출발지</option>
+											<c:out value="${cri.searchType eq 'start'? 'selected' : ''}"/>>출발지</option>
 										<option value="end"
-											<c:out value="${cri.searchType eq 'nm'? 'selected' : ''}"/>>도착지</option>
+											<c:out value="${cri.searchType eq 'end'? 'selected' : ''}"/>>도착지</option>
 										<option value="dirver"
-											<c:out value="${cri.searchType eq 'type'? 'selected' : ''}"/>>운전자</option>
+											<c:out value="${cri.searchType eq 'dirver'? 'selected' : ''}"/>>운전자</option>
 										<option value="rider"
-											<c:out value="${cri.searchType eq 'email'? 'selected' : ''}"/>>동승자</option>
+											<c:out value="${cri.searchType eq 'rider'? 'selected' : ''}"/>>동승자</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -127,21 +127,19 @@
 									<td>${history.rname }</td>
 									<td>${history.start_point }<br>${history.start_datetime }</td>
 									<td>${history.end_point }</td>
-									<td>${history.seat_num } 명<br>${history.charge } 원
+									<td>${history.seat_num }명<br>${history.charge } 원
 									</td>
 									<td><c:if test="${history.progress eq 0 }">
-									<span class="label label-default">카풀 대기</span>
-									</c:if> <c:if test="${history.progress eq 1 }">
-									<span class="label label-success">승인</span>
-									</c:if> <c:if test="${history.progress eq 2 }">
-									<span class="label label-info">탑승</span>
-									</c:if> <c:if test="${history.progress eq 3 }">
-									<span class="label label-primary">결제 완료</span>
-									</c:if>
-									<c:if test="${history.progress eq 9 }">
-									<span class="label label-danger">취소</span>
-									</c:if>
-									</td>
+											<span class="label label-default">카풀 대기</span>
+										</c:if> <c:if test="${history.progress eq 1 }">
+											<span class="label label-success">승인</span>
+										</c:if> <c:if test="${history.progress eq 2 }">
+											<span class="label label-info">탑승</span>
+										</c:if> <c:if test="${history.progress eq 3 }">
+											<span class="label label-primary">결제 완료</span>
+										</c:if> <c:if test="${history.progress eq 9 }">
+											<span class="label label-danger">취소</span>
+										</c:if></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -171,58 +169,37 @@
 					</ul>
 				</div>
 			</div>
+		</section>
 	</div>
-	</section>
 	<!-- /.content -->
-</div>
 </div>
 <!-- 컨텐츠 끝  -->
 
 <script>
 	$(document).ready(function() {
-		//appendYear();
-		//appendMonth();
-
+		$("#btnSearch").on("click",	function(evt) {
+			evt.preventDefault();
+			console.log("btnSearch Click......");
+			self.location = "list"
+							+ '${pageMaker.makeQuery(1)}'
+							+ '&searchType='
+							+ $("select[name='searchType'] option:selected").val()
+							+ "&keyword="
+							+ $('#inputKeyword').val();
+		});
+		
 		$('#year').change(function() {
-			// 드롭다운리스트에서 선택된 값을 텍스트박스에 출력
 			var selectedText = $("#year option:selected").text();
 			//$("option:selected").text();
 			//$(":selected").text();  // 드롭다운리스트가 하나밖에 없다면 이렇게 써도 됨
-
 		});
 
 		$('#month').change(function() {
-			// 드롭다운리스트에서 선택된 값을 텍스트박스에 출력
 			var selectedText = $("#month option:selected").text();
 			//$("option:selected").text();
 			//$(":selected").text();  // 드롭다운리스트가 하나밖에 없다면 이렇게 써도 됨
 			frm.submit();
 		});
 	});
-
-	function appendYear() {
-		var date = new Date();
-		var year = date.getFullYear();
-		var selectValue = document.getElementById("year");
-		var optionIndex = 0;
-
-		/* for (var i = year; i >= year - 30; i--) {
-			var sss = '';
-			if(i==${param.year}){
-				
-				sss = "selected='selected'";
-			}
-			selectValue.add(new Option(i , i, sss), optionIndex++);
-		} */
-	}
-
-	function appendMonth() {
-		var selectValue = document.getElementById("month");
-		var optionIndex = 0;
-
-		for (var i = 1; i <= 12; i++) {
-			selectValue.add(new Option(i, i), optionIndex++);
-		}
-	}
 </script>
 <%@ include file="../includes/footer.jsp"%>
