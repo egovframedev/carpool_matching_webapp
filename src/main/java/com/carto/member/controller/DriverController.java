@@ -70,7 +70,7 @@ public class DriverController {
 	@ResponseBody
 	public  ResponseEntity<String> uploadAction(MultipartFile[] uploadFile, String item, String userid) {
 		List<String> list = new ArrayList<>();
-		String uploadFolder = "D:\\upload\\driver\\";
+		String uploadFolder = "c:\\upload\\driver\\";
 		log.info("/member/uploadAction........." + item + ": " + userid);
 		for (MultipartFile multipartFile : uploadFile) {
 			//log.info("Upload File Name: " + multipartFile.getOriginalFilename());
@@ -97,7 +97,7 @@ public class DriverController {
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(@RequestParam("filename") String FileName) {
 		log.info("display ... filaname: " + FileName);
-		File file = new File("D:\\upload\\driver\\" + FileName);
+		File file = new File("c:\\upload\\driver\\" + FileName);
 		log.info("file: " + file);
 		ResponseEntity<byte[]> result = null;
 		try {

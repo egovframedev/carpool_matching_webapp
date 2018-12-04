@@ -5,7 +5,7 @@
 <style>
 	.uploadbox label {display: block;}
 	.uploadbox .img-box { max-height: 400px; background-color: #e1e1e1; overflow: hidden; margin-top: 10px; margin-bottom: 10px;}
-	.uploadbox .img-box img { width: 100%; height: 100%; }
+	.uploadbox .img-box img { width: 100%; height: 300px; }
 	
 
 </style>

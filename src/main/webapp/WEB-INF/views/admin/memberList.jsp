@@ -134,7 +134,7 @@
 												title="수정"> <i class="fa fa-pencil-square-o"></i></a></td>
 											<td><a onclick="removeGo(form${status.index })"
 												title="삭제"> <i class="fa fa-trash"></i></a></td>
-											<td><a onclick="driverRegGO(${member.mno}"><i class="fa fa-file-image-o"
+											<td><a onclick="driverRegGO(form${status.index }}"><i class="fa fa-file-image-o"
 													title="운전자서류인증"></i></a></td>
 										</tr>
 									</form>
@@ -230,12 +230,12 @@
 		}
 		//드라이버 인증서류 확인
 		function driverRegGO(mno){
-			var formObj = $("form[role='form']");
-			
-			formObj.attr("action","${contextPath}/member/driver/vertify");
-			formObj.attr("method", "post");
-			$("#mno").val(mno);
-			formObj.submit();
+			var delConfirm = confirm('해당 회원의 서류를 확인하시겠습니까??');
+			if (delConfirm) {
+				
+				formObj.action= "${contextPath}/member/driver/vertify";
+				formObj.submit();
+			}
 		}
 </script>
 
