@@ -3,11 +3,8 @@ package com.carto.carpool.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -32,7 +29,6 @@ import com.carto.carpool.domain.MyCarpoolDTO;
 import com.carto.carpool.domain.Paging;
 import com.carto.carpool.service.CarpoolService;
 import com.carto.member.domain.MemberDTO;
-
 import lombok.extern.log4j.Log4j;
 
 /**
