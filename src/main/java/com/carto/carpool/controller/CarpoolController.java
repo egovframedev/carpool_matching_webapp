@@ -231,6 +231,4 @@ public class CarpoolController {
 		return "carpool/loglist_" + cpType;
 	}
 	
-	
-	
 }

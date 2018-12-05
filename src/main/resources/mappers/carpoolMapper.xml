@@ -313,7 +313,7 @@
 		LEFT JOIN carpool_info cp ON mat.cpno = cp.cpno
 		LEFT JOIN member rid ON pay.payer = rid.mno
 		LEFT JOIN member drv ON pay.driver = drv.mno
-		WHERE pay.payer = #{driver}
+		WHERE pay.driver = #{driver}
 		ORDER BY pay.pay_date DESC
 	</select>
 </mapper>
