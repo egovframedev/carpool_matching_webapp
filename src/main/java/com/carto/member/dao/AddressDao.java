@@ -1,12 +1,9 @@
-package com.carto.address.dao;
+package com.carto.member.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.activation.CommandMap;
-
-import com.carto.address.domain.AddressDTO;
+import com.carto.member.domain.AddressDTO;
 
 public interface AddressDao {
 

@@ -102,6 +102,7 @@ INSERT INTO `member` (`mno`, `mstate`, `userid`, `userpw`, `name`, `birth`, `ema
 	(199, 1, 'admin98', '1234', '관리자98', NULL, 'admin98@carpool.com', '010-2222-3333', 2, 'true', NULL, '2018-11-29 15:49:35', NULL, NULL, NULL, 1),
 	(200, 1, 'admin99', '1234', '관리자99', NULL, 'admin99@carpool.com', '010-2222-3333', 1, 'true', NULL, '2018-11-29 15:49:35', NULL, NULL, NULL, 1);
 
+SET FOREIGN_KEY_CHECKS = 0;
 -- 회원 권한 정보 입력
 INSERT INTO `member_auth` (`userid`, `authority`, `sessionKey`, `sessionLimit`) VALUES
 	('rider0', 'ROLE_RIDER', NULL, NULL),	('rider1', 'ROLE_RIDER', 'D32A27B28AE208A1E92B10D55A41A77A', '2018-12-02 17:17:47'),

@@ -1,13 +1,11 @@
-package com.carto.address.service;
+package com.carto.member.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.activation.CommandMap;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
-import com.carto.address.domain.AddressDTO;
+import com.carto.member.domain.AddressDTO;
 
 public interface AddressService {
     
@@ -18,7 +16,7 @@ public interface AddressService {
     //삭제
     public void addressDeleteService(ArrayList<Integer> deleteArray) throws Exception;
     //등록
-	public int addressInsertService(AddressDTO addressdto) throws Exception;
+	public void addressInsertService(HttpServletResponse response, AddressDTO addressdto) throws Exception;
 	//주소 이름 편집
 	public void addressNameUpdate(AddressDTO address);
 	

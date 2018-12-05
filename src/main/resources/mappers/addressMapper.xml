@@ -5,25 +5,18 @@
 
 <mapper namespace="com.carto.mappers.AddressMapper">
 	<!-- 주소 타입의 갯수 출력 -->
-	<select id="CountType" resultType="int">
-
-		SELECT
-		COUNT(*)
-		FROM
-		address
-		WHERE
-		mno=#{mno}
-		AND
-		addr_type = #{addr_type}
+	<select id="CountAddr" resultType="int">
+		SELECT COUNT(*)
+		FROM address
+		WHERE mno=#{mno}
 
 	</select>
 	<!-- 주소 목록 출력 -->
 	<select id="AddressList" parameterType="long"
-		resultType="com.carto.address.domain.AddressDTO">
+		resultType="AddressDTO">
 		SELECT
 		mno,
-		addr_type,
-		addr_no, 
+		addr_no,
 		addr_name,
 		address1,
 		address2,
@@ -32,26 +25,25 @@
 		carto.address
 		WHERE
 		mno = #{mno}
-		ORDER BY
-		addr_type ASC
+		ORDER BY 
+		addr_regdate ASC
+		
 	</select>
 
-	<insert id="AddressInsert"
-		parameterType="com.carto.address.domain.AddressDTO">
+	<insert id="AddressInsert" parameterType="AddressDTO">
 		INSERT
 		INTO
 		carto.address
-		(mno, addr_type, addr_name,
+		(mno, addr_name,
 		address1,
 		address2, address3)
 		VALUES
-		(#{mno}, #{addr_type}, #{addr_name},
+		(#{mno}, #{addr_name},
 		#{address1},
 		#{address2}, #{address3})
 	</insert>
 
-	<update id="AddressUpdate"
-		parameterType="com.carto.address.domain.AddressDTO">
+	<update id="AddressUpdate" parameterType="AddressDTO">
 		UPDATE
 		carto.address
 		SET
@@ -64,15 +56,12 @@
 		mno =
 		#{mno}
 		and
-		addr_type =
-		#{addr_type}
-		ORDER BY
-		addr_regdate
-		ASC limit 1
+		addr_no =
+		#{addr_no}
+
 	</update>
 
-	<update id="AddressNameUpdate"
-		parameterType="com.carto.address.domain.AddressDTO">
+	<update id="AddressNameUpdate" parameterType="AddressDTO">
 		UPDATE
 		carto.address
 		SET
@@ -80,10 +69,11 @@
 		where
 		mno = #{mno}
 		and
-		addr_no = #{addr_no}
-		
+		addr_no =
+		#{addr_no}
+
 	</update>
-	
+
 	<delete id="AddressDelete" parameterType="int">
 		DELETE
 		FROM
@@ -91,5 +81,5 @@
 		WHERE
 		addr_no = #{addr_no}
 	</delete>
-	
+
 </mapper>

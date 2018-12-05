@@ -1,18 +1,17 @@
-package com.carto.address.service;
+package com.carto.member.service;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.activation.CommandMap;
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.carto.address.dao.AddressDao;
-import com.carto.address.domain.AddressDTO;
+import com.carto.member.dao.AddressDao;
+import com.carto.member.domain.AddressDTO;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -31,30 +30,27 @@ public class AddressServiceImpl implements AddressService {
 		// 수정
 		return 0;
 	}
-
+	
 	@Transactional
 	@Override
-	public int addressInsertService(AddressDTO address) throws Exception {
-		// 등록
-		if (address.getAddr_type().getCount() <= addressDAO.getCount(address)) {
-			System.out.println("초과할때==============>");
-			System.out.println("주소 입력 가능 갯수: " + address.getAddr_type().getCount());
-			System.out.println("타입갯수 :" + addressDAO.getCount(address));
-			return addressDAO.addressUpdate(address);
-		} else {
-			System.out.println("입력가능==============>");
-			System.out.println("타입갯수 :" + addressDAO.getCount(address));
-			return addressDAO.addressInsert(address);
+	public void addressInsertService(HttpServletResponse response, AddressDTO address) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		// 주소 5개 초과
+		if (addressDAO.getCount(address) >= 5) {
+			out.close();
+		}else {
+			addressDAO.addressInsert(address);
 		}
-
 	}
-	
+
 	@Override
 	public void addressNameUpdate(AddressDTO address) {
 		// 주소 이름 편집
 		addressDAO.addressNameUpdate(address);
 	}
 
+	@Transactional
 	@Override
 	public void addressDeleteService(ArrayList<Integer> deleteArray) throws Exception {
 		// 삭제

@@ -1,12 +1,17 @@
 package com.carto.member.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.carto.member.domain.AddressDTO;
 import com.carto.member.domain.LoginDTO;
 import com.carto.member.domain.MemberDTO;
 import com.carto.member.domain.NotAuthorizedUserException;
 import com.carto.member.domain.WithdrawalUserException;
+import com.carto.member.service.AddressService;
 import com.carto.member.service.MemberService;
-import com.carto.member.service.MemberServiceImpl;
 import com.carto.member.util.RegisterRequest;
 
 import lombok.extern.log4j.Log4j;
@@ -30,6 +37,8 @@ public class MemberController {
 
 	@Autowired
 	private MemberService service;
+	@Autowired
+	private AddressService addressService;
 
 	// 1. 약관
 	@RequestMapping(value = "/member/join/step1")
@@ -122,7 +131,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	// 회원 정보 수정
+	// 회원 정보 수정 , 주소록 리스트 출력
 	@RequestMapping(value = "/member/myprofile")
 	public ModelAndView memberProfile(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		MemberDTO member = (MemberDTO) session.getAttribute("login");
@@ -130,8 +139,10 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		member = service.selectMember(member.getUserid());
 		if (member != null) {
+			List<AddressDTO> addressList = addressService.adressListService(member.getMno());
 			mav.setViewName("member/profile");
 			mav.addObject("memberlist", member);
+			mav.addObject("list", addressList);
 			log.info("mno값 ================>>>" + member.getMno());
 			return mav;
 		}
@@ -170,7 +181,7 @@ public class MemberController {
 		return "/member/findidpw/idpw";
 	}
 
-	// FIND PASSWORD
+	// 비밀번호 찾기
 	@RequestMapping(value = "/member/find/pw", method = RequestMethod.POST)
 	@ResponseBody
 	public void find_pw(@ModelAttribute MemberDTO member, HttpServletResponse response) throws Exception {
@@ -189,6 +200,33 @@ public class MemberController {
 		if (service.withdrawal(member, response)) {
 			session.invalidate();
 		}
+	}
+
+	// 주소 저장(AJAX)
+	@RequestMapping(value = "/addressSave")
+	@ResponseBody
+	public void addressSave(AddressDTO address, HttpSession session, HttpServletResponse response) throws Exception {
+		log.info(address);
+		addressService.addressInsertService(response, address);
+	}
+
+	// 주소 이름 편집
+	@RequestMapping(value = "/addrNameEdit")
+	public void addressNameEdit(AddressDTO address) throws Exception {
+		addressService.addressNameUpdate(address);
+	}
+
+	// 주소 삭제
+	@RequestMapping(value = "/member/deleteAddress", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public String deleteAddress(@RequestParam(value = "checkArray[]") List<Integer> deleteList, @ModelAttribute("AddressDTO") AddressDTO addressdto, ModelMap model) throws Exception {
+		ArrayList<Integer> deleteArray = new ArrayList<>();
+		for (int i = 0; i < deleteList.size(); i++) {
+			deleteArray.add(deleteList.get(i));
+			System.out.println(deleteArray.size());
+		}
+		addressService.addressDeleteService(deleteArray);
+		return "redirect:/myprofile";
 	}
 
 }
