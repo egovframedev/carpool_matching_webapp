@@ -188,7 +188,11 @@
 							+ '&searchType='
 							+ $("select[name='searchType'] option:selected").val()
 							+ "&keyword="
-							+ $('#inputKeyword').val();
+							+ $('#inputKeyword').val()
+							+ "&year="
+							+ $('#year option:selected').val()
+							+ "&month="
+							+ $('#month option:selected').val();
 		});
 	});
 </script>

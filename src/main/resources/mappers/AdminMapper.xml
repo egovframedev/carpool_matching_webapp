@@ -132,9 +132,9 @@
 		and mem_r.mno = pay.payer
 		and car_m.matchno = pay.matchno
 		and car_i.cpno = car_m.cpno
-		order by pay.pay_date desc
 	]]>
 		<include refid="paySearch" />
+		order by pay.pay_date desc
 	</select>
 
 	<!-- /admin/carpool 부분 -->
@@ -157,8 +157,10 @@
 	<![CDATA[
 		SELECT COUNT(car_m.cpno)
 		from
-		carpool_match car_m, carpool_info car_i
-		where car_i.cpno = car_m.cpno
+		carpool_match car_m, carpool_info car_i,member mem_d, member mem_r
+		where car_i.mno = mem_r.mno
+        and car_m.mno = mem_d.mno
+		and car_i.cpno = car_m.cpno
 	]]>
 		 <include refid="paySearch" />
 	</select>
