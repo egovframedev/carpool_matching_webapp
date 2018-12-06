@@ -24,7 +24,7 @@
 						<div class="box-header with-border">
 							<h2 class="box-title">이용 약관</h2>
 						</div>
-						<form:form role="form" commandName="memberDTO" id="joinForm"
+						<form:form role="form" commandName="registerRequest" id="joinForm"
 							action="step3" method="post" cssClass="form-horizontal">
 							<div class="box-body">
 								<div class="form-group">
@@ -56,7 +56,7 @@
 									<label for="pw2" class="col-sm-2 control-label">비밀번호 확인</label>
 									<div class="col-sm-10">
 										<input type="password" name="pw2" class="form-control"
-											id="pw2" oninput="checkPwd()" placeholder="비밀번호 확인 입력.."
+											id="pw2" oninput="checkPwd();" placeholder="비밀번호 확인 입력.."
 											required="required">
 										<p class="help-block">8글자 이상 영문+숫자+특수문자 조합</p>
 
@@ -108,6 +108,7 @@
 		</section>
 	</div>
 </div>
+
 <script>
  	$(function() {
 		$("#joinForm").submit(
@@ -137,7 +138,7 @@
 				})
 	})
 
-		$("#userid").keyup(function() {
+/* 		$("#userid").keyup(function() {
 			$.ajax({
 				url : "/check_id",
 				type : "POST",
@@ -172,7 +173,7 @@
 				},
 			})
 		});
-	})
+ */
 
 	function checkPwd() {
 		var inputed = $('#userpw').val();
