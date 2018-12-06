@@ -30,7 +30,7 @@
 								<div class="form-group">
 									<label for="name" class="col-sm-2 control-label">이름</label>
 									<div class="col-sm-10">
-										<form:input path="name" type="text" name="name" class="form-control" id="name"
+										<input type="text" name="name" class="form-control" id="name"
 											placeholder="이름 입력.." required="required" />
 										<p class="help-block">실명을 쓰지 않으면 이용에 제한이 있을 수 있습니다.</p>
 										<form:errors path="name" cssClass="error" />
@@ -109,7 +109,7 @@
 	</div>
 </div>
 <script>
-/* 	$(function() {
+ 	$(function() {
 		$("#joinForm").submit(
 				function() {
 					if ($("#userpw").val() !== $("#pw2").val()) {
@@ -119,7 +119,15 @@
 						return false;
 					} else if ($("#userpw").val().length < 8) {
 						alert("비밀번호는 8자 이상으로 설정해야 합니다.");
-						$("#pw").val("").focus();
+						$("#userpw").val("").focus();
+						return false;
+					} else if ($("#userid").val().length < 6) {
+						alert("아이디는 6자 이상으로 설정해야 합니다.");
+						$("#userid").val("").focus();
+						return false;
+					} else if ($("#name").val().length < 2) {
+						alert("이름은 2자 이상으로 설정해야 합니다.");
+						$("#name").val("").focus();
 						return false;
 					} else if ($.trim($("#userpw").val()) !== $("#userpw").val() || $.trim($("#email").val()) !== $("#email").val()
 							|| $.trim($("#userid").val()) !== $("#userid").val()) {
@@ -127,9 +135,9 @@
 						return false;
 					}
 				})
-	}) */
+	})
 
-/* 		$("#userid").keyup(function() {
+		$("#userid").keyup(function() {
 			$.ajax({
 				url : "/check_id",
 				type : "POST",
@@ -183,5 +191,5 @@
 			//$("#joinBtn").css("background-color", "#aaaaaa");
 			$("#pw2").css("background-color", "#FFCECE");
 		}
-	} */
+	}
 </script>
