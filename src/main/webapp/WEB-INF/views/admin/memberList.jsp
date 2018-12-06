@@ -95,6 +95,10 @@
 											<td>${member.gender}</td>
 											<td>${member.phone}</td>
 											<td><c:if test="${member.authority ne 'ROLE_ADMIN'}">
+												<c:if test="${member.mstate eq 'DISABLE' }">
+													${member.authority}
+												</c:if>
+												<c:if test="${member.mstate ne 'DISABLE' }">
 													<select name="authority">
 														<c:if test="${member.authority eq 'ROLE_DRIVER'}">
 															<option value="ROLE_DRIVER">ROLE_DRIVER</option>
@@ -109,11 +113,17 @@
 															<option value="ROLE_DRIVER">ROLE_DRIVER</option>
 														</c:if>
 													</select>
+												</c:if>		
+													
 												</c:if> <c:if test="${member.authority eq 'ROLE_ADMIN'}">
 												${member.authority}
 												</c:if></td>
 											<td>${member.email}</td>
 											<td><c:if test="${member.authority ne 'ROLE_ADMIN'}">
+											<c:if test="${member.mstate eq 'DISABLE' }">
+													${member.approval_status}
+												</c:if>
+												<c:if test="${member.mstate ne 'DISABLE' }">
 													<select name="approval_status">
 														<c:if test="${member.approval_status eq 'true'}">
 															<option value="true">true</option>
@@ -124,6 +134,7 @@
 															<option value="true">true</option>
 														</c:if>
 													</select>
+												</c:if>
 												</c:if> <c:if test="${member.authority eq 'ROLE_ADMIN'}">
 												${member.approval_status}
 												</c:if></td>
@@ -184,7 +195,6 @@
 							+ $('#inputKeyword').val();
 		});
 	});
-	
 		//수정
 		function modifyGo( formObj){
 			var arr = [];
@@ -231,7 +241,7 @@
 		//드라이버 인증서류 확인
 		function driverRegGO(formObj){
 			var driConfirm = confirm('드라이버 인증을 확인하시겠습니까?');
-			 if (driConfirm) {
+			 if (delConfirm) {
 				formObj.action= '<c:url value="/"/>member/driver/vertify';
 	            formObj.method="post";
 	            formObj.submit();
