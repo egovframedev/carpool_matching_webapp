@@ -276,27 +276,30 @@ public class MemberServiceImpl implements MemberService {
 	// 프로필 수정
 	@Transactional
 	@Override
-	public void updateProfile(HttpServletResponse response, MemberDTO member, String logEmail) throws Exception {
+	public void updateProfile(HttpServletResponse response, MemberDTO member, String logEmail, String logPhone) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		if (!logEmail.equals(member.getEmail())) { // 이메일이 변경 됨.
 			if (manager.check_email(member.getEmail()) == 1) {
-				out.println("alert('동일한 이메일이 있습니다.');");
+				out.println("동일한 이메일이 있습니다.");
 				out.close();
 			} else {
-				// 인증키 생성
+				// 인증키 새로 생성
 				member.setApproval_key(approval_key());
 				// 인증 메일 발송
 				sendmail(member, "updateEmail"); // 메일 발송.
-				manager.approval_status(member); // 이메일 인증 권한 false , 이메일 인증키 새로 업데이트.
+				manager.approval_status(member); // 이메일 인증 권한 false 로 변경.
 				out.print("수정하신 이메일로 인증 후 로그인 하세요.");
 				out.close();
 			}
-		} else {
+		} else if(!logPhone.equals(member.getPhone())){
 			out.print("전화번호가 수정 되었습니다.");
 			out.close();
+			manager.updateProfile(member);
+		} else {
+			out.print("수정된 정보가 없습니다.");
+			out.close();
 		}
-		manager.updateProfile(member);
 	}
 
 	// 비밀번호 수정

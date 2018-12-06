@@ -158,9 +158,10 @@ public class MemberController {
 		log.info("프로필 수정 컨트롤러 진입");
 		MemberDTO logMem = (MemberDTO) session.getAttribute("login");
 		String logEmail = logMem.getEmail();
+		String logPhone = logMem.getPhone();
 		System.out.println("로그인 이메일 : " + logMem.getEmail());
 		System.out.println("수정된 이메일 : " + member.getEmail());
-		service.updateProfile(response, member, logEmail);
+		service.updateProfile(response, member, logEmail, logPhone);
 	}
 
 	// ID/ PW FIND FORM

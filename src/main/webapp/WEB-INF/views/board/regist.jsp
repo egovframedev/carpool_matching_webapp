@@ -68,7 +68,7 @@
 								<!-- /.box-body -->
 								<div class="box-footer">
 									<div class="pull-right">
-										<button type="submit" class="btn btn-success" id="btnSubmit">
+										<button type="submit" class="btn btn-success" id="btnSubmit" >
 											<i class="fa fa-pencil"></i> 글 작성
 										</button>
 									</div>
@@ -237,6 +237,22 @@
 			formObj.attr("method", "get");
 			formObj.submit();
 		});
+		
+/* 		$("#btnSubmit").on("click", function() {
+			var formObj = $("form[role='form']");
+			var form = document.writeForm;
+
+		    if(!form.title.value) {
+		        alert("제목을 입력해주세요");
+		        form.title.focus();
+		    }
+		    
+		    if(!form.content.value) {
+		        alert("내용을 입력해주세요");
+		        form.content.focus();
+		    }
+			formObj.submit();
+		}); */
 	});
 </script>
 

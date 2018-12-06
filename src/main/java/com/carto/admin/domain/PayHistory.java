@@ -2,6 +2,8 @@ package com.carto.admin.domain;
 
 import org.apache.ibatis.type.Alias;
 
+import com.carto.member.domain.MemberStatus;
+
 import lombok.Data;
 
 @Data
@@ -24,5 +26,6 @@ public class PayHistory {
 	private String pay_date; // 결제날짜
 	//private boolean driverChk; // 드라이버 체크(드라이버1, 동승자0)
 	private int isdriver;
+	private MemberStatus mstate;
 
 }

@@ -38,7 +38,6 @@ public class AddressServiceImpl implements AddressService {
 		PrintWriter out = response.getWriter();
 		// 주소 5개 초과
 		if (addressDAO.getCount(address) >= 5) {
-			out.close();
 		}else {
 			addressDAO.addressInsert(address);
 		}
@@ -53,7 +52,7 @@ public class AddressServiceImpl implements AddressService {
 	@Transactional
 	@Override
 	public void addressDeleteService(ArrayList<Integer> deleteArray) throws Exception {
-		// 삭제
+		// 주소 삭제
 		addressDAO.addressDelete(deleteArray);
 	}
 

@@ -304,7 +304,7 @@ $(function(){
 									<td id="addrlist">상세주소</td>
 								</tr>
 								<c:forEach var="list" items="${list}">
-									<tr>
+									<tr class="myaddr">
 										<td><input type="checkbox" class="edit_Addr" name="check"
 											width="10" id="${list.addr_no}" value="${list.addr_no}">${list.addr_name}</td>
 										<td id="addrlist">${list.address1}</td>
@@ -374,9 +374,14 @@ $(function(){
 	
 		$('[name=insertAddrBtn]').click(function() { //주소 등록 버튼 클릭 
 			var insertData = $('[name=addressInsertForm]').serialize(); //addressInsertForm의 내용을 가져옴
+			
 			insertAddress(insertData); //insertAddress 함수호출
+			if($(".myaddr").length >= 5 ){
+				alert("주소 등록 갯수를 초과하였습니다.")
+			}else{
+				alert("주소가 등록 되었습니다.")
+			}
 		});
-
 		//주소 등록(AJAX)
 		function insertAddress(insertData) {
 			$.ajax({
