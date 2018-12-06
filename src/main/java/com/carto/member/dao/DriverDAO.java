@@ -40,5 +40,9 @@ public class DriverDAO {
 	public List<DriverDTO> getAttach(Integer mno) throws Exception {
 		return sqlsession.selectList(NAMESPACE + ".getAttach", mno);
 	}
+	
+	public int updateRole(String userid) {
+		return sqlsession.update(NAMESPACE+".updateRole",userid);
+	}
 
 }

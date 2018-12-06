@@ -65,4 +65,12 @@ public class DriverServiceImpl implements DriverService {
 		// TODO Auto-generated method stub
 		return manager.getAttach(mno);
 	}
+
+	@Override
+	public int updateRole(String userid) {
+		// TODO Auto-generated method stub
+		return manager.updateRole(userid);
+	}
+	
+	
 }

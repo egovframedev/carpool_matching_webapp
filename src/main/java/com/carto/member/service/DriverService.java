@@ -21,4 +21,6 @@ public interface DriverService {
 	public int UpdateDriver(DriverDTO dto);
 	
 	public List<DriverDTO> getAttach(Integer mno) throws Exception;
+	
+	public int updateRole(String userid);
 }

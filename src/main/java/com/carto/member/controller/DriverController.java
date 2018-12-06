@@ -141,7 +141,12 @@ public class DriverController {
 	public String verifyOk(Model model,DriverDTO driver) {
 		log.info("verifyOk------"+driver);
 		ds.UpdateDriverVerti(driver);
-/*		if(driver.isCar_photo_chk() && driver.isCarReg_photo_chk() && driver.isInsurance_chk() && driver.isLicense_chk())*/
+		MemberDTO member= ms.getMember(driver.getMno());
+		log.info("verify--------------------------------"+driver.getCar_photo_chk() + driver.getCarReg_photo_chk() + driver.getInsurance_chk() + driver.getLicense_chk());
+		if(driver.getCar_photo_chk() + driver.getCarReg_photo_chk() + driver.getInsurance_chk() + driver.getLicense_chk() == 8) {
+			log.info("updateROLE--------------------"+member.getUserid());
+			ds.updateRole(member.getUserid());
+		}
 		/*model.addAttribute("driver",ds.getDriver(mno));*/
 		return "redirect:/admin/member/list";
 	}
