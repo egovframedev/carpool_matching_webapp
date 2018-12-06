@@ -23,7 +23,44 @@
 		<!-- 검색 부분 -->
 		<div class="box box-primary">
 			<div class="box-header with-border">
-				<h3 class="box-title">카풀 내역 목록</h3>
+				<!-- <h3 class="box-title">카풀 내역 목록</h3> -->
+				<div class="row">
+					<form method="get" class="navbar-form">
+					<div class="col-md-6">
+						<div class="form-group">
+							<select id="year" name="year" class="form-control">
+								<option value="">- 년도 -</option>
+								<option value="2018">2018년</option>
+								<option value="2018">2018년</option>
+								<option value="2019">2019년</option>
+							</select>
+							<select id="month" name="month" class="form-control">
+								<option value="">- 월 -</option>
+								<c:forEach var="i" begin="1" end="12">
+									<fmt:formatNumber var="m" minIntegerDigits="2" value="${i}" type="number"/>
+									<option value="${m}">${i}월</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<select name="searchType" class="form-control" style="width: 140px;">
+								<option value="">- 검색 옵션 -</option>
+								<option value="START">출발지</option>
+								<option value="END">도착시간</option>
+								<option value="DRIVER">운전자</option>								
+							</select>
+						</div>
+						<div class="form-group">
+							<input type="text" name="keyword" id="inputKeyword" class="form-control"
+										placeholder="Search.." style="width: 260px;">
+						</div>
+						<button type="submit" class="btn btn-warning" id="btnSearch" title="검색">
+							<i class="fa fa-search"></i> 검색</button>
+					</div>
+					</form>
+				</div>
 			</div>
 			<div class="box-body">
 				<table class="table table-bordered">
@@ -31,9 +68,9 @@
 						<tr>
 							<th>체결ID</th>
 							<th>운전자</th>
-							<th>출발지 -&gt; 도착지</th>
-							<th>출발시간</th>
+							<th>출발지 -&gt; 도착지 / 출발시간</th>
 							<th>인원/결제금액</th>
+							<th>결제일자</th>
 							<th>진행상황</th>							
 							<th>처리버튼</th>							
 						</tr>
@@ -44,10 +81,11 @@
 							<td>${log.matchno}</td>
 							<td>${log.driverName}</td>
 							<td>${log.startPoint} -&gt;
-								${log.endPoint}</td>
-							<td><fmt:formatDate value="${log.startDatetime}" pattern="yyyy-MM-dd" /></td>
-							<td>${log.cpnum} / <br/> 
+								${log.endPoint} <br /> 
+								/ <fmt:formatDate value="${log.startDatetime}" pattern="yyyy-MM-dd a KK:mm" /> </td>
+							<td>${log.cpnum} 인/ <br/> 
 								<fmt:formatNumber value="${log.amount}" pattern="#,###원" /></td>
+							<td><fmt:formatDate value="${log.payDate}" pattern="yyyy-MM-dd" /></td>
 							<td><c:choose>
 								<c:when test="${log.progress == 1 }">
 									<span class="label label-primary">동승수락</span>
@@ -68,13 +106,16 @@
 					</tbody>
 				</table>
 			</div><!-- /.box-body -->
+			<div class="box-footer clearfix  text-center">
+              <ul class="pagination no-margin">
+                <li><a href="#">«</a></li>
+                <li class="active"><a href="#">1</a></li>              
+                <li><a href="#">»</a></li>
+              </ul>
+            </div>
 		</div> <!-- /.box -->
 	</section><!-- /.content -->
 	</div>
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=696a80bf76359ec5e09adde78a569f4f"></script>
-<script>
-
-</script>
 <!-- 컨텐츠 끝  -->
 <%@ include file="../includes/footer.jsp"%>

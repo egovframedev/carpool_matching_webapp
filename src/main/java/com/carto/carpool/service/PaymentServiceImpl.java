@@ -1,8 +1,13 @@
 package com.carto.carpool.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.carto.carpool.dao.CarpoolDAO;
 import com.carto.carpool.dao.PaymentDAO;
 import com.carto.carpool.domain.CarpoolMatchDTO;
@@ -20,8 +25,13 @@ public class PaymentServiceImpl implements PaymentService {
 	CarpoolDAO carpoolDAO;
 	
 	// 결제 정보 등록
+	@Transactional
 	@Override
 	public int registPay(PaymentDTO payDTO) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("payno", payDTO.getPayerNo());
+		paramMap.put("matchno", payDTO.getMatchno());
+		payDAO.updateProgress(paramMap);
 		return payDAO.insertPayment(payDTO);
 	}
 

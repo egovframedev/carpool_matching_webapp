@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="com.carto.carpool.dao.CarpoolDAOImpl" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/dao/CarpoolDAOImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="779" y="359"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="2" language="java" name="com.carto.carpool.dao.CarpoolDAO" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/dao/CarpoolDAO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="63" width="234" x="347" y="192"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="3" language="java" name="com.carto.carpool.controller.CarpoolController" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/controller/CarpoolController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="227" y="-48"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="4" language="java" name="com.carto.carpool.service.CarpoolService" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/service/CarpoolService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="67" width="289" x="37" y="149"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" language="java" name="com.carto.carpool.service.CarpoolServiceImpl" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/service/CarpoolServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="184" y="388"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.carto.carpool.domain.CarpoolCriteria" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/domain/CarpoolCriteria.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="173" width="158" x="449" y="-204"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.carto.carpool.domain.CarpoolDTO" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/domain/CarpoolDTO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="428" width="161" x="1078" y="-197"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.carto.carpool.domain.CarpoolMatchDTO" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/domain/CarpoolMatchDTO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="232" width="167" x="846" y="-194"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.carto.carpool.domain.CarpoolProvideDTO" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/domain/CarpoolProvideDTO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="151" x="1339" y="-200"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.carto.carpool.domain.CarpoolRequestDTO" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/domain/CarpoolRequestDTO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="227" width="154" x="1310" y="180"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.carto.carpool.domain.CPMatchingDTO" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/domain/CPMatchingDTO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="266" width="160" x="1077" y="255"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="com.carto.carpool.domain.Paging" project="carpool_matching_webapp" 
+    file="/carpool_matching_webapp/src/main/java/com/carto/carpool/domain/Paging.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="314" width="163" x="657" y="-204"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="13">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="14" name="carpool"/>      
+      <multiplicity id="15" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="16">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="17" name="cri"/>      
+      <multiplicity id="18" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="20" name="carpoolDAO"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="23" name="service"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="25">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <realization id="28">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

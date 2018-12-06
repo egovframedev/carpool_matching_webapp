@@ -98,6 +98,7 @@
 		              		</ul>
 						</li>
 						<!-- 관리자 링크 -->
+						<c:if test="${login.authority == 'ROLE_ADMIN'}">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="fa fa-gears"></i></a>
@@ -107,6 +108,7 @@
 				                <li><a href="<c:url value='/admin/pay/list'/>">결제정산관리</a></li>
 		              		</ul>	
 						</li>
+						</c:if>
 						</c:if>
 					</ul>
 				</div>

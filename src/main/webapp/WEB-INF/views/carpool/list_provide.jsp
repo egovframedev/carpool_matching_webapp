@@ -147,7 +147,7 @@
 							</ul>
 							<div class="btn-group pull-right">
 								<button type="button" class="btn btn-primary btn-lg pull-right" onclick="location.href='regist'">
-									<i class="fa fa-plus"></i> 카풀 요청 등록
+									<i class="fa fa-plus"></i> 카풀 제공 등록
 								</button>
 							</div>
 						</div>

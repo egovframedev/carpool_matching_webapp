@@ -1,11 +1,11 @@
 package com.carto.carpool.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.carto.carpool.domain.CarpoolMatchDTO;
 import com.carto.carpool.domain.PaymentDTO;
 import com.carto.carpool.domain.ReviewDTO;
 
@@ -43,5 +43,10 @@ public class PaymentDAOImpl implements  PaymentDAO {
 	@Override
 	public int insertReview(ReviewDTO dto) {
 		return sqlsession.insert(NAMESAPCE + ".insertReview", dto);
+	}
+
+	@Override
+	public void updateProgress(Map<String, Object> paramMap) {
+		sqlsession.update(NAMESAPCE + ".updateProgress", paramMap);		
 	}		
 }
