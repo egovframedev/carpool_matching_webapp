@@ -48,9 +48,9 @@
 								</c:otherwise>
 							</c:choose>
 						</div>
-						<input type="radio" name="license_photo_chk" value="0" ${driver.license_chk eq 0 ?'checked' : ''}/> 승인 취소
-						<input type="radio" name="license_photo_chk" value="1" ${driver.license_chk eq 1 ?'checked' : ''}/> 승인 대기
-						<input type="radio" name="license_photo_chk" value="2" ${driver.license_chk eq 2 ?'checked' : ''}/> 승인 통과
+						<input type="radio" name="license_chk" value="0" ${driver.license_chk eq 0 ?'checked' : ''}/> 승인 취소
+						<input type="radio" name="license_chk" value="1" ${driver.license_chk eq 1 ?'checked' : ''}/> 승인 대기
+						<input type="radio" name="license_chk" value="2" ${driver.license_chk eq 2 ?'checked' : ''}/> 승인 통과
 						
 					</div>
 					<div class="col-md-6">
